@@ -1,0 +1,49 @@
+* {
+    box-sizing: border-box;
+    font-family: Montserrat, Calibri, Helvetica, sans-serif;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: fixed;
+}
+
+h1 {
+    margin: 0;
+}
+
+header {
+    margin: 0;
+    height: 60px;
+    background-color: #28208C;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    flex-grow: 2;
+    overflow-y: hidden;
+    background-image: url("/assets/img/background.jpg");
+    background-color: rgba(0, 0, 0, 0.81);
+    background-position: center; /* Center the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}

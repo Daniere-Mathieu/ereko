@@ -1,0 +1,30 @@
+form {
+    margin: 20px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.81);
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type=date] {
+    height: 30px;
+    border-radius: 15px;
+    background-color: black;
+    color: #e9e9e9;
+    border: 2px solid #e9e9e9;
+    padding: auto;
+}
+
+button {
+    margin: 20px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #28208C;
+    color: white ;
+    border: 2px solid #28208C;
+    padding: auto 10px;
+}
