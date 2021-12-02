@@ -1,21 +1,34 @@
-version: '3'
+version: '2'
 
 services:
-###> doctrine/doctrine-bundle ###
-  database:
-    image: postgres:${POSTGRES_VERSION:-13}-alpine
+  mariadb:
+    image: docker.io/bitnami/mariadb:10.5
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
-      POSTGRES_USER: ${POSTGRES_USER:-symfony}
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      #- ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_ROOT_PASSWORD=mariadb_ereko
+      - MARIADB_PASSWORD=mariadb_ereko
+      - MARIADB_USER=ereko
+      - MARIADB_DATABASE=ereko
     volumes:
-      - db-data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
-
+      - ereko-db-persist:/var/lib/mysql
+  myapp:
+    image: symfony5_youtube-dl #docker.io/bitnami/symfony:5.3
+    ports:
+      - '8000:8000'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      #- ALLOW_EMPTY_PASSWORD=yes
+      - SYMFONY_DATABASE_PASSWORD=mariadb_ereko
+      - SYMFONY_DATABASE_HOST=mariadb
+      - SYMFONY_DATABASE_PORT_NUMBER=3306
+      - SYMFONY_DATABASE_USER=ereko
+      - SYMFONY_DATABASE_NAME=ereko
+    volumes:
+      - '.:/app'
+    depends_on:
+      - mariadb
+# this is for the persistence of the BDD
 volumes:
-###> doctrine/doctrine-bundle ###
-  db-data:
-###< doctrine/doctrine-bundle ###
+  ereko-db-persist:
+
