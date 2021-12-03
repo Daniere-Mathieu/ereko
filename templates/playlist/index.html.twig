@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PlaylistController!{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/assets/css/playlist.css">
+{% endblock %}
+
+
+
+{% block main %}
+
+<div class="example_wrapper">
+    <div class="playlist_container">
+        <!-- wrap the playlist in a container to allow it to scroll -->
+        <div class="playlist">
+            <div class="track">
+                <b>Jackson 5</b> - Eye of the tiger 1
+                <hr>
+            </div>
+            <div class="track">
+                <b>Jackson 5</b> - I want you back
+                <hr>
+            </div>
+            <div class="track">
+                <b>Jackson 5</b> - Eye of the tiger
+                <hr>
+            </div>
+            <div class="track">
+                <b>Jackson 5</b> - I want you back
+                <hr>
+            </div>
+            <div class="track">
+                <b>Jackson 5</b> - Eye of the tiger
+                <hr>
+            </div>
+            <div class="track">
+                <b>Jackson 5</b> - I want you
+                <hr>
+            </div>
+            <div class="track">
+                <b>Jackson 5</b> - Eye of the tiger
+                <hr>
+            </div>
+            <div class="track">
+                <b>Jackson 5</b> - Eye of the tiger
+                <hr>
+            </div>
+            <div class="track">
+                <b>Jackson 5</b> - I want you back
+                <hr>
+            </div>
+            <div class="track">
+                <b>Jackson 5</b> - Eye of the tiger
+                <hr>
+            </div>
+            <div class="track">
+                <b>Jackson 5</b> - I want you back
+                <hr>
+            </div>
+            <div class="track">
+                <b>Jackson 5</b> - Eye of the tiger
+                <hr>
+            </div>
+            <div class="track">
+                <b>Jackson 5</b> - I want you
+                <hr>
+            </div>
+            <div class="track">
+                <b>Jackson 5</b> - Eye of the tiger last
+                <hr>
+            </div>
+        </div>
+    </div>
+
+        <div class="player">
+            <audio controls src="">
+                Your browser does not support the
+                <code>audio</code> element.
+            </audio>
+            <audio class="hidden" controls src="">
+                Your browser does not support the
+                <code>audio</code> element.
+            </audio>
+        </div>
+
+        <div class="search">
+            <input type="text" placeholder="Search">
+        </div>
+</div>
+
+{% endblock %}

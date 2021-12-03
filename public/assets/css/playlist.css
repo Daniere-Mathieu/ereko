@@ -1,0 +1,31 @@
+/* see https://geon.github.io/programming/2016/02/24/flexbox-full-page-web-app-layout*/
+
+.example_wrapper {
+    overflow-y: hidden;
+    background-color:  rgba(0, 0, 0, 0.81);
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.search {
+    background-color: grey;
+}
+
+.player {
+    background-color: grey;
+}
+
+.playlist_container{
+    overflow-y: auto;
+}
+
+.playlist{
+    overflow-y: scroll;
+}
+
+.track {
+    color: white;
+    padding: 0 10px;
+}
+
