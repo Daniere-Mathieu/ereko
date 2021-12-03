@@ -34,14 +34,6 @@
     stroke: white;
 }
 
-.player {
-    padding-top: 5px;
-    background-color: #28208C ;
-}
-.playing {
-    background-color: #28208C ;
-}
-
 .playlist_container{
     flex-grow:5;
     overflow-y: auto;
