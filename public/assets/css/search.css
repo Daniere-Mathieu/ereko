@@ -1,5 +1,9 @@
 /* see https://geon.github.io/programming/2016/02/24/flexbox-full-page-web-app-layout*/
 
+.search {
+    overflow-y: hidden;
+}
+
 .search_bar {
     margin: 20px;
     height: 40px;
