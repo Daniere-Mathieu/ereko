@@ -1,6 +1,7 @@
 /* see https://geon.github.io/programming/2016/02/24/flexbox-full-page-web-app-layout*/
 
 .example_wrapper {
+    position: relative;
     overflow-y: hidden;
     background-color:  rgba(0, 0, 0, 0.81);
     display: flex;
@@ -8,12 +9,32 @@
     flex-direction: column;
 }
 
-.search {
-    background-color: grey;
+.search_btn {
+    width: 60px;
+    height: 60px;
+    padding: 12px;
+    border-radius: 50%;
+    background-color: #28208C;
+    opacity: 50%;
+
+    position: absolute;
+    right: 35px;
+    bottom: 75px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.search_btn:hover {
+    opacity: 100%;
+}
+
+.icon-tabler-search {
+    stroke: white;
 }
 
 .player {
-    background-color: grey;
+    background-color: none;
 }
 
 .playlist_container{
@@ -21,7 +42,7 @@
 }
 
 .playlist{
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .track {
