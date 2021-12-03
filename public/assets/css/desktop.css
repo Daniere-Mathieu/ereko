@@ -11,12 +11,14 @@
 
 
 .playlist {
+    flex-grow: 0;
     height: 100%;
     width: 50%;
 }
 
 .desk_left {
     height: 100%;
+    width: 50%;
     overflow-y: hidden;
 }
 
@@ -44,7 +46,4 @@
     width: 100%;
 }
 
-.playlist {
-    flex-grow: none;
-}
 
