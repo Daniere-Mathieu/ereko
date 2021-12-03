@@ -1,0 +1,55 @@
+/* see https://geon.github.io/programming/2016/02/24/flexbox-full-page-web-app-layout*/
+
+.search_bar {
+    margin: 20px;
+    height: 40px;
+    padding: 10px;
+    border: 2px solid grey;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+
+}
+.search_bar:focus-within {
+    border-color: white;;
+}
+.search_bar input {
+    background-color: transparent;
+    color: white;
+    border: none;
+}
+.search_bar input:focus {
+    outline: none;
+}
+
+.results_list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.result {
+    width: 350px;
+    color: white;
+    padding: 0 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.result_img {
+    width: 30%;
+    display: flex;
+}
+
+.result_img > img {
+    width: 100%;
+}
+
+.result_info > p {
+    margin: 0;
+}
+
+
+
+
