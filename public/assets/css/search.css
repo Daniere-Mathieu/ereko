@@ -52,6 +52,9 @@
 .result_img > img {
     width: 100%;
 }
+.result_info {
+    width: 70%;
+}
 
 .result_info > p {
     margin: 0;

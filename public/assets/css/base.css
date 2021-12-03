@@ -50,6 +50,7 @@ main {
 
 .wrapper {
     flex-grow: 5;
+    width: 350px;
     position: relative;
     overflow-y: hidden;
     background-color:  rgba(0, 0, 0, 0.81);
