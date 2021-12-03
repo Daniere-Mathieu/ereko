@@ -1,6 +1,6 @@
 /* see https://geon.github.io/programming/2016/02/24/flexbox-full-page-web-app-layout*/
 
-.example_wrapper {
+.wrapper {
     flex-grow: 5;
     position: relative;
     overflow-y: hidden;
