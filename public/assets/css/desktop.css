@@ -48,6 +48,8 @@
     overflow-y: hidden;
 }
 .audio_player_full {
+    position: relative;
+    height: 50%;
     padding: 15px;
 }
 
