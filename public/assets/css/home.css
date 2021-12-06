@@ -2,8 +2,8 @@ form {
     margin: 20px;
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.81);
+    border-radius: 5px;
     color: white;
-    text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,19 +12,32 @@ form {
 
 input[type=date] {
     height: 30px;
+    width: 150px;
     border-radius: 15px;
     background-color: black;
-    color: #e9e9e9;
+    color: grey;
     border: 2px solid #e9e9e9;
-    padding: auto;
+    text-align: center;
 }
+input[type=date]:hover {
+    color: white;
+}
+
 
 button {
     margin: 20px;
     height: 30px;
+    width: 150px;
     border-radius: 15px;
     background-color: #28208C;
     color: white ;
     border: 2px solid #28208C;
+    box-shadow: 0 0 4px 4px  hsl(244, 63%, 65%);
     padding: auto 10px;
+}
+button:hover {
+    background-color: hsl(244, 63%, 65%);
+    border-color: hsl(244, 63%, 65%);
+    color: black;
+    box-shadow: none;
 }
