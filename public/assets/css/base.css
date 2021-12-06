@@ -65,7 +65,7 @@ main {
     overflow-y: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 .scroll {
     overflow-y: auto;

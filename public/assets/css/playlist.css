@@ -34,3 +34,8 @@
     border-bottom: 1px solid grey;
 }
 
+.playing {
+    color: hsl(244, 63%, 80%);
+    border-bottom: 3px solid hsl(244, 63%, 80%);
+}
+
