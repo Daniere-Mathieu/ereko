@@ -113,3 +113,14 @@
     left: -123px;
     width: 120px;
   }
+  .icono-volume, .icono-volumeDecrease, .icono-volumeHigh, .icono-volumeIncrease, .icono-volumeLow, .icono-volumeMedium, .icono-volumeMute {
+    width: 0;
+    height: 0;
+    border: 7px solid;
+    border-left: none;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    padding: 6px 3px;
+    box-shadow: inset 4px 0;
+    margin: 4px 10px 4px 11px;
+}
