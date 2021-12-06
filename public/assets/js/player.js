@@ -5,9 +5,16 @@
 // - Hover over sliders to see preview of timestamp/volume change
 
 const audioPlayer = document.querySelector(".audio-player");
-const audio = new Audio(
-  "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/backsound.mp3"
-);
+let cpt = 0;
+let currentMusic = 0;
+let futureMusic = currentMusic + 1;
+let musicList = [
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/BackgroundMusica2.ogg"},
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg"},
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg"},
+]
+let audio = new Audio(musicList[currentMusic].path);
+audio.autoplay = true;
 //credit for song: Adrian kreativaweb@gmail.com
 
 console.dir(audio);
@@ -91,4 +98,26 @@ function getTimeCodeFromNum(num) {
   return `${String(hours).padStart(2, 0)}:${minutes}:${String(
     seconds % 60
   ).padStart(2, 0)}`;
+}
+audio.addEventListener("ended",() => {
+  let endVerification = currentMusic + 2
+  audio.src = musicList[futureMusic].path;
+  currentMusic = futureMusic;
+  futureMusic++;
+  if (musicList.length === endVerification) {
+    currentMusic = 0;
+    futureMusic = 0;
+  }
+})
+function fetch(url){
+  fetch(url).then(function(response) {
+  if(response.ok) {
+    response.blob().then(function(blob) {
+      musicList[cpt] = URL.createObjectURL(blob);
+      cpt++;
+    });
+  } else {
+    console.log('Network request for "' + product.name + '" image failed with response ' + response.status + ': ' + response.statusText);
+  }
+});
 }
