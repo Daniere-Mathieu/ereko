@@ -15,12 +15,12 @@
     border-radius: 20px;
     display: flex;
     align-items: center;
-
 }
-.search_bar:focus-within {
-    border-color: white;;
+.search_bar:focus-within, .search_bar:hover {
+    border-color: white;
 }
 .search_bar input {
+    width: 100%;
     background-color: transparent;
     color: white;
     border: none;
