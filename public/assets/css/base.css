@@ -61,6 +61,7 @@ main {
 
 .scroll_container {
     flex-grow:5;
+    padding: 15px;
     overflow-y: hidden;
     display: flex;
     flex-direction: column;

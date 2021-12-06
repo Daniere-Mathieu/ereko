@@ -6,6 +6,7 @@
     padding: 12px;
     border-radius: 50%;
     background-color: #28208C;
+    box-shadow: 0 0 4px 4px  hsl(244, 63%, 65%);
     opacity: 50%;
 
     position: absolute;
@@ -17,6 +18,8 @@
     align-items: center;
 }
 .search_btn:hover {
+    background-color: hsl(244, 63%, 65%);
+    box-shadow: none;
     opacity: 100%;
 }
 
@@ -25,7 +28,9 @@
 }
 
 .track {
+    width: 100%;
     color: white;
-    padding: 0 10px;
+    padding: 5px 10px;
+    border-bottom: 1px solid grey;
 }
 
