@@ -19,20 +19,25 @@ let musicList1 = [
   {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg"},
 ];
 // tableau temporaire servant de remplacant a la réponse du serveur sur la liste de musique
-let musicList = ["https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.og"];
+let musicList = ["https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg"];
 //tableau de musique
 let audio = new Audio();
 //object audio
 audio.autoplay = true;
 // je donne la valeur true a autoplay pour que les musique ce joue en automatique apres la premiere
+audio.volume = .75;
+// je donne la valeur au volume du son
 window.addEventListener("load",() => {
   console.log("load");
   for (let i = 0; i < 4; i++) {
-    callMusic(musicList1[currentMusic].path);
+    callMusic(musicList1[i].path);
   }
-  window.setTimeout(setAudio(musicList[0]),1000);
+  let timeoutID = setTimeout(()=>{
+    setAudio(musicList[currentMusic])
+  },2000);
   console.log("c'est passé");
 })
+
 // fonction qui capte le chargement de la page pour load les premier musique
 audio.addEventListener(
   "loadeddata",
@@ -41,7 +46,6 @@ audio.addEventListener(
     audioPlayer.querySelector(".time .length").textContent = getTimeCodeFromNum(
       audio.duration
     );
-    audio.volume = .75;
   },
   false
 );
