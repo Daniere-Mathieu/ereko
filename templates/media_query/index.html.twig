@@ -17,7 +17,7 @@
 {% block main %}
 
 <div class="wrapper">
-    <div class="scroll_container playlist">
+    <div class="scroll_container playlist" id="playlist">
         <!-- wrap the playlist in a container to allow it to scroll -->
         <div class="scroll">
             <div class="track playing">
@@ -95,7 +95,7 @@
         </div>
     </div>
 
-    <div class="search_btn">
+    <div class="search_btn" id="search_btn">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44"
             viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -106,7 +106,7 @@
 
     <div class="vertical_separator"></div>
 
-    <div class="desk_left">
+    <div class="desk_left" id="desktop_left">
         <div class="audio_player_full">
             <!-- This is for thumbnail-->
             <div class="player_desktop_img">
@@ -146,14 +146,23 @@
 
         </div>
 
-        <script src="/assets/js/player.js"></script>
-
         <hr class="horizontal_separator">
 
-        <div class="search">
-            <div class="search_bar">
-                <input type="text" name="search" id="search" placeholder="Search">
+        <div class="search" id="search">
+            <div class="search_bar_container">
+                <div class="search_back" id="search_back">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <line x1="5" y1="12" x2="11" y2="18" />
+                        <line x1="5" y1="12" x2="11" y2="6" />
+                      </svg>
+                </div>
+                <div class="search_bar">
+                    <input type="text" name="search" id="search_input" placeholder="Search">
+                </div>
             </div>
+
 
             <div class="scroll_container results_list">
                 <!-- wrap the playlist in a container to allow it to scroll -->
@@ -225,5 +234,7 @@
 
 </div>
 
+<script src="/assets/js/player.js"></script>
+<script src="/assets/js/search.js"></script>
 
 {% endblock %}

@@ -1,14 +1,39 @@
 /* see https://geon.github.io/programming/2016/02/24/flexbox-full-page-web-app-layout*/
 
+
 .search {
     overflow-y: hidden;
-    height: 50%;
     display: flex;
     flex-direction: column;
 }
-
+.search_bar_container {
+    padding: 15px 25px;
+    width: 100%;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+.search_back {
+    height: 40px;
+    width: 40px;
+    border: 2px solid grey;
+    border-radius: 20px;
+    stroke: grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.search_back svg{
+    width: 70%;
+    stroke: inherit;
+}
+.search_back:hover, .search_back:active {
+    stroke: white;
+    border-color: white;
+}
 .search_bar {
-    margin: 20px;
+    flex-grow: 1;
     height: 40px;
     padding: 10px;
     border: 2px solid grey;

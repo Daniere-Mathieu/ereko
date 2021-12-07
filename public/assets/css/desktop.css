@@ -9,7 +9,8 @@
 {
     display: block;
 }
-.search_btn
+.search_btn,
+.search_back 
 {
     display: none;
 }
@@ -51,6 +52,9 @@
     position: relative;
     height: 50%;
     padding: 15px;
+}
+.search {
+    height: 50%;
 }
 
 /*
