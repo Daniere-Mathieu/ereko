@@ -27,6 +27,18 @@ class TrackInParty
      */
     private $state;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Party::class, inversedBy="trackInParties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $party_id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Track::class, inversedBy="trackInParties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $track_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +64,30 @@ class TrackInParty
     public function setState(string $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    public function getPartyId(): ?Party
+    {
+        return $this->party_id;
+    }
+
+    public function setPartyId(?Party $party_id): self
+    {
+        $this->party_id = $party_id;
+
+        return $this;
+    }
+
+    public function getTrackId(): ?Track
+    {
+        return $this->track_id;
+    }
+
+    public function setTrackId(?Track $track_id): self
+    {
+        $this->track_id = $track_id;
 
         return $this;
     }

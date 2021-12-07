@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TrackRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class Track
      * @ORM\Column(type="string", length=255)
      */
     private $state;
+
+    /**
+     * @ORM\OneToMany(targetEntity=TrackInParty::class, mappedBy="track_id", orphanRemoval=true)
+     */
+    private $trackInParties;
+
+    public function __construct()
+    {
+        $this->trackInParties = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +98,36 @@ class Track
     public function setState(string $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TrackInParty[]
+     */
+    public function getTrackInParties(): Collection
+    {
+        return $this->trackInParties;
+    }
+
+    public function addTrackInParty(TrackInParty $trackInParty): self
+    {
+        if (!$this->trackInParties->contains($trackInParty)) {
+            $this->trackInParties[] = $trackInParty;
+            $trackInParty->setTrackId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrackInParty(TrackInParty $trackInParty): self
+    {
+        if ($this->trackInParties->removeElement($trackInParty)) {
+            // set the owning side to null (unless already changed)
+            if ($trackInParty->getTrackId() === $this) {
+                $trackInParty->setTrackId(null);
+            }
+        }
 
         return $this;
     }
