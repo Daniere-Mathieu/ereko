@@ -21,3 +21,5 @@
 
 ### data
 /data/music/*?.*
+/data/images/*?.*
+/public/assets/img/*?.*

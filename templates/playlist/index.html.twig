@@ -1,0 +1,240 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MediaQuery!
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/assets/css/playlist.css">
+<link rel="stylesheet" href="/assets/css/player.css">
+<link rel="stylesheet" href="/assets/css/search.css">
+<link rel="stylesheet" href="/assets/css/interface_common.css" />
+
+<!--link rel="stylesheet" media="(max-width: 1200px)" href="/assets/css/smartphone.css" /-->
+<link rel="stylesheet" media="(min-width: 750px)" href="/assets/css/desktop.css" />
+{% endblock %}
+
+
+{% block main %}
+
+<div class="wrapper">
+    <div class="scroll_container playlist" id="playlist">
+        <!-- wrap the playlist in a container to allow it to scroll -->
+        <div class="scroll">
+            <div class="track playing">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1 aaaaaaaaaaaa fdsgfdg gfdgfdggfdg gfdgfdg gfdgfdg gfdgfdg gfdgfdg 
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger 1
+            </div>
+            <div class="track">
+                <b>Jackson 5</b>
+                - Eye of the tiger last
+            </div>
+        </div>
+    </div>
+
+    <div class="search_btn" id="search_btn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44"
+            viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <circle cx="10" cy="10" r="7" />
+            <line x1="21" y1="21" x2="15" y2="15" />
+        </svg>
+    </div>
+
+    <div class="vertical_separator"></div>
+
+    <div class="desk_left" id="desktop_left">
+        <div class="audio_player_full">
+            <!-- This is for thumbnail-->
+            <div class="player_desktop_img">
+                <div class="player_desktop_img_container">
+                    <img src="https://i.ytimg.com/vi/BmSzWXl5Ofg/mqdefault.jpg" alt="">
+
+                </div>
+            </div>
+            <div class="audio-player" style="margin: 0 auto">
+
+                <!-- see https://codeconvey.com/customize-html5-audio-player-css/ -->
+                <div class="timeline">
+                    <div class="progress"></div>
+                </div>
+                <div class="controls">
+                    <div class="play-container">
+                        <div class="toggle-play play"></div>
+                    </div>
+                    <div class="time">
+                        <div class="current">0:00</div>
+                        <div class="divider">/</div>
+                        <div class="length"></div>
+                    </div>
+                    <div class="name">Eye of the tiger</div>
+                    <!--     credit for icon to https://saeedalipoor.github.io/icono/ -->
+                    <div class="volume-container">
+                        <div class="volume-button">
+                            <div class="volume icono-volumeMedium"></div>
+                        </div>
+
+                        <div class="volume-slider">
+                            <div class="volume-percentage"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="horizontal_separator">
+
+        <div class="search" id="search">
+            <div class="search_bar_container">
+                <div class="search_back" id="search_back">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <line x1="5" y1="12" x2="11" y2="18" />
+                        <line x1="5" y1="12" x2="11" y2="6" />
+                      </svg>
+                </div>
+                <div class="search_bar">
+                    <input type="text" name="search" id="search_input" placeholder="Search">
+                </div>
+            </div>
+
+
+            <div class="scroll_container results_list">
+                <!-- wrap the playlist in a container to allow it to scroll -->
+                <div class="scroll">
+                    <div class="result">
+                        <div class="result_img">
+                            <img src="https://i.ytimg.com/vi/BmSzWXl5Ofg/mqdefault.jpg" alt="">
+                        </div>
+                        <div class="result_info">
+                            <p class="result_title">
+                                <b>Jackson 5</b>
+                                - Eye of the tiger 1 aaaaaaaaaaaa fdsgfdg gfdgfdggfdg gfdgfdg gfdgfdg gfdgfdg gfdgfdg 
+                            </p>
+                            <p class="result_time">03:45</p>
+                        </div>
+                    </div>
+                    <div class="result">
+                        <div class="result_img">
+                            <img src="https://i.ytimg.com/vi/BmSzWXl5Ofg/mqdefault.jpg" alt="">
+                        </div>
+                        <div class="result_info">
+                            <p class="result_title">
+                                <b>Jackson 5</b>
+                                - Eye of the tiger 1
+                            </p>
+                            <p class="result_time">03:45</p>
+                        </div>
+                    </div>
+                    <div class="result">
+                        <div class="result_img">
+                            <img src="https://i.ytimg.com/vi/BmSzWXl5Ofg/mqdefault.jpg" alt="">
+                        </div>
+                        <div class="result_info">
+                            <p class="result_title">
+                                <b>Jackson 5</b>
+                                - Eye of the tiger 1
+                            </p>
+                            <p class="result_time">03:45</p>
+                        </div>
+                    </div>
+                    <div class="result">
+                        <div class="result_img">
+                            <img src="https://i.ytimg.com/vi/BmSzWXl5Ofg/mqdefault.jpg" alt="">
+                        </div>
+                        <div class="result_info">
+                            <p class="result_title">
+                                <b>Jackson 5</b>
+                                - Eye of the tiger 1
+                            </p>
+                            <p class="result_time">03:45</p>
+                        </div>
+                    </div>
+                    <div class="result">
+                        <div class="result_img">
+                            <img src="https://i.ytimg.com/vi/BmSzWXl5Ofg/mqdefault.jpg" alt="">
+                        </div>
+                        <div class="result_info">
+                            <p class="result_title">
+                                <b>Jackson 5</b>
+                                - Eye of the tiger 1
+                            </p>
+                            <p class="result_time">03:45</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="/assets/js/player.js"></script>
+<script src="/assets/js/search.js"></script>
+
+{% endblock %}

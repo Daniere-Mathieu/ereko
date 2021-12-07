@@ -1,0 +1,41 @@
+/* see https://geon.github.io/programming/2016/02/24/flexbox-full-page-web-app-layout*/
+
+.search_btn {
+    width: 60px;
+    height: 60px;
+    padding: 12px;
+    border-radius: 50%;
+    background-color: #28208C;
+    box-shadow: 0 0 4px 4px  hsl(244, 63%, 65%);
+    opacity: 50%;
+
+    position: absolute;
+    right: 35px;
+    bottom: 75px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.search_btn:hover {
+    background-color: hsl(244, 63%, 65%);
+    box-shadow: none;
+    opacity: 100%;
+}
+
+.icon-tabler-search {
+    stroke: white;
+}
+
+.track {
+    width: 100%;
+    color: white;
+    padding: 5px 10px;
+    border-bottom: 1px solid grey;
+}
+
+.playing {
+    color: hsl(244, 63%, 80%);
+    border-bottom: 3px solid hsl(244, 63%, 80%);
+}
+

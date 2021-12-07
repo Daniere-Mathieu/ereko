@@ -1,0 +1,62 @@
+
+
+.playlist, .search {
+    flex-grow: 0;
+    height: calc(100% - 50px); /* 50px : height of the player */
+    width: 100%;
+}
+
+.desk_left {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    overflow-y: hidden;
+}
+
+.audio_player_full {
+    height: 50%;
+    min-height: 50px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.player_desktop_img {
+    flex-grow: 2;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.player_desktop_img_container {
+    width: 80%;
+    display: flex;
+}
+.player_desktop_img_container > img {
+    width: 100%;
+}
+
+.horizontal_separator {
+    width: 75%;
+    stroke: 1px;
+}
+.vertical_separator {
+    height: 93%;
+    width: 1px;
+    background-color: grey;
+}
+
+
+/* hide elements for smartphone display */
+
+.player_desktop_img,
+.search,
+.horizontal_separator,
+.vertical_separator
+{
+    display: none;
+}
+

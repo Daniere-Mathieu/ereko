@@ -1,0 +1,91 @@
+/* see https://geon.github.io/programming/2016/02/24/flexbox-full-page-web-app-layout*/
+
+
+.search {
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.search_bar_container {
+    padding: 15px 25px;
+    width: 100%;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+.search_back {
+    height: 40px;
+    width: 40px;
+    border: 2px solid grey;
+    border-radius: 20px;
+    stroke: grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.search_back svg{
+    width: 70%;
+    stroke: inherit;
+}
+.search_back:hover, .search_back:active {
+    stroke: white;
+    border-color: white;
+}
+.search_bar {
+    flex-grow: 1;
+    height: 40px;
+    padding: 10px;
+    border: 2px solid grey;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+}
+.search_bar:focus-within, .search_bar:hover {
+    border-color: white;
+}
+.search_bar input {
+    width: 100%;
+    background-color: transparent;
+    color: white;
+    border: none;
+}
+.search_bar input:focus {
+    outline: none;
+}
+
+.results_list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.result {
+    width: 100%;
+    color: white;
+    padding: 5px 10px;
+    border-bottom: 1px solid grey;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.result_img {
+    width: 30%;
+    display: flex;
+}
+
+.result_img > img {
+    width: 100%;
+}
+.result_info {
+    width: 70%;
+}
+
+.result_info > p {
+    margin: 0;
+}
+
+
+
+
