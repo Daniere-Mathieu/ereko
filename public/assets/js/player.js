@@ -5,23 +5,39 @@
 // - Hover over sliders to see preview of timestamp/volume change
 
 const audioPlayer = document.querySelector(".audio-player");
+//constante du player de musique
 let cpt = 0;
+// initilization d'un compteur
 let currentMusic = 0;
+// initilization du numro de la musique actuel
 let futureMusic = currentMusic + 1;
-let musicList = [
+// initilization du numro de la musique a venir
+let musicList1 = [
   {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/BackgroundMusica2.ogg"},
   {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg"},
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/BackgroundMusica2.ogg"},
   {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg"},
-]
-let audio = new Audio(musicList[currentMusic].path);
+];
+// tableau temporaire servant de remplacant a la réponse du serveur sur la liste de musique
+let musicList = ["https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.og"];
+//tableau de musique
+let audio = new Audio();
+//object audio
 audio.autoplay = true;
-//credit for song: Adrian kreativaweb@gmail.com
-
-console.dir(audio);
-
+// je donne la valeur true a autoplay pour que les musique ce joue en automatique apres la premiere
+window.addEventListener("load",() => {
+  console.log("load");
+  for (let i = 0; i < 4; i++) {
+    callMusic(musicList1[currentMusic].path);
+  }
+  window.setTimeout(setAudio(musicList[0]),1000);
+  console.log("c'est passé");
+})
+// fonction qui capte le chargement de la page pour load les premier musique
 audio.addEventListener(
   "loadeddata",
   () => {
+    console.log("loadeddata");
     audioPlayer.querySelector(".time .length").textContent = getTimeCodeFromNum(
       audio.duration
     );
@@ -29,6 +45,7 @@ audio.addEventListener(
   },
   false
 );
+//function qui capte le chargement des donné sur l'élement audio et indique le temps et donne un volume de base
 
 //click on timeline to skip around
 const timeline = audioPlayer.querySelector(".timeline");
@@ -100,8 +117,9 @@ function getTimeCodeFromNum(num) {
   ).padStart(2, 0)}`;
 }
 audio.addEventListener("ended",() => {
+  console.log("ended");
   let endVerification = currentMusic + 2
-  audio.src = musicList[futureMusic].path;
+  setAudio(musicList[futureMusic]);
   currentMusic = futureMusic;
   futureMusic++;
   if (musicList.length === endVerification) {
@@ -109,7 +127,9 @@ audio.addEventListener("ended",() => {
     futureMusic = 0;
   }
 })
-function fetch(url){
+//function qui capte la fin d'une musique grace a l'event ended et lance la prochaine musique;
+function callMusic(url){
+  console.log("callMusic");
   fetch(url).then(function(response) {
   if(response.ok) {
     response.blob().then(function(blob) {
@@ -121,3 +141,9 @@ function fetch(url){
   }
 });
 }
+//fonction qui demande au serveur les musique
+function setAudio(source){
+  console.log("setAudio");
+  audio.src = source;
+}
+//function qui change la musique (sert a économisé quelque ligne)
