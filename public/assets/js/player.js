@@ -9,9 +9,11 @@ const audioPlayer = document.querySelector(".audio-player");
 let cpt = 0;
 // initilization d'un compteur
 let currentMusic = 0;
-// initilization du numro de la musique actuel
+// initilization du numéro de la musique actuel
 let futureMusic = currentMusic + 1;
-// initilization du numro de la musique a venir
+// initilization du numéro de la musique a venir
+let lastLoadMusic = currentMusic + 4;
+// initilization du numéro de la prochaine musique a charger avec fetch
 let musicList1 = [
   {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/BackgroundMusica2.ogg"},
   {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg"},
@@ -19,28 +21,27 @@ let musicList1 = [
   {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg"},
 ];
 // tableau temporaire servant de remplacant a la réponse du serveur sur la liste de musique
-let musicList = ["https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg"];
+let musicList = [];
 //tableau de musique
 let audio = new Audio();
 //object audio
 audio.autoplay = true;
-// je donne la valeur true a autoplay pour que les musique ce joue en automatique apres la premiere
+// je donne la valeur true a autoplay pour que les musique se jouent en automatique apres la premiere
 audio.volume = .75;
 // je donne la valeur au volume du son
 window.addEventListener("load",() => {
   console.log("load");
-  for (let i = 0; i < 4; i++) {
+  for (let i = currentMusic; i < lastLoadMusic; i++) {
     callMusic(musicList1[i].path);
   }
-  let timeoutID = setTimeout(()=>{
+    let timeoutID = setTimeout(()=>{
     setAudio(musicList[currentMusic])
-  },2000);
+  },5000);
   console.log("c'est passé");
 })
 
 // fonction qui capte le chargement de la page pour load les premier musique
-audio.addEventListener(
-  "loadeddata",
+audio.addEventListener("loadeddata",
   () => {
     console.log("loadeddata");
     audioPlayer.querySelector(".time .length").textContent = getTimeCodeFromNum(
@@ -122,7 +123,7 @@ function getTimeCodeFromNum(num) {
 }
 audio.addEventListener("ended",() => {
   console.log("ended");
-  let endVerification = currentMusic + 2
+  let endVerification = currentMusic + 2;
   setAudio(musicList[futureMusic]);
   currentMusic = futureMusic;
   futureMusic++;
@@ -141,7 +142,7 @@ function callMusic(url){
       cpt++;
     });
   } else {
-    console.log('Network request for "' + product.name + '" image failed with response ' + response.status + ': ' + response.statusText);
+    console.log('Network request for "' + response.status + ': ' + response.statusText);
   }
 });
 }
