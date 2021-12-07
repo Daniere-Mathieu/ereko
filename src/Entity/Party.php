@@ -25,7 +25,7 @@ class Party
     private $uid;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
      */
     private $current_track;
 
