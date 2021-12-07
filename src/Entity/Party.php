@@ -39,6 +39,11 @@ class Party
      */
     private $trackInParties;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $end_date;
+
     public function __construct()
     {
         $this->trackInParties = new ArrayCollection();
@@ -111,6 +116,18 @@ class Party
                 $trackInParty->setPartyId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        return $this->end_date;
+    }
+
+    public function setEndDate(\DateTimeInterface $end_date): self
+    {
+        $this->end_date = $end_date;
 
         return $this;
     }

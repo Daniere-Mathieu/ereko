@@ -44,6 +44,11 @@ class Track
      */
     private $trackInParties;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $thumbnail_path;
+
     public function __construct()
     {
         $this->trackInParties = new ArrayCollection();
@@ -128,6 +133,18 @@ class Track
                 $trackInParty->setTrackId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getThumbnailPath(): ?string
+    {
+        return $this->thumbnail_path;
+    }
+
+    public function setThumbnailPath(string $thumbnail_path): self
+    {
+        $this->thumbnail_path = $thumbnail_path;
 
         return $this;
     }
