@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PartyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -36,11 +37,15 @@ class Party
 
     /**
      * @ORM\OneToMany(targetEntity=TrackInParty::class, mappedBy="party_id", orphanRemoval=true)
+     * @Assert\Type("\DateTimeInterface")
+     * @var string A "Y-m-d H:i:s" formatted value
      */
     private $trackInParties;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Type("\DateTimeInterface")
+     * @var string A "Y-m-d H:i:s" formatted value
      */
     private $end_date;
 
