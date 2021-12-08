@@ -20,7 +20,7 @@ class Party
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
      */
     private $uid;
 
@@ -47,6 +47,8 @@ class Party
     public function __construct()
     {
         $this->trackInParties = new ArrayCollection();
+        $this->setUid(10);
+        $this->current_track = 0;
     }
 
     public function getId(): ?int
@@ -59,10 +61,14 @@ class Party
         return $this->uid;
     }
 
-    public function setUid(string $uid): self
+    private function setUid(int $length): self
     {
-        $this->uid = $uid;
+        $uuid = '';
+        for ($i = 0; $i < $length; $i++) {
+            $uuid .= chr(rand(ord('a'), ord('z')));
+        }
 
+        $this->uid = $uuid;
         return $this;
     }
 
