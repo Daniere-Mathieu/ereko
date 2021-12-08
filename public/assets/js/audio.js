@@ -39,18 +39,18 @@ function setAudio(source){
 audio.addEventListener("ended",() => {
   console.log("ended");
   let endVerification = currentMusic + 1;
-  if (musicList.length === endVerification) {
+  if (allTrackList.length === endVerification) {
     currentMusic = 0;
     futureMusic = 1;
-    setAudio(musicList[currentMusic]);
-    cpt = 3;
+    setAudio(musicList[0]);
+    //cpt = 3;
     spliceList(musicList,3);
     nextLoadMusic();
   }else {
     setAudio(musicList[futureMusic]);
     currentMusic = futureMusic;
     futureMusic++;
-    cpt = 3;
+    //cpt = 3;
     spliceList(musicList,4);
     nextLoadMusic();
   }
@@ -69,17 +69,17 @@ window.addEventListener("load",() => {
 // fonction qui capte le chargement de la page pour load les premier musique
 function nextLoadMusic(){
   console.log("nextLoadMusic")
-  if (lastLoadMusic >= musicList.length) {
+  if (lastLoadMusic >= allTrackList.length) {
     console.log("nextLoadMusic/if");
-    lastLoadMusic -= musicList.length;
+    lastLoadMusic -= allTrackList.length;
     callMusic(allTrackList[lastLoadMusic].path);
-    console.log(lastLoadMusic);
+    console.log(lastLoadMusic+"/lastLoadMusic");
     lastLoadMusic++;
   }
   else {
     callMusic(allTrackList[lastLoadMusic].path);
     console.log("nextLoadMusic/else");
-    console.log(lastLoadMusic);
+    console.log(lastLoadMusic+"/lastLoadMusic");
     lastLoadMusic++;
   }
 }

@@ -9,7 +9,7 @@ const audioPlayer = document.querySelector(".audio-player");
 audio.addEventListener("loadeddata",
   () => {
     console.log("loadeddata");
-    console.log(currentMusic);
+    console.log(currentMusic + "/currentmusic");
     audioPlayer.querySelector(".time .length").textContent = getTimeCodeFromNum(
       audio.duration
     );

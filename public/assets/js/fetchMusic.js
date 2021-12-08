@@ -3,6 +3,7 @@ function callMusic(url){
   fetch(url).then(function(response) {
   if(response.ok) {
     response.blob().then(function(blob) {
+      console.log(cpt+"/ctp");
       musicList[cpt] = URL.createObjectURL(blob);
       cpt++;
     });
