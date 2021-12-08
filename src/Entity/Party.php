@@ -48,6 +48,7 @@ class Party
     {
         $this->trackInParties = new ArrayCollection();
         $this->setUid(10);
+        $this->current_track = 0;
     }
 
     public function getId(): ?int
