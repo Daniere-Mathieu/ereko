@@ -7,7 +7,7 @@ function callMusic(url){
       cpt++;
     });
   } else {
-    console.log('Network request for "' + response.status + ': ' + response.statusText);
+    console.log('Network request for musicCall' + response.status + ': ' + response.statusText);
   }
 });
 }

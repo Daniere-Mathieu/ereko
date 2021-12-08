@@ -33,10 +33,16 @@ audio.addEventListener("ended",() => {
     currentMusic = 0;
     futureMusic = 1;
     setAudio(musicList[currentMusic]);
+    cpt = 3;
+    spliceList(musicList,3);
+    nextLoadMusic();
   }else {
     setAudio(musicList[futureMusic]);
     currentMusic = futureMusic;
     futureMusic++;
+    cpt = 3;
+    spliceList(musicList,3);
+    nextLoadMusic();
   }
 })
 //function qui capte la fin d'une musique grace a l'event ended et lance la prochaine musique;
@@ -51,3 +57,27 @@ window.addEventListener("load",() => {
   console.log("c'est passé");
 })
 // fonction qui capte le chargement de la page pour load les premier musique
+function nextLoadMusic(){
+  console.log("nextLoadMusic")
+  if (lastLoadMusic >= musicList.length) {
+    console.log("nextLoadMusic/if");
+    lastLoadMusic -= musicList.length;
+    callMusic(musicList[lastLoadMusic]);
+    console.log(lastLoadMusic);
+    lastLoadMusic++;
+  }
+  else {
+    callMusic(musicList[lastLoadMusic]);
+    console.log("nextLoadMusic/else");
+    console.log(lastLoadMusic);
+    lastLoadMusic++;
+  }
+}
+// fonction qui a pour but de d'apeller la prochaine musique loadable
+function spliceList(array,size){
+  console.log("spliceList");
+  if (array.length >= size) {
+    array.splice(0,1);
+    console.log("spliceList/if");
+  }
+}
