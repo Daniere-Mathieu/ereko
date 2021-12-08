@@ -68,24 +68,24 @@ class TrackInParty
         return $this;
     }
 
-    public function getPartyId(): ?Party
+    public function getParty(): ?Party
     {
         return $this->party_id;
     }
 
-    public function setPartyId(?Party $party_id): self
+    public function setParty(?Party $party_id): self
     {
         $this->party_id = $party_id;
 
         return $this;
     }
 
-    public function getTrackId(): ?Track
+    public function getTrack(): ?Track
     {
         return $this->track_id;
     }
 
-    public function setTrackId(?Track $track_id): self
+    public function setTrack(?Track $track_id): self
     {
         $this->track_id = $track_id;
 
