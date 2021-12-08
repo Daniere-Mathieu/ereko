@@ -30,18 +30,17 @@ class PartyController extends AbstractController
 
         // Vérification de la date
         $errors = $validator->validate($party);
-        die(dump($errors));
+        // die(dump($errors));
+        if (count($errors) > 0) {
+            // return $this->redirect("/");
+        }
 
         // Ecriture dans la bdd
-        $entityManager->persist($party);
+        $entityManager->persist($party); 
         $entityManager->flush();
 
         $uid = $party->getUid();
-
-        // Création d'une nouvelle route
         
-
-        // Retour de la vue /party/uid
-        return $this->render('playlist/index.html.twig');
+        return $this->redirectToRoute('playlist_uid', ['party_uid' => $uid]);
     }
 }
