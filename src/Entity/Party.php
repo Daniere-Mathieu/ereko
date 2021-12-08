@@ -40,6 +40,8 @@ class Party
      */
     private $trackInParties;
 
+    private $tracks;
+
     /**
      * @ORM\Column(type="datetime")
      */
@@ -138,4 +140,42 @@ class Party
 
         return $this;
     }
+
+    public function getTrackRelationByUid(string $track_uid): ?TrackInParty
+    {
+        foreach ($this->getTrackInParties() as $track_in_party) {
+            if ($track_in_party->getTrackId()->getTrackId() === $track_uid) {
+                return $track_in_party;
+            }
+        }
+        return NULL;
+    }
+
+    public function getAllTracks(): Array
+    {
+        $this->tracks = [];
+        foreach ($this->getTrackInParties() as $track_in_party) {
+            $this->tracks[] = $track_in_party->getTrackId();
+        }
+        return $this->tracks;
+    }
+
+    public function getTrackByUid(string $track_uid): ?Track
+    {
+        $this->getAllTracks();
+        foreach ($this->tracks as $track) {
+            if ( $track->getTrackId() === $track_uid ) {
+                return $track;
+            }
+        }
+        return NULL;
+    }
+
+    // TODO
+    /*
+    public function getAllTracks() {}
+    public function getCurrentTrack() {}
+    public function getTrackByUid() {}
+
+    */
 }

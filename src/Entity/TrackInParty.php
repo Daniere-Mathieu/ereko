@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace App\Entity;
 
 use App\Repository\TrackInPartyRepository;
@@ -68,24 +70,24 @@ class TrackInParty
         return $this;
     }
 
-    public function getParty(): ?Party
+    public function getPartyId(): ?Party
     {
         return $this->party_id;
     }
 
-    public function setParty(?Party $party_id): self
+    public function setPartyId(?Party $party_id): self
     {
         $this->party_id = $party_id;
 
         return $this;
     }
 
-    public function getTrack(): ?Track
+    public function getTrackId(): ?Track
     {
         return $this->track_id;
     }
 
-    public function setTrack(?Track $track_id): self
+    public function setTrackId(?Track $track_id): self
     {
         $this->track_id = $track_id;
 
