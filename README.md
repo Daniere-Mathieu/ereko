@@ -39,6 +39,9 @@ Mise en place
 Se placer dans le conteneur Docker Symfony.
 
 ```
+# Installer les dépendances
+composer install
+
 # Créer la base de donnée
 bin/console doctrine:migrations:migrate
 
