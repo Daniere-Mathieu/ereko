@@ -6,11 +6,21 @@ let futureMusic = currentMusic + 1;
 // initilization du numéro de la musique a venir
 let lastLoadMusic = currentMusic + 4;
 // initilization du numéro de la prochaine musique a charger avec fetch
-let musicList1 = [
+let allTrackList = [
   {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/BackgroundMusica2.ogg",number:0,},
   {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg",number:1,},
   {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/BackgroundMusica2.ogg",number:2,},
   {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg",number:3,},
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg",number:4,},
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg",number:5,},
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg",number:6,},
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg",number:7,},
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg",number:8,},
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg",number:9,},
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg",number:10,},
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg",number:11,},
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg",number:12,},
+  {path: "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/Hangout.ogg",number:13,},
 ];
 // tableau temporaire servant de remplacant a la réponse du serveur sur la liste de musique
 let musicList = [];
@@ -41,7 +51,7 @@ audio.addEventListener("ended",() => {
     currentMusic = futureMusic;
     futureMusic++;
     cpt = 3;
-    spliceList(musicList,3);
+    spliceList(musicList,4);
     nextLoadMusic();
   }
 })
@@ -49,7 +59,7 @@ audio.addEventListener("ended",() => {
 window.addEventListener("load",() => {
   console.log("load");
   for (let i = currentMusic; i < lastLoadMusic; i++) {
-    callMusic(musicList1[i].path);
+    callMusic(allTrackList[i].path);
   }
     let timeoutID = setTimeout(()=>{
     setAudio(musicList[currentMusic])
@@ -62,12 +72,12 @@ function nextLoadMusic(){
   if (lastLoadMusic >= musicList.length) {
     console.log("nextLoadMusic/if");
     lastLoadMusic -= musicList.length;
-    callMusic(musicList[lastLoadMusic]);
+    callMusic(allTrackList[lastLoadMusic].path);
     console.log(lastLoadMusic);
     lastLoadMusic++;
   }
   else {
-    callMusic(musicList[lastLoadMusic]);
+    callMusic(allTrackList[lastLoadMusic].path);
     console.log("nextLoadMusic/else");
     console.log(lastLoadMusic);
     lastLoadMusic++;
