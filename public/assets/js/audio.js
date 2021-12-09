@@ -57,7 +57,7 @@ audio.addEventListener("ended",() => {
 window.addEventListener("load",() => {
   console.log("load");
   for (let i = currentMusic; i < lastLoadMusic; i++) {
-    callMusic(allTrackList[i].path);
+    callMusic(allTrackList[i].download_path);
   }
     let timeoutID = setTimeout(()=>{
     setAudio(musicList[currentMusic])
@@ -70,12 +70,12 @@ function nextLoadMusic(){
   if (lastLoadMusic >= allTrackList.length) {
     console.log("nextLoadMusic/if");
     lastLoadMusic -= allTrackList.length;
-    callMusic(allTrackList[lastLoadMusic].path);
+    callMusic(allTrackList[lastLoadMusic].download_path);
     console.log(lastLoadMusic+"/lastLoadMusic");
     lastLoadMusic++;
   }
   else {
-    callMusic(allTrackList[lastLoadMusic].path);
+    callMusic(allTrackList[lastLoadMusic].download_path);
     console.log("nextLoadMusic/else");
     console.log(lastLoadMusic+"/lastLoadMusic");
     lastLoadMusic++;
