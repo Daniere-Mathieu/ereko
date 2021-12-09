@@ -2,34 +2,28 @@ let search_input = document.getElementById('search_input');
 let result_list = document.getElementById('result_list');
 let list_exist = false;
 
-
 function createResultDiv(item) {
     let result = document.createElement('div');
     result.className = 'result';
     console.log(result);
 
-    let result_img = document.createElement('div')
+    let result_img = document.createElement('div');
     result_img.className = 'result_img';
 
     let img = document.createElement('img');
     img.src = item.snippet.thumbnails.medium.url;
     result_img.appendChild(img);
-    // Ajouter img alt
-
+    result_img.alt = "Thumbnail of Youtube video" 
+    
     let result_info = document.createElement('div');
     result_info.className = 'result_info';
 
     let result_title = document.createElement('p');
     result_title.className = 'result_title';
-    result_title.innerHTML = item.snippet.title;
-
-    let result_time = document.createElement('p');
-    result_time.innerText = "03:45";
+    result_title.innerHTML = titleInBold(item.snippet.title);
 
     result_info.appendChild(result_title);
-    result_info.appendChild(result_time);
 
-    
     result.appendChild(result_img);
     result.appendChild(result_info);
 
@@ -38,12 +32,19 @@ function createResultDiv(item) {
 
 function removeResultDiv() {
     let result_div = document.getElementsByClassName("result");
-    console.log(result_div.length)
-    console.log(result_div)
     for (let i = result_div.length-1; i >= 0 ; i--) {
         console.log(i);
         result_list.removeChild(result_div[i]);
     }
+}
+
+function titleInBold(title) {
+    let found = title.match('[-]');
+    if (found != null) {
+        let splitTitle = title.split(' -');
+        return '<b>' + splitTitle.shift() + ' -</b>' + splitTitle.join(' -');
+    }
+    return title;
 }
 
 async function requestToYoutube(research) {
@@ -75,7 +76,7 @@ async function requestToYoutube(research) {
         })
         .catch(function (e) {
             console.log(e);
-            // A FAIRE : afficher une erreur dans le front
+            // Afficher une erreur dans le front ?
         }
     );
 }
