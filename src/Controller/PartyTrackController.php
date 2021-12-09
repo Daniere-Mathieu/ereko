@@ -35,16 +35,8 @@ class PartyTrackController extends AbstractController
 
     private function fetchPartyAndTrackInformation(string $party_uid, string $track_uid, ManagerRegistry $doctrine) {
         $entityManager = $doctrine->getManager();
-        $parties = $entityManager->getRepository(Party::class)->findBy(['uid' => $party_uid]);
-        if (empty($parties)) {
-            throw new HttpException(404, 'Party not found.');
-        }
-        else if (count($parties) > 1) {
-            // Should not happen: conflicting party uids.
-            throw new HttpException(500);
-        }
 
-        $party = $parties[0];
+        $party = fetchParty($party_uid, $entityManager);
         $track_in_party = $party->getTrackRelationByUid($track_uid);
         if (empty($track_in_party)) {
             throw new HttpException(404, 'Track not found.');
@@ -58,6 +50,19 @@ class PartyTrackController extends AbstractController
         ];
     }
 
+    private function fetchParty($party_uid, $entityManager) {
+        $parties = $entityManager->getRepository(Party::class)->findBy(['uid' => $party_uid]);
+        if (empty($parties)) {
+            throw new HttpException(404, 'Party not found.');
+        }
+        else if (count($parties) > 1) {
+            // Should not happen: conflicting party uids.
+            throw new HttpException(500);
+        }
+
+        return $parties[0];
+    }
+
     private function createJsonArray($party, $track_in_party, $track) {
         return [
             "party_id" => $party->getUid(),
@@ -68,6 +73,32 @@ class PartyTrackController extends AbstractController
             "state_track" => $track->getState(),
             "download_path" => $track->getPath(),
         ];
+    }
+
+    /**
+     * @Route("/api/{party_uid}", name="party_playlist")
+     */
+    public function partyPlaylist(string $party_uid, ManagerRegistry $doctrine) : JsonResponse
+    {
+        {
+            Party::verifyMatchUid($party_uid);
+
+            $entityManager = $doctrine->getManager();
+
+            $party = $this->fetchParty($party_uid, $entityManager);
+            $tracks_in_party = $party->getTrackInParties();
+            if (empty($tracks_in_party)) {
+                throw new HttpException(404, 'Tracks not found.');
+            }
+
+            $response_array = [];
+            foreach($tracks_in_party as $track_in_party) {
+                $track = $track_in_party->getTrackId();
+                $response_array[] = $this->createJsonArray($party, $track_in_party, $track);
+            }
+    
+            return new JsonResponse($response_array);
+        }
     }
 
 }
