@@ -13,4 +13,16 @@ class Track {
     this.state_track = state_track;
     this.download_path = download_path;
   }
+  displayTrack(titleParam){
+    let scrollParent = document.getElementById('scroll');
+    let track = document.createElement("div");
+    let author = document.createElement("b");
+    let title = document.createElement("p");
+    scrollParent.appendChild(track);
+    track.setAttribute("class","track");
+    track.appendChild(author);
+    track.appendChild(title);
+    author.innerText = "authorParam -";
+    title.innerText = titleParam;
+  }
 }
