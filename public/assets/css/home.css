@@ -41,3 +41,13 @@ button:hover {
     color: black;
     box-shadow: none;
 }
+
+.no-date {
+    padding: 10px;
+    color: white;
+    font-weight: 900;
+    font-size: larger;
+    background-color: hsl(244, 63%, 65%);
+    background-color: black;
+    border-radius: 5px;
+}

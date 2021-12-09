@@ -16,4 +16,12 @@ class PlaylistController extends AbstractController
     {
         return $this->render('playlist/index.html.twig');
     }
+
+    /**
+     * @Route("/playlist/{party_uid}", name="playlist_uid")
+     */
+    public function playlist($party_uid): Response
+    {
+        return $this->render('playlist/index.html.twig');
+    }
 }
