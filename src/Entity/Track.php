@@ -6,12 +6,14 @@ use App\Repository\TrackRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * @ORM\Entity(repositoryClass=TrackRepository::class)
  */
 class Track
 {
+    protected $track_id_regex = "#^[a-zA-Z0-9_-]{11}$#";
     protected $available_states = [
         'TO_DOWNLOAD',
         'DOWNLOADING',
@@ -156,5 +158,16 @@ class Track
         $this->thumbnail_path = $thumbnail_path;
 
         return $this;
+    }
+
+    public static function verifyMatchUid($track_id) {
+        if ( self::matchUid($track_id) !== 1 ) {
+            throw new HttpException(400, 'Wrong track uid.');
+        }
+    }
+
+    public static function matchUid($id): Bool
+    {
+        return preg_match(self::$track_id_regex, $id);
     }
 }

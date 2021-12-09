@@ -20,8 +20,8 @@ class PartyTrackController extends AbstractController
      */
     public function index(string $party_uid, string $track_uid, ManagerRegistry $doctrine): JsonResponse
     {
-
-        // TODO filter parameters
+        Party::verifyMatchUid($party_uid);
+        Track::verifyMatchUid($track_uid);
 
         $infos = $this->fetchPartyAndTrackInformation($party_uid, $track_uid, $doctrine);
         $party = $infos[0];

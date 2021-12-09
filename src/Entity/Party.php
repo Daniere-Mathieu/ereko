@@ -7,12 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * @ORM\Entity(repositoryClass=PartyRepository::class)
  */
 class Party
 {
+    protected $party_id_length = 10;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -50,7 +53,7 @@ class Party
     public function __construct()
     {
         $this->trackInParties = new ArrayCollection();
-        $this->setUid(10);
+        $this->setUid(self::$party_id_length);
         $this->current_track = 0;
     }
 
@@ -178,4 +181,19 @@ class Party
     public function getTrackByUid() {}
 
     */
+
+    public static function verifyMatchUid($uid) {
+        if ( self::matchUid($uid) !== 1 ) {
+            throw new HttpException(400, 'Wrong party uid.');
+        }
+    }
+
+    public static function matchUid($uid): Bool
+    {
+        return preg_match(self::partyIdRegex(), $uid);
+    }
+
+    protected function partyIdRegex() {
+        return "#^[a-z]{" . self::$party_id_length . "}$#";
+    }
 }
