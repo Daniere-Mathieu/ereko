@@ -43,14 +43,12 @@ audio.addEventListener("ended",() => {
     currentMusic = 0;
     futureMusic = 1;
     setAudio(musicList[0]);
-    //cpt = 3;
     spliceList(musicList,3);
     nextLoadMusic();
   }else {
     setAudio(musicList[futureMusic]);
     currentMusic = futureMusic;
     futureMusic++;
-    //cpt = 3;
     spliceList(musicList,4);
     nextLoadMusic();
   }
