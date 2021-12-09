@@ -13,8 +13,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  */
 class Track
 {
-    protected $track_id_regex = "#^[a-zA-Z0-9_-]{11}$#";
-    protected $available_states = [
+    protected static $track_id_regex = "#^[a-zA-Z0-9_-]{11}$#";
+    public static $available_states = [
         'TO_DOWNLOAD',
         'DOWNLOADING',
         'READY',
@@ -111,7 +111,7 @@ class Track
 
     public function setState(string $state): self
     {
-        if ( in_array($state, $available_states, true)) {
+        if ( in_array($state, self::$available_states, true)) {
             $this->state = $state;
             return $this;
         }

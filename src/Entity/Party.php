@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  */
 class Party
 {
-    protected $party_id_length = 10;
+    protected const party_id_length = 10;
 
     private $tracks;
 
@@ -53,7 +53,7 @@ class Party
     public function __construct()
     {
         $this->trackInParties = new ArrayCollection();
-        $this->setUid(self::$party_id_length);
+        $this->setUid(self::party_id_length);
         $this->current_track = 0;
     }
 
