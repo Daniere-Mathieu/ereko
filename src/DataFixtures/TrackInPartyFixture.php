@@ -13,12 +13,6 @@ class TrackInPartyFixture extends Fixture
 {
     protected $faker;
 
-    private static $states = [
-        'played',
-        'current',
-        'future'
-    ];
-
     public function load(ObjectManager $manager): void
     {
         $this->faker = Factory::create();
@@ -41,12 +35,13 @@ class TrackInPartyFixture extends Fixture
             //order
             $track_in_party->setOrderInList($i);
 
-            // random state
-            $track_in_party->setState($this->faker->randomElement(self::$states));
+            // random state. More chances to be IN_PLAYLIST than CURRENT than REMOVED.
+            $states = TrackInParty::$available_states;
+            $choice_index = $this->faker->biasedNumberBetween(0, count($states)-1, $function = 'sqrt');
+            $track_in_party->setState($states[$choice_index]);
 
             $manager->persist($track_in_party);
         }
-
 
         $manager->flush();
     }
