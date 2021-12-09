@@ -33,10 +33,10 @@ class TrackInPartyFixture extends Fixture
             $track_in_party = new TrackInParty();
 
             //random party
-            $track_in_party->setParty($this->faker->randomElement($parties));
+            $track_in_party->setPartyId($this->faker->randomElement($parties));
 
             //random track
-            $track_in_party->setTrack($this->faker->randomElement($tracks));
+            $track_in_party->setTrackId($this->faker->randomElement($tracks));
 
             //order
             $track_in_party->setOrderInList($i);
