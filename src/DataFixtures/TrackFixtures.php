@@ -26,13 +26,6 @@ class TrackFixtures extends Fixture
         'https://i.ytimg.com/vi/uT3SBzmDxGk/mqdefault.jpg'
     ];
 
-    private static $states = [
-        'TO_LOAD',
-        'DOWLOADING',
-        'READY',
-        'ON_ERROR'
-    ];
-
     public function load(ObjectManager $manager): void
     {
         $this->faker = Factory::create();
@@ -40,20 +33,28 @@ class TrackFixtures extends Fixture
         for( $i = 0 ; $i <= 50 ; $i++) {
             $track = new Track();
 
-            // random strings. They would be YouTube identifiers.
-            $uuid = '';
-            for ($j = 0; $j <= 10; $j++) {
-                $uuid .= chr(rand(ord('a'), ord('z')));
-            }
-            $track->setTrackId($uuid);
-
+            $track->setTrackId($this->fakeYoutubeUid());
             $track->setTitle($this->faker->name);
             $track->setPath($this->faker->randomElement(self::$paths));
             $track->setThumbnailPath($this->faker->randomElement(self::$thumbnails));
-            $track->setState($this->faker->randomElement(self::$states));
+            $track->setState($this->faker->randomElement(Track::$available_states));
 
             $manager->persist($track);
         }
         $manager->flush();
     }
+
+    private function fakeYoutubeUid() {
+        $youtube_uid_length = 11;
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_';
+        $randomString = '';
+      
+        for ($i = 0; $i < $youtube_uid_length; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+        }
+      
+        return $randomString;
+    }
+
 }
