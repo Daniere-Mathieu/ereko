@@ -183,17 +183,18 @@ class Party
     */
 
     public static function verifyMatchUid($uid) {
-        if ( self::matchUid($uid) !== 1 ) {
+        if ( self::matchUid($uid)) {
+            dump(self::matchUid($uid)); die ; //debug
             throw new HttpException(400, 'Wrong party uid.');
         }
     }
 
     public static function matchUid($uid): Bool
     {
-        return preg_match(self::partyIdRegex(), $uid);
+        return (preg_match(self::partyIdRegex(), $uid) !== 1 && preg_match(self::partyIdRegex(), $uid) !== true);
     }
 
     protected function partyIdRegex() {
-        return "#^[a-z]{" . self::$party_id_length . "}$#";
+        return "#^[a-z]{" . self::party_id_length . "}$#";
     }
 }
