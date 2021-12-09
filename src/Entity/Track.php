@@ -161,13 +161,14 @@ class Track
     }
 
     public static function verifyMatchUid($track_id) {
-        if ( self::matchUid($track_id) !== 1 ) {
+        if ( self::notMatchUid($track_id) ) {
             throw new HttpException(400, 'Wrong track uid.');
         }
+        return true;
     }
 
-    public static function matchUid($id): Bool
+    public static function notMatchUid($id): Bool
     {
-        return preg_match(self::$track_id_regex, $id);
+        return ( preg_match(self::$track_id_regex, $id) !== 1 && preg_match(self::$track_id_regex, $id) !== true  ); 
     }
 }
