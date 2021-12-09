@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TrackInParty
 {
+    public static $available_states = [
+        'REMOVED',
+        'CURRENT',
+        'IN_PLAYLIST'
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -65,9 +71,11 @@ class TrackInParty
 
     public function setState(string $state): self
     {
-        $this->state = $state;
-
-        return $this;
+        if ( in_array($state, self::$available_states, true)) {
+            $this->state = $state;
+            return $this;
+        }
+        throw new \ValueError('Track in Party state forbidden');
     }
 
     public function getPartyId(): ?Party
