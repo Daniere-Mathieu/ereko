@@ -1,4 +1,5 @@
 function callTrackList(uid){
+  console.log("callTrackList");
   let url = "http://0.0.0.0:8000/api/"+uid;
   fetch(url).then((response)=>{
     if(response.ok){

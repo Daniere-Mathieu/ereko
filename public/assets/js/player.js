@@ -8,11 +8,17 @@ const audioPlayer = document.querySelector(".audio-player");
 //constante du player de musique
 audio.addEventListener("loadeddata",
   () => {
+    if (autoplay === 0) {
+      audio.autoplay = true;
+      // je donne la valeur true a autoplay pour que les musique se jouent en automatique apres la premiere
+    }
     console.log("loadeddata");
     console.log(currentMusic + "/currentmusic");
     audioPlayer.querySelector(".time .length").textContent = getTimeCodeFromNum(
       audio.duration
     );
+    let songName = document.getElementById("songName");
+    songName.innerText = allTrackList[currentMusic].track_title;
   },
   false
 );
