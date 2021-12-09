@@ -23,14 +23,16 @@ class PartyController extends AbstractController
         // Création de la soirée
         $party = new Party();
         $party->setDate(new \DateTime($date));
-        $party->setEndDate(new \DateTime($date));
 
+        // /|\ A SUPPRIMER PLUS TARD QUAND DEFINIE DANS l'ENTITY
+        $party->setEndDate(new \DateTime($date));
+ 
         // Vérification de la date
         $errors = $validator->validate($party);
-        if (empty($date) || count($errors) > 0) {
+        if (empty($date) || count($errors) > 0) { 
             return $this->render('home/index.html.twig', ['no_date' => 'Date required']);
         }
-
+ 
         // Ecriture dans la bdd
         $entityManager->persist($party); 
         $entityManager->flush();
