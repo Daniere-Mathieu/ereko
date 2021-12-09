@@ -36,7 +36,7 @@ class PartyTrackController extends AbstractController
     private function fetchPartyAndTrackInformation(string $party_uid, string $track_uid, ManagerRegistry $doctrine) {
         $entityManager = $doctrine->getManager();
 
-        $party = fetchParty($party_uid, $entityManager);
+        $party = $this->fetchParty($party_uid, $entityManager);
         $track_in_party = $party->getTrackRelationByUid($track_uid);
         if (empty($track_in_party)) {
             throw new HttpException(404, 'Track not found.');
