@@ -1,5 +1,7 @@
 let search_input = document.getElementById('search_input');
 let result_list = document.getElementById('result_list');
+let list_exist = false;
+
 
 function createResultDiv(item) {
     let result = document.createElement('div');
@@ -10,7 +12,7 @@ function createResultDiv(item) {
     result_img.className = 'result_img';
 
     let img = document.createElement('img');
-    img.src = "https://i.ytimg.com/vi/BmSzWXl5Ofg/mqdefault.jpg";
+    img.src = item.snippet.thumbnails.medium.url;
     result_img.appendChild(img);
     // Ajouter img alt
 
@@ -19,7 +21,7 @@ function createResultDiv(item) {
 
     let result_title = document.createElement('p');
     result_title.className = 'result_title';
-    result_title.innerHTML = "<b>Jackson 5</b>- Eye of the tiger 1 aaaaaaaaaaaa fdsgfdg gfdgfdggfdg gfdgfdg gfdgfdg gfdgfdg gfdgfdg ";
+    result_title.innerHTML = item.snippet.title;
 
     let result_time = document.createElement('p');
     result_time.innerText = "03:45";
@@ -32,6 +34,16 @@ function createResultDiv(item) {
     result.appendChild(result_info);
 
     result_list.appendChild(result);
+}
+
+function removeResultDiv() {
+    let result_div = document.getElementsByClassName("result");
+    console.log(result_div.length)
+    console.log(result_div)
+    for (let i = result_div.length-1; i >= 0 ; i--) {
+        console.log(i);
+        result_list.removeChild(result_div[i]);
+    }
 }
 
 async function requestToYoutube(research) {
@@ -58,6 +70,7 @@ async function requestToYoutube(research) {
         .then(function (data) {
             for (const item of data.items) {
                 console.log(item);
+                createResultDiv(item);
             }
         })
         .catch(function (e) {
@@ -69,14 +82,13 @@ async function requestToYoutube(research) {
 
 search_input.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
+        if (list_exist) {
+            removeResultDiv();
+            list_exist = false
+        }
         if (search_input.value.length > 0) {
             requestToYoutube(search_input.value);
+            list_exist = true;
         }
     }
 })
-
-createResultDiv()
-createResultDiv()
-createResultDiv()
-createResultDiv()
-createResultDiv()
