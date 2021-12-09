@@ -17,19 +17,19 @@ let audio = new Audio();
 audio.volume = .75;
 // je donne la valeur au volume du son
 function setAudio(source){
-  audio.src = source;
+  return new Promise(test => {
+      audio.src = source;
+  })
 }
 //function qui change la musique (sert a économisé quelque ligne)
 audio.addEventListener("ended",() => {
   let endVerification = currentMusic + 1;
   if (allTrackList.length === endVerification) {
-    currentMusic = 0;
-    futureMusic = 1;
-    setAudio(musicList[currentMusic]);
+    setAudio(musicList[0]);
     spliceList(musicList,4);
     nextLoadMusic();
   }else {
-    setAudio(musicList[futureMusic]);
+    setAudio(musicList[0]);
     currentMusic = futureMusic;
     futureMusic++;
     spliceList(musicList,4);
@@ -42,7 +42,8 @@ window.addEventListener("load",async() => {
     for (let i = currentMusic; i < lastLoadMusic; i++) {
       await callMusic(allTrackList[i].download_path);
     }
-    setAudio(musicList[currentMusic])
+    setAudio(musicList[0]);
+    spliceList(musicList,3);
 })
 // fonction qui capte le chargement de la page pour load les premier musique
 async function nextLoadMusic(){
@@ -58,7 +59,10 @@ async function nextLoadMusic(){
 }
 // fonction qui a pour but de d'apeller la prochaine musique loadable
 function spliceList(array,size){
+  console.log("slice");
+  console.log(array.length);
   if (array.length >= size) {
+    console.log("slicer")
     array.splice(0,1);
   }
 }
