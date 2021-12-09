@@ -19,11 +19,7 @@ class PartyController extends AbstractController
     {   
         $entityManager = $this->getDoctrine()->getManager();
         $date = $request->request->get('party_date');
-        // die(dump($date));
-        if (empty($date)) {
-            return $this->render('home/index.html.twig', ['no_date' => 'Date required']);
-        }
-
+        
         // Création de la soirée
         $party = new Party();
         $party->setDate(new \DateTime($date));
@@ -31,10 +27,8 @@ class PartyController extends AbstractController
 
         // Vérification de la date
         $errors = $validator->validate($party);
-        // die(dump($errors));
-        if (count($errors) > 0) {
-            // Retour sur la main page si date incorrect
-            // return $this->redirect("/");
+        if (empty($date) || count($errors) > 0) {
+            return $this->render('home/index.html.twig', ['no_date' => 'Date required']);
         }
 
         // Ecriture dans la bdd
