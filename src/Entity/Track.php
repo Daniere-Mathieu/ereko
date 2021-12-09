@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Track
 {
+    protected $available_states = [
+        'TO_DOWNLOAD',
+        'DOWNLOADING',
+        'READY',
+        'ON_ERROR'
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -102,9 +109,11 @@ class Track
 
     public function setState(string $state): self
     {
-        $this->state = $state;
-
-        return $this;
+        if ( in_array($state, $available_states, true)) {
+            $this->state = $state;
+            return $this;
+        }
+        throw new \ValueError('Track state forbidden');
     }
 
     /**
