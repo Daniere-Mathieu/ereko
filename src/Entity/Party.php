@@ -7,12 +7,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * @ORM\Entity(repositoryClass=PartyRepository::class)
  */
 class Party
 {
+    protected const party_id_length = 10;
+
+    private $tracks;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -48,7 +53,7 @@ class Party
     public function __construct()
     {
         $this->trackInParties = new ArrayCollection();
-        $this->setUid(10);
+        $this->setUid(self::party_id_length);
         $this->current_track = 0;
     }
 
@@ -137,5 +142,59 @@ class Party
         $this->end_date = $end_date;
 
         return $this;
+    }
+
+    public function getTrackRelationByUid(string $track_uid): ?TrackInParty
+    {
+        foreach ($this->getTrackInParties() as $track_in_party) {
+            if ($track_in_party->getTrackId()->getTrackId() === $track_uid) {
+                return $track_in_party;
+            }
+        }
+        return NULL;
+    }
+
+    public function getAllTracks(): Array
+    {
+        $this->tracks = [];
+        foreach ($this->getTrackInParties() as $track_in_party) {
+            $this->tracks[] = $track_in_party->getTrackId();
+        }
+        return $this->tracks;
+    }
+
+    public function getTrackByUid(string $track_uid): ?Track
+    {
+        $this->getAllTracks();
+        foreach ($this->tracks as $track) {
+            if ( $track->getTrackId() === $track_uid ) {
+                return $track;
+            }
+        }
+        return NULL;
+    }
+
+    // TODO
+    /*
+    public function getAllTracks() {}
+    public function getCurrentTrack() {}
+    public function getTrackByUid() {}
+
+    */
+
+    public static function verifyMatchUid($uid) {
+        if ( self::notMatchUid($uid) ) {
+            throw new HttpException(400, 'Wrong party uid.');
+        }
+        return true;
+    }
+
+    public static function notMatchUid($uid): Bool
+    {
+        return (preg_match(self::partyIdRegex(), $uid) !== 1 && preg_match(self::partyIdRegex(), $uid) !== true);
+    }
+
+    protected function partyIdRegex() {
+        return "#^[a-z]{" . self::party_id_length . "}$#";
     }
 }

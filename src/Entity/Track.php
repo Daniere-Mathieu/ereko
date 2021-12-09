@@ -6,12 +6,21 @@ use App\Repository\TrackRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * @ORM\Entity(repositoryClass=TrackRepository::class)
  */
 class Track
 {
+    protected static $track_id_regex = "#^[a-zA-Z0-9_-]{11}$#";
+    public static $available_states = [
+        'TO_DOWNLOAD',
+        'DOWNLOADING',
+        'READY',
+        'ON_ERROR'
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -102,9 +111,11 @@ class Track
 
     public function setState(string $state): self
     {
-        $this->state = $state;
-
-        return $this;
+        if ( in_array($state, self::$available_states, true)) {
+            $this->state = $state;
+            return $this;
+        }
+        throw new \ValueError('Track state forbidden');
     }
 
     /**
@@ -147,5 +158,17 @@ class Track
         $this->thumbnail_path = $thumbnail_path;
 
         return $this;
+    }
+
+    public static function verifyMatchUid($track_id) {
+        if ( self::notMatchUid($track_id) ) {
+            throw new HttpException(400, 'Wrong track uid.');
+        }
+        return true;
+    }
+
+    public static function notMatchUid($id): Bool
+    {
+        return ( preg_match(self::$track_id_regex, $id) !== 1 && preg_match(self::$track_id_regex, $id) !== true  ); 
     }
 }

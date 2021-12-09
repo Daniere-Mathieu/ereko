@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace App\Entity;
 
 use App\Repository\TrackInPartyRepository;
@@ -10,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TrackInParty
 {
+    public static $available_states = [
+        'REMOVED',
+        'CURRENT',
+        'IN_PLAYLIST'
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -63,29 +71,31 @@ class TrackInParty
 
     public function setState(string $state): self
     {
-        $this->state = $state;
-
-        return $this;
+        if ( in_array($state, self::$available_states, true)) {
+            $this->state = $state;
+            return $this;
+        }
+        throw new \ValueError('Track in Party state forbidden');
     }
 
-    public function getParty(): ?Party
+    public function getPartyId(): ?Party
     {
         return $this->party_id;
     }
 
-    public function setParty(?Party $party_id): self
+    public function setPartyId(?Party $party_id): self
     {
         $this->party_id = $party_id;
 
         return $this;
     }
 
-    public function getTrack(): ?Track
+    public function getTrackId(): ?Track
     {
         return $this->track_id;
     }
 
-    public function setTrack(?Track $track_id): self
+    public function setTrackId(?Track $track_id): self
     {
         $this->track_id = $track_id;
 
