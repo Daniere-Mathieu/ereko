@@ -16,6 +16,8 @@ class Party
 {
     protected $party_id_length = 10;
 
+    private $tracks;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -42,8 +44,6 @@ class Party
      * @ORM\OneToMany(targetEntity=TrackInParty::class, mappedBy="party_id", orphanRemoval=true)
      */
     private $trackInParties;
-
-    private $tracks;
 
     /**
      * @ORM\Column(type="datetime")
