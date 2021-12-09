@@ -5,23 +5,24 @@
 // - Hover over sliders to see preview of timestamp/volume change
 
 const audioPlayer = document.querySelector(".audio-player");
-const audio = new Audio(
-  "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/backsound.mp3"
-);
-//credit for song: Adrian kreativaweb@gmail.com
-
-console.dir(audio);
-
-audio.addEventListener(
-  "loadeddata",
+//constante du player de musique
+audio.addEventListener("loadeddata",
   () => {
+    if (autoplay === 0) {
+      audio.autoplay = true;
+      // je donne la valeur true a autoplay pour que les musique se jouent en automatique apres la premiere
+    }
+    console.log("loadeddata");
+    console.log(currentMusic + "/currentmusic");
     audioPlayer.querySelector(".time .length").textContent = getTimeCodeFromNum(
       audio.duration
     );
-    audio.volume = .75;
+    let songName = document.getElementById("songName");
+    songName.innerText = allTrackList[currentMusic].track_title;
   },
   false
 );
+//function qui capte le chargement des donné sur l'élement audio et indique le temps et donne un volume de base
 
 //click on timeline to skip around
 const timeline = audioPlayer.querySelector(".timeline");

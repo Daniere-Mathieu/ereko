@@ -19,10 +19,10 @@
 <div class="wrapper">
     <div class="scroll_container playlist" id="playlist">
         <!-- wrap the playlist in a container to allow it to scroll -->
-        <div class="scroll">
+        <div class="scroll" id="scroll">
             <div class="track playing">
                 <b>Jackson 5</b>
-                - Eye of the tiger 1 aaaaaaaaaaaa fdsgfdg gfdgfdggfdg gfdgfdg gfdgfdg gfdgfdg gfdgfdg 
+                - Eye of the tiger 1 aaaaaaaaaaaa fdsgfdg gfdgfdggfdg gfdgfdg gfdgfdg gfdgfdg gfdgfdg
             </div>
             <div class="track">
                 <b>Jackson 5</b>
@@ -130,7 +130,7 @@
                         <div class="divider">/</div>
                         <div class="length"></div>
                     </div>
-                    <div class="name">Eye of the tiger</div>
+                    <div class="name" id="songName"></div>
                     <!--     credit for icon to https://saeedalipoor.github.io/icono/ -->
                     <div class="volume-container">
                         <div class="volume-button">
@@ -174,7 +174,7 @@
                         <div class="result_info">
                             <p class="result_title">
                                 <b>Jackson 5</b>
-                                - Eye of the tiger 1 aaaaaaaaaaaa fdsgfdg gfdgfdggfdg gfdgfdg gfdgfdg gfdgfdg gfdgfdg 
+                                - Eye of the tiger 1 aaaaaaaaaaaa fdsgfdg gfdgfdggfdg gfdgfdg gfdgfdg gfdgfdg gfdgfdg
                             </p>
                             <p class="result_time">03:45</p>
                         </div>
@@ -234,6 +234,10 @@
 
 </div>
 
+<script src="/assets/js/Track.js"></script>
+<script src="/assets/js/fetchTrack.js"></script>
+<script src="/assets/js/fetchMusic.js"></script>
+<script src="/assets/js/audio.js"></script>
 <script src="/assets/js/player.js"></script>
 <script src="/assets/js/search.js"></script>
 
