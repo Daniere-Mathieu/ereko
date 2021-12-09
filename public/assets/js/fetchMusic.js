@@ -3,9 +3,9 @@ function callMusic(url){
   fetch(url).then(function(response) {
   if(response.ok) {
     response.blob().then(function(blob) {
-      console.log(cpt+"/ctp");
-      musicList[cpt] = URL.createObjectURL(blob);
-      cpt++;
+      console.log(counter+"/ctp");
+      musicList[counter] = URL.createObjectURL(blob);
+      counter++;
     });
   } else {
     console.log('Network request for musicCall' + response.status + ': ' + response.statusText);

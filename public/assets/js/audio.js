@@ -1,4 +1,4 @@
-let cpt = 0;
+let counter = 0;
 // initilization d'un compteur
 let currentMusic = 0;
 // initilization du numéro de la musique actuel
@@ -24,7 +24,7 @@ let allTrackList = [
 ];
 // tableau temporaire servant de remplacant a la réponse du serveur sur la liste de musique
 let musicList = [];
-//tableau de musique
+//j'initilize le tableau de musique
 let audio = new Audio();
 //object audio
 audio.autoplay = true;
