@@ -18,10 +18,11 @@ class PartyController extends AbstractController
     public function createParty(Request $request, ValidatorInterface $validator)
     {   
         $entityManager = $this->getDoctrine()->getManager();
-
         $date = $request->request->get('party_date');
-    
-        // Retour sur la main page si date incorrect
+        // die(dump($date));
+        if (empty($date)) {
+            return $this->render('home/index.html.twig', ['no_date' => 'Date required']);
+        }
 
         // Création de la soirée
         $party = new Party();
@@ -32,6 +33,7 @@ class PartyController extends AbstractController
         $errors = $validator->validate($party);
         // die(dump($errors));
         if (count($errors) > 0) {
+            // Retour sur la main page si date incorrect
             // return $this->redirect("/");
         }
 
@@ -40,7 +42,7 @@ class PartyController extends AbstractController
         $entityManager->flush();
 
         $uid = $party->getUid();
-        
+
         return $this->redirectToRoute('playlist_uid', ['party_uid' => $uid]);
     }
 }

@@ -16,4 +16,11 @@
         <button type="submit">Create!</button>
     </form>
 </div>
+
+{% if no_date is defined %}
+    <div class="no-date">
+        <p>{{no_date}}</p>
+    </div>
+{% endif %}
+
 {% endblock %}
