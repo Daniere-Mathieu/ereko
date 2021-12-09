@@ -17,14 +17,19 @@ use App\Entity\TrackInParty;
 class PartyTrackController extends AbstractController
 {
     /**
-     * @Route("/api/{party_uid}/{track_uid}", name="party_track")
+     * @Route("/api/{party_uid}/{track_uid}/{order}", name="party_track")
      */
-    public function index(string $party_uid, string $track_uid, ManagerRegistry $doctrine): JsonResponse
+    public function index(
+        string $party_uid,
+        string $track_uid,
+        int $order,
+        ManagerRegistry $doctrine): JsonResponse
     {
         Party::verifyMatchUid($party_uid);
         Track::verifyMatchUid($track_uid);
 
-        $infos = $this->fetchPartyAndTrackInformation($party_uid, $track_uid, $doctrine);
+        $entityManager = $doctrine->getManager();
+        $infos = $this->fetchPartyAndTrackInformation($party_uid, $track_uid, $entityManager, $order);
         $party = $infos[0];
         $track_in_party = $infos[1];
         $track = $infos[2];
@@ -34,11 +39,14 @@ class PartyTrackController extends AbstractController
         return new JsonResponse($response_array);
     }
 
-    private function fetchPartyAndTrackInformation(string $party_uid, string $track_uid, ManagerRegistry $doctrine) {
-        $entityManager = $doctrine->getManager();
-
+    private function fetchPartyAndTrackInformation(
+        string $party_uid,
+        string $track_uid,
+        $entityManager,
+        int $order)
+    {
         $party = $this->fetchParty($party_uid, $entityManager);
-        $track_in_party = $party->getTrackRelationByUid($track_uid);
+        $track_in_party = $party->getTrackRelationByUid($track_uid, $order);
         if (empty($track_in_party)) {
             throw new HttpException(404, 'Track not found.');
         }
@@ -116,6 +124,32 @@ class PartyTrackController extends AbstractController
 
         $entityManager->persist($track);
         $entityManager->persist($party);
+        $entityManager->persist($track_in_party);
+        $entityManager->flush();
+
+        $response_array = $this->createJsonArray($party, $track_in_party, $track);
+        return new JsonResponse($response_array);
+    }
+
+    /**
+     * @Route("/api/remove/{party_uid}/{track_uid}/{order}", name="party_track_remove", methods="POST")
+     */
+    public function remove(
+        string $party_uid,
+        string $track_uid,
+        int $order,
+        ManagerRegistry $doctrine ): JsonResponse
+    {
+        Party::verifyMatchUid($party_uid);
+        Track::verifyMatchUid($track_uid);
+
+        $entityManager = $doctrine->getManager();
+        $infos = $this->fetchPartyAndTrackInformation($party_uid, $track_uid, $entityManager, $order);
+        $party = $infos[0];
+        $track_in_party = $infos[1];
+        $track = $infos[2];
+
+        $track_in_party->setState('REMOVED');
         $entityManager->persist($track_in_party);
         $entityManager->flush();
 

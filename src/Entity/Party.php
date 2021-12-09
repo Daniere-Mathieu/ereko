@@ -152,10 +152,10 @@ class Party
         return $this;
     }
 
-    public function getTrackRelationByUid(string $track_uid): ?TrackInParty
+    public function getTrackRelationByUid(string $track_uid, int $order): ?TrackInParty
     {
         foreach ($this->getTrackInParties() as $track_in_party) {
-            if ($track_in_party->getTrackId()->getTrackId() === $track_uid) {
+            if ($track_in_party->matchTrackIdAndOrder($track_uid, $order)) {
                 return $track_in_party;
             }
         }
