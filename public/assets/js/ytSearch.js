@@ -98,10 +98,34 @@ function getPartyUid() {
 let all_results = Array.from(document.getElementsByClassName('result'));
 all_results.forEach(e => e.addEventListener('click', addTrack));
 
-function addTrack() {
+async function addTrack() {
     let party = getPartyUid();
     let url =  'http://0.0.0.0:8000/api/add/' + party + '/' + this.id;
     console.log(url);
 
-    
+    await fetch(url, {
+            method: 'POST', 
+            body: {'title': 'Un titre de test'},
+        })
+        .then(function (response) {
+            if (response.status == 200) {
+                return response.json();
+            } else {
+                throw new TypeError('Request failed ! Status code : ' + response.status);
+            }
+        })
+        .then(function (data) {
+            for (const item of data.items) {
+                createResultDiv(item);
+            }
+        })
+        .catch(function (e) {
+            console.log(e);
+            // Afficher une erreur dans le front ?
+        }
+    );
 }
+
+// function addTrackInPlaylist() {
+//     let track = new Track(party_id,track_id,state_for_party,order,state_track,download_path);
+// }
