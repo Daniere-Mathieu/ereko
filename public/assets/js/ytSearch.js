@@ -1,7 +1,7 @@
 let search_input = document.getElementById('search_input');
 let result_list = document.getElementById('result_list');
 let list_exist = false;
-const API_KEY = '';//'AIzaSyChQda9SVL9Lql8-KBX-6XsNJzB4hrSbkM'; // Token for YT API requests. Please limit requests, we have 100 each day.
+const API_KEY = 'AIzaSyChQda9SVL9Lql8-KBX-6XsNJzB4hrSbkM'; // Token for YT API requests. Please limit requests, we have 100 each day.
 
 function createResultDiv(item) {
     let img = document.createElement('img');
@@ -19,9 +19,9 @@ function createResultDiv(item) {
     result_info.className = 'result_info';
 
     let result = document.createElement('div');
+    result.addEventListener('click', addTrackApi);
     result.className = 'result';
     result.id = item.id.videoId;
-    result.addEventListener('click', function () {console.log('ok')});
 
     result.appendChild(result_img);
     result.appendChild(result_info);
@@ -43,6 +43,10 @@ function titleInBold(title) {
         return '<b>' + splitTitle.shift() + '</b> -' + splitTitle.join(' -');
     }
     return title;
+}
+
+function getPartyUid() {
+    return window.location.href.split('/').pop();
 }
 
 async function requestToYoutube(research) {
@@ -78,30 +82,10 @@ async function requestToYoutube(research) {
     );
 }
 
-search_input.addEventListener('keyup', (e) => {
-    if (e.key === 'Enter') {
-        if (list_exist) {
-            removeResultDiv();
-            list_exist = false
-        }
-        if (search_input.value.length > 0) {
-            requestToYoutube(search_input.value);
-            list_exist = true;
-        }
-    }
-})
-
-function getPartyUid() {
-    return window.location.href.split('/').pop();
-}
-
-let all_results = Array.from(document.getElementsByClassName('result'));
-all_results.forEach(e => e.addEventListener('click', addTrack));
-
-async function addTrack() {
+async function addTrackApi() {
     let party = getPartyUid();
+    removeResultDiv()
     let url =  'http://0.0.0.0:8000/api/add/' + party + '/' + this.id;
-    console.log(url);
 
     await fetch(url, {
             headers: {'Content-Type': 'application/json'},
@@ -116,8 +100,8 @@ async function addTrack() {
             }
         })
         .then(function (data) {
-            console.log(typeof data);
-          
+            console.log(data);
+            // Instance objet Track
         })
         .catch(function (e) {
             console.log(e);
@@ -126,6 +110,15 @@ async function addTrack() {
     );
 }
 
-// function addTrackInPlaylist() {
-//     let track = new Track(party_id,track_id,state_for_party,order,state_track,download_path);
-// }
+search_input.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+        if (list_exist) {
+            removeResultDiv();
+            list_exist = false
+        }
+        if (search_input.value.length > 0) {
+            requestToYoutube(search_input.value);
+            list_exist = true;
+        }
+    }
+})
