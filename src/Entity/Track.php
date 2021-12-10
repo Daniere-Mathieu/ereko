@@ -16,6 +16,7 @@ use App\Validator as CustomAssert;
 class Track
 {
     public static $track_id_regex = "[a-zA-Z0-9_-]{11}";
+    // TODO use a key => value array
     public static $available_states = [
         'TO_DOWNLOAD',
         'DOWNLOADING',
