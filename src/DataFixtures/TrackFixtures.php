@@ -26,6 +26,13 @@ class TrackFixtures extends Fixture
         'https://i.ytimg.com/vi/uT3SBzmDxGk/mqdefault.jpg'
     ];
 
+    private static $youtube_ids = [
+        'zOvsyamoEDg',
+        'zjHCpGbaYBs',
+        'nLgM1QJ3S_I',
+        'zr8d9sXioj4',
+    ];
+
     public function load(ObjectManager $manager): void
     {
         $this->faker = Factory::create();
@@ -33,7 +40,7 @@ class TrackFixtures extends Fixture
         for( $i = 0 ; $i <= 50 ; $i++) {
             $track = new Track();
 
-            $track->setTrackId($this->fakeYoutubeUid());
+            $track->setTrackId($this->faker->randomElement(self::$youtube_ids));
             $track->setTitle($this->faker->name);
             $track->setPath($this->faker->randomElement(self::$paths));
             $track->setThumbnailPath($this->faker->randomElement(self::$thumbnails));
@@ -43,18 +50,4 @@ class TrackFixtures extends Fixture
         }
         $manager->flush();
     }
-
-    private function fakeYoutubeUid() {
-        $youtube_uid_length = 11;
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_';
-        $randomString = '';
-      
-        for ($i = 0; $i < $youtube_uid_length; $i++) {
-            $index = rand(0, strlen($characters) - 1);
-            $randomString .= $characters[$index];
-        }
-      
-        return $randomString;
-    }
-
 }
