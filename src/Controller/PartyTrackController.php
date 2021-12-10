@@ -17,7 +17,7 @@ use App\Entity\TrackInParty;
 class PartyTrackController extends AbstractController
 {
     /**
-     * @Route("/api/{party_uid}/{track_uid}/{order}", name="party_track")
+     * @Route("/api/info/{party_uid}/{track_uid}/{order}", name="party_track")
      */
     public function index(
         string $party_uid,
@@ -158,7 +158,7 @@ class PartyTrackController extends AbstractController
     }
 
     /**
-     * @Route("/api/{party_uid}", name="party_playlist")
+     * @Route("/api/playlist/{party_uid}", name="party_playlist")
      */
     public function partyPlaylist(string $party_uid, ManagerRegistry $doctrine) : JsonResponse
     {
