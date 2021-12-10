@@ -19,10 +19,10 @@
 <div class="wrapper">
     <div class="scroll_container playlist" id="playlist">
         <!-- wrap the playlist in a container to allow it to scroll -->
-        <div class="scroll">
+        <div class="scroll" id="scroll">
             <div class="track playing">
                 <b>Jackson 5</b>
-                - Eye of the tiger 1 aaaaaaaaaaaa fdsgfdg gfdgfdggfdg gfdgfdg gfdgfdg gfdgfdg gfdgfdg 
+                - Eye of the tiger 1 aaaaaaaaaaaa fdsgfdg gfdgfdggfdg gfdgfdg gfdgfdg gfdgfdg gfdgfdg
             </div>
             <div class="track">
                 <b>Jackson 5</b>
@@ -130,7 +130,7 @@
                         <div class="divider">/</div>
                         <div class="length"></div>
                     </div>
-                    <div class="name">Eye of the tiger</div>
+                    <div class="name" id="songName"></div>
                     <!--     credit for icon to https://saeedalipoor.github.io/icono/ -->
                     <div class="volume-container">
                         <div class="volume-button">
@@ -166,13 +166,18 @@
 
             <div class="scroll_container results_list">
                 <!-- wrap the playlist in a container to allow it to scroll -->
-                <div class="scroll" id="result_list"></div>
+                <div class="scroll" id="result_list">
+                </div>
             </div>
         </div>
     </div>
 
 </div>
 
+<script src="/assets/js/Track.js"></script>
+<script src="/assets/js/fetchTrack.js"></script>
+<script src="/assets/js/fetchMusic.js"></script>
+<script src="/assets/js/audio.js"></script>
 <script src="/assets/js/player.js"></script>
 <script src="/assets/js/search.js"></script>
 <script src="/assets/js/ytSearch.js"></script>

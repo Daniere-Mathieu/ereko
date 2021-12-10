@@ -115,9 +115,17 @@ class Party
         if (!$this->trackInParties->contains($trackInParty)) {
             $this->trackInParties[] = $trackInParty;
             $trackInParty->setPartyId($this);
+            $trackInParty->setOrderInList($this->findLastTrackInParty() + 1);
         }
-
         return $this;
+    }
+
+    private function findLastTrackInParty() {
+        $max_position = $this->trackInParties[0]->getOrderInList();
+        foreach($this->trackInParties as $track) {
+            $max_position = ($track->getOrderInList() > $max_position) ? $track->getOrderInList() : $max_position;
+        }
+        return $max_position;
     }
 
     public function removeTrackInParty(TrackInParty $trackInParty): self
@@ -144,10 +152,10 @@ class Party
         return $this;
     }
 
-    public function getTrackRelationByUid(string $track_uid): ?TrackInParty
+    public function getTrackRelationByUid(string $track_uid, int $order): ?TrackInParty
     {
         foreach ($this->getTrackInParties() as $track_in_party) {
-            if ($track_in_party->getTrackId()->getTrackId() === $track_uid) {
+            if ($track_in_party->matchTrackIdAndOrder($track_uid, $order)) {
                 return $track_in_party;
             }
         }
@@ -183,18 +191,22 @@ class Party
     */
 
     public static function verifyMatchUid($uid) {
-        if ( self::notMatchUid($uid) ) {
-            throw new HttpException(400, 'Wrong party uid.');
+        if ( self::matchUid($uid) ) {
+            return true;
         }
-        return true;
+        throw new HttpException(400, 'Wrong party uid.');
     }
 
-    public static function notMatchUid($uid): Bool
+    public static function matchUid($uid): Bool
     {
-        return (preg_match(self::partyIdRegex(), $uid) !== 1 && preg_match(self::partyIdRegex(), $uid) !== true);
+        return preg_match(self::singlePartyIdRegex(), $uid);
     }
 
-    protected function partyIdRegex() {
-        return "#^[a-z]{" . self::party_id_length . "}$#";
+    public static function singlePartyIdRegex() {
+        return "#^" . self::partyIdRegex() . "$#";
+    }
+
+    public static function partyIdRegex() {
+        return "[a-z]{" . self::party_id_length . "}";
     }
 }

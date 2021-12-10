@@ -101,4 +101,12 @@ class TrackInParty
 
         return $this;
     }
+
+    public function matchTrackIdAndOrder($track_id, int $order) {
+        return (
+            $this->getTrackId()->getTrackId() === $track_id
+            &&
+            $this->getOrderInList() === $order
+        );
+    }
 }

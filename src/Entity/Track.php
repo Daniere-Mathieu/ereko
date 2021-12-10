@@ -7,13 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as CustomAssert;
 
 /**
  * @ORM\Entity(repositoryClass=TrackRepository::class)
  */
 class Track
 {
-    protected static $track_id_regex = "#^[a-zA-Z0-9_-]{11}$#";
+    public static $track_id_regex = "[a-zA-Z0-9_-]{11}";
     public static $available_states = [
         'TO_DOWNLOAD',
         'DOWNLOADING',
@@ -30,31 +32,55 @@ class Track
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank
+     * @Assert\Type("string")
+     * @CustomAssert\TrackIdRegex
+     * 
      */
     private $track_id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank
+     * @Assert\Type("string")
+     * 
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank
+     * @Assert\Type("string")
+     * @CustomAssert\VideoUrl
+     * 
      */
     private $path;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank
+     * @Assert\Type("string")
+     * 
      */
     private $state;
 
     /**
      * @ORM\OneToMany(targetEntity=TrackInParty::class, mappedBy="track_id", orphanRemoval=true)
+     * 
      */
     private $trackInParties;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank
+     * @Assert\Type("string")
+     * @CustomAssert\ThumbnailPath
+     * 
      */
     private $thumbnail_path;
 
@@ -161,14 +187,19 @@ class Track
     }
 
     public static function verifyMatchUid($track_id) {
-        if ( self::notMatchUid($track_id) ) {
-            throw new HttpException(400, 'Wrong track uid.');
+        if ( self::matchUid($track_id) ) {
+            return true; 
         }
-        return true;
+        throw new HttpException(400, 'Wrong track uid.');
+        
     }
 
-    public static function notMatchUid($id): Bool
+    public static function matchUid($id): Bool
     {
-        return ( preg_match(self::$track_id_regex, $id) !== 1 && preg_match(self::$track_id_regex, $id) !== true  ); 
+        return preg_match(self::singleTrackIdRegex(), $id);
+    }
+
+    public static function singleTrackIdRegex() {
+        return "#^" . self::$track_id_regex . "$#";
     }
 }
