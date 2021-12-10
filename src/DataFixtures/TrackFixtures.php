@@ -27,17 +27,17 @@ class TrackFixtures extends Fixture
     ];
 
     private static $youtube_ids = [
-        'zOvsyamoEDg',
-        'zjHCpGbaYBs',
-        'nLgM1QJ3S_I',
-        'zr8d9sXioj4',
+        'aaaaaamoEDg',
+        'aaaaaabaYBs',
+        'aaaaaahg56_',
+        'aaaaaahg56_',
     ];
 
     public function load(ObjectManager $manager): void
     {
         $this->faker = Factory::create();
 
-        for( $i = 0 ; $i <= 50 ; $i++) {
+        for( $i = 0 ; $i < 10 ; $i++) {
             $track = new Track();
 
             $track->setTrackId($this->faker->randomElement(self::$youtube_ids));
