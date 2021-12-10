@@ -1,8 +1,9 @@
-async function callMusic(url){
+async function callMusic(url,array){
   return fetch(url).then(function(response) {
   if(response.ok) {
     response.blob().then(function(blob) {
-      musicList[counter] = URL.createObjectURL(blob);
+      musicList[counter].path = URL.createObjectURL(blob);
+      musicList[counter].number = array
       if (counter < 3) {
         counter++;
       }

@@ -16,6 +16,7 @@ let audio = new Audio();
 //object audio
 audio.volume = .75;
 // je donne la valeur au volume du son
+let track = new Track();
 function setAudio(source){
   return new Promise(test => {
       audio.src = source;
@@ -25,11 +26,11 @@ function setAudio(source){
 audio.addEventListener("ended",() => {
   let endVerification = currentMusic + 1;
   if (allTrackList.length === endVerification) {
-    setAudio(musicList[0]);
+    setAudio(musicList[0].path);
     spliceList(musicList,4);
     nextLoadMusic();
   }else {
-    setAudio(musicList[0]);
+    setAudio(musicList[0].path);
     currentMusic = futureMusic;
     futureMusic++;
     spliceList(musicList,4);
@@ -39,12 +40,15 @@ audio.addEventListener("ended",() => {
 //function qui capte la fin d'une musique grace a l'event ended et lance la prochaine musique;
 window.addEventListener("load",async() => {
   await callTrackList("ntqfjswdnk");
-   await loadCallMusic();
+  await loadCallMusic();
   window.setTimeout(()=>{
-    setAudio(musicList[0]);
+    setAudio(musicList[0].path);
     spliceList(musicList,4);
-    let tempo = lastLoadMusic+ 1
-    callMusic(allTrackList[tempo].download_path);
+    let temporary = lastLoadMusic+ 1
+    callMusic(allTrackList[temporary].download_path,allTrackList[temporary].order);
+    for (let i = 0; i < allTrackList.length; i++) {
+      track.displayTrack(allTrackList[i].track_title,allTrackList[i].order)
+    }
   },1000)
 })
 // fonction qui capte le chargement de la page pour load les premier musique
