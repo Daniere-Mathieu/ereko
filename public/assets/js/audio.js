@@ -39,13 +39,23 @@ audio.addEventListener("ended",() => {
 //function qui capte la fin d'une musique grace a l'event ended et lance la prochaine musique;
 window.addEventListener("load",async() => {
   await callTrackList("ntqfjswdnk");
-    for (let i = currentMusic; i < lastLoadMusic; i++) {
-      await callMusic(allTrackList[i].download_path);
-    }
+   await loadCallMusic();
+  window.setTimeout(()=>{
     setAudio(musicList[0]);
-    spliceList(musicList,3);
+    spliceList(musicList,4);
+    let tempo = lastLoadMusic+ 1
+    callMusic(allTrackList[tempo].download_path);
+  },1000)
 })
 // fonction qui capte le chargement de la page pour load les premier musique
+function loadCallMusic(){
+  return new Promise(resolve=>{
+    for (let i = currentMusic; i < lastLoadMusic; i++) {
+       callMusic(allTrackList[i].download_path);
+    }
+    resolve("blc");
+  })
+}
 async function nextLoadMusic(){
   if (lastLoadMusic >= allTrackList.length) {
     lastLoadMusic -= allTrackList.length;
@@ -59,10 +69,7 @@ async function nextLoadMusic(){
 }
 // fonction qui a pour but de d'apeller la prochaine musique loadable
 function spliceList(array,size){
-  console.log("slice");
-  console.log(array.length);
-  if (array.length >= size) {
-    console.log("slicer")
-    array.splice(0,1);
-  }
+    if (array.length >= size) {
+      array.splice(0,1);
+    }
 }
