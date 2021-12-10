@@ -38,14 +38,16 @@ class YtDlDownloadCommand extends EndlessCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $track_repo = $this->entityManager->getRepository(Track::class);
-        
-        // ??? get first DOWNLOADING track in DB (should not exist, I guess)
 
-        // If not, get first TO_DOWNLOAD track in DB
-        $track = $track_repo->findBy(['state' => Track::$available_states[0]])[0];
+        $track = $this->getPriorityTrackToDownload();
+        if (empty($track)) {
+            return 0;
+        }
+        
         // pass its state to DOWNLOADING
         $track->setState(Track::$available_states[1]);
+        $this->entityManager->persist($track);
+        $this->entityManager->flush();
 
         // download it.
         $downloader = new YoutubeDownloader();
@@ -54,10 +56,12 @@ class YtDlDownloadCommand extends EndlessCommand
             // set status to READY
             $track->setState(Track::$available_states[2]);
         }
-        catch (\RuntimeError $e) {
+        catch (\RuntimeException $e) {
             // TODO set status to ON_ERROR
             $track->setState(Track::$available_states[3]);
-
+            $this->entityManager->persist($track);
+            $this->entityManager->flush();
+            
             $output->writeln("Download failed for video " . $track->getTrackId());
             return 1;		
         }
@@ -69,6 +73,20 @@ class YtDlDownloadCommand extends EndlessCommand
         $this->entityManager->flush();
         // finished fine
         return 0;
+    }
+
+    private function getPriorityTrackToDownload(): ?Track
+    {
+        $track_repo = $this->entityManager->getRepository(Track::class);
+        
+        // get DOWNLOADING tracks in DB (should not exist, I guess)
+        $tracks = $track_repo->findBy(['state' => Track::$available_states[1]]);
+        // If not, get TO_DOWNLOAD tracks in DB
+        if (empty($tracks)) {
+            $tracks = $track_repo->findBy(['state' => Track::$available_states[0]]);
+        }
+
+        return empty($tracks) ? NULL : $tracks[0];
     }
 
     /**
