@@ -3,6 +3,8 @@ function callMusic(url){
   if(response.ok) {
     response.blob().then(function(blob) {
       musicList[counter] = URL.createObjectURL(blob);
+      console.log("callTrackList")
+      console.log(counter)
       if (counter < 3) {
         counter++;
       }

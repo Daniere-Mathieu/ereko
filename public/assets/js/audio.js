@@ -38,7 +38,7 @@ audio.addEventListener("ended",() => {
 })
 //function qui capte la fin d'une musique grace a l'event ended et lance la prochaine musique;
 window.addEventListener("load",async() => {
-  await callTrackList("nyaztanrnp");
+  await callTrackList("ntqfjswdnk");
     for (let i = currentMusic; i < lastLoadMusic; i++) {
       await callMusic(allTrackList[i].download_path);
     }
