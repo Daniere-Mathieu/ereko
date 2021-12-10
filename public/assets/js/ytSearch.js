@@ -104,8 +104,9 @@ async function addTrack() {
     console.log(url);
 
     await fetch(url, {
+            headers: {'Content-Type': 'application/json'},
             method: 'POST', 
-            body: {'title': 'Un titre de test'},
+            body: JSON.stringify({'title': 'Un titre de test'}),
         })
         .then(function (response) {
             if (response.status == 200) {
@@ -115,9 +116,8 @@ async function addTrack() {
             }
         })
         .then(function (data) {
-            for (const item of data.items) {
-                createResultDiv(item);
-            }
+            console.log(typeof data);
+          
         })
         .catch(function (e) {
             console.log(e);
