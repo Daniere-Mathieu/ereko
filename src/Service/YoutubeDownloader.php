@@ -4,7 +4,6 @@ namespace App\Service;
 
 class YoutubeDownloader
 {
-    public static $download_dir = "data/music/";
     private static $youtube_dl_command = "youtube-dl --no-playlist \
         -x --audio-format vorbis --recode-video ogg";
     private static $output_video_file_format = "%(id)s.%(ext)s";
@@ -25,7 +24,7 @@ class YoutubeDownloader
     }
 
     private function createFullCommand(string $video_id) {
-        return self::$youtube_dl_command . " -o '" . self::$download_dir . self::$output_video_file_format . "' " . $video_id;
+        return self::$youtube_dl_command . " -o '" . Track::$download_dir . self::$output_video_file_format . "' " . $video_id;
     }
 
     private function display_cli_output() {

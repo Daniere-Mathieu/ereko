@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -155,6 +156,25 @@ class PartyTrackController extends AbstractController
 
         $response_array = $this->createJsonArray($party, $track_in_party, $track);
         return new JsonResponse($response_array);
+    }
+
+    /**
+     * @Route("/api/download/{party_uid}/{track_uid}/{order}", name="party_track_download", methods="GET")
+     */
+    public function download(
+        string $party_uid,
+        string $track_uid,
+        int $order,
+        ManagerRegistry $doctrine ): BinaryFileResponse
+    {
+        Party::verifyMatchUid($party_uid);
+        Track::verifyMatchUid($track_uid);
+
+        $entityManager = $doctrine->getManager();
+        $infos = $this->fetchPartyAndTrackInformation($party_uid, $track_uid, $entityManager, $order);
+        $track = $infos[2];
+
+        return new BinaryFileResponse('../' . $track->getPathToFile());
     }
 
     /**

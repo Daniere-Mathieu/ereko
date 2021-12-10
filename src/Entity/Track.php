@@ -23,6 +23,8 @@ class Track
         'READY',
         'ON_ERROR'
     ];
+    public static $download_dir = "data/music/";
+    public static $audio_format = ".ogg";
 
     /**
      * @ORM\Id
@@ -130,6 +132,18 @@ class Track
 
         return $this;
     }
+
+
+    public function getPathToFile(): ?string
+    {
+        return self::$download_dir . $this->getFileName();
+    }
+
+    public function getFileName(): ?string
+    {
+        return $this->track_id . self::$audio_format;
+    }
+
 
     public function getState(): ?string
     {
