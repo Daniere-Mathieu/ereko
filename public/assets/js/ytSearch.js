@@ -20,6 +20,9 @@ function createResultDiv(item) {
 
     let result = document.createElement('div');
     result.className = 'result';
+    result.id = item.id.videoId;
+    result.addEventListener('click', function () {console.log('ok')});
+
     result.appendChild(result_img);
     result.appendChild(result_info);
 
@@ -87,3 +90,18 @@ search_input.addEventListener('keyup', (e) => {
         }
     }
 })
+
+function getPartyUid() {
+    return window.location.href.split('/').pop();
+}
+
+let all_results = Array.from(document.getElementsByClassName('result'));
+all_results.forEach(e => e.addEventListener('click', addTrack));
+
+function addTrack() {
+    let party = getPartyUid();
+    let url =  'http://0.0.0.0:8000/api/add/' + party + '/' + this.id;
+    console.log(url);
+
+    
+}
