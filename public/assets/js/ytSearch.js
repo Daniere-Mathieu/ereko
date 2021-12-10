@@ -1,6 +1,7 @@
 let search_input = document.getElementById('search_input');
 let result_list = document.getElementById('result_list');
 let list_exist = false;
+const API_KEY = '';//'AIzaSyChQda9SVL9Lql8-KBX-6XsNJzB4hrSbkM'; // Token for YT API requests. Please limit requests, we have 100 each day.
 
 function createResultDiv(item) {
     let img = document.createElement('img');
