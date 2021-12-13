@@ -633,5 +633,8 @@
     },
     "webmozart/assert": {
         "version": "1.10.0"
+    },
+    "wrep/daemonizable-command": {
+        "version": "3.1.0"
     }
 }
