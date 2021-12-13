@@ -68,6 +68,9 @@
     display: flex;
     gap: 10px;
     align-items: center;
+    transition: transform 0.25s ease;
+    cursor: zoom-in;
+    
 }
 
 .result_img {
@@ -85,7 +88,14 @@
 .result_info > p {
     margin: 0;
 }
-
+/* Search line change color hover result */
+.result:hover {
+    
+    color: hsl(244, 63%, 80%);
+    -webkit-transform: scale(103%);
+    transform: scale(103%);
+    cursor: zoom-out;
+}
 
 
 
