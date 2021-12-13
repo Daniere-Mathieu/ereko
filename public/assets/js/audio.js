@@ -80,3 +80,11 @@ function spliceList(array,size){
       array.splice(0,1);
     }
 }
+function setPlaying(){
+  let trackTitle = document.getElementById(allTrackList[currentMusic].order);
+  let idCurrantMusic = trackTitle.getAttribute("id");
+  if(allTrackList[currentMusic].order == idCurrantMusic){
+    songName.innerText = allTrackList[currentMusic].track_title;
+    trackTitle.setAttribute("class","playing");
+  }
+}

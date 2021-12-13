@@ -16,6 +16,7 @@ audio.addEventListener("loadeddata",async() => {
       audio.duration
     );
     songName.innerText = allTrackList[currentMusic].track_title;
+    setPlaying()
   },
   false
 );
