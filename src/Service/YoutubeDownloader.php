@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Entity\Track;
+
 class YoutubeDownloader
 {
     private static $youtube_dl_command = "youtube-dl --no-playlist \

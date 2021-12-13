@@ -8,6 +8,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Lock\LockFactory;
+use Symfony\Component\Lock\Store\FlockStore;
+use Symfony\Component\Lock\Exception\LockConflictedException;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\YoutubeDownloader;
 
@@ -17,6 +20,7 @@ class YtDlDownloadCommand extends EndlessCommand
 {
     protected static $defaultName = 'yt-dl:download';
     protected static $defaultDescription = 'Download all tracks to be downloaded. Daemonizable command.';
+    private $lock;
 
     private EntityManagerInterface $entityManager;
 
@@ -38,6 +42,18 @@ class YtDlDownloadCommand extends EndlessCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+
+        // TODO create lock and verify
+        $store = new FlockStore();
+        $lock_factory = new LockFactory($store);
+        // use static method to avoid locks being different thanks to the scope.
+        //$this->lock = LockFactory::createLock('yt-downloader');
+        $this->lock = $lock_factory->createLock('yt-downloader');
+
+        if ($this->lock->acquire() === false) {
+            // exit of the loop
+            throw new LockConflictedException('Downloader already active');
+        }
 
         $track = $this->getPriorityTrackToDownload();
         if (empty($track)) {
@@ -97,6 +113,9 @@ class YtDlDownloadCommand extends EndlessCommand
 	protected function finishIteration(InputInterface $input, OutputInterface $output): void
 	{
 		// Do some cleanup/memory management here, don't forget to call the parent implementation!
+        // TODO release lock
+        $this->lock->release();
+
 		parent::finishIteration($input, $output);
 	}
 
@@ -104,6 +123,9 @@ class YtDlDownloadCommand extends EndlessCommand
 	protected function finalize(InputInterface $input, OutputInterface $output): void
 	{
 		// Do some cleanup here, don't forget to call the parent implementation!
+        // TODO release lock
+        $this->lock->release();
+
 		parent::finalize($input, $output);
 
 		// Keep it short! We may need to exit because the OS wants to shutdown
