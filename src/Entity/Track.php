@@ -8,10 +8,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Validator as CustomAssert;
+
+
 
 /**
  * @ORM\Entity(repositoryClass=TrackRepository::class)
+ * @UniqueEntity("track_id")
+ * 
  */
 class Track
 {
