@@ -18,17 +18,18 @@ audio.volume = .75;
 // je donne la valeur au volume du son
 let track = new Track();
 function setAudio(source){
-  return new Promise(test => {
       audio.src = source;
-  })
 }
 //function qui change la musique (sert a économisé quelque ligne)
 audio.addEventListener("ended",() => {
   let endVerification = currentMusic + 1;
-  if (allTrackList.length === endVerification) {
+  if (allTrackList.length <= endVerification) {
+    console.log("test")
     setAudio(musicList[0].path);
     spliceList(musicList,4);
     nextLoadMusic();
+    //currentMusic = 0;
+    //futureMusic = 1;
   }else {
     setAudio(musicList[0].path);
     currentMusic = futureMusic;
@@ -39,23 +40,23 @@ audio.addEventListener("ended",() => {
 })
 //function qui capte la fin d'une musique grace a l'event ended et lance la prochaine musique;
 window.addEventListener("load",async() => {
-  await callTrackList("ntqfjswdnk");
-  await loadCallMusic();
+  await callTrackList("jyizlslbcw");
+  await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
   window.setTimeout(()=>{
     setAudio(musicList[0].path);
-    spliceList(musicList,4);
-    let temporary = lastLoadMusic+ 1
-    callMusic(allTrackList[temporary].download_path,allTrackList[temporary].order);
+    spliceList(musicList,1);
+    counter = 0;
+    loadCallMusic();
     for (let i = 0; i < allTrackList.length; i++) {
       track.displayTrack(allTrackList[i].track_title,allTrackList[i].order)
     }
-  },1000)
+  },10000)
 })
 // fonction qui capte le chargement de la page pour load les premier musique
 function loadCallMusic(){
   return new Promise(resolve=>{
-    for (let i = currentMusic; i < lastLoadMusic; i++) {
-       callMusic(allTrackList[i].download_path);
+    for (let i = futureMusic; i < lastLoadMusic+1 ; i++) {
+      callMusic(allTrackList[i].download_path,allTrackList[i]);
     }
     resolve("blc");
   })
@@ -63,16 +64,17 @@ function loadCallMusic(){
 async function nextLoadMusic(){
   if (lastLoadMusic >= allTrackList.length) {
     lastLoadMusic -= allTrackList.length;
-    await callMusic(allTrackList[lastLoadMusic].download_path);
+    await callMusic(allTrackList[lastLoadMusic].download_path,allTrackList[lastLoadMusic]);
     lastLoadMusic++;
   }
   else {
-    await callMusic(allTrackList[lastLoadMusic].download_path);
+    await callMusic(allTrackList[lastLoadMusic].download_path,allTrackList[lastLoadMusic]);
     lastLoadMusic++;
   }
 }
 // fonction qui a pour but de d'apeller la prochaine musique loadable
 function spliceList(array,size){
+  console.log("splice")
     if (array.length >= size) {
       array.splice(0,1);
     }
