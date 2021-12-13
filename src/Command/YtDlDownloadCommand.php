@@ -38,11 +38,11 @@ class YtDlDownloadCommand extends EndlessCommand
     protected function initialize(InputInterface $input, OutputInterface $output)
 	{
 		// Should remove each *.part files
+        $output->writeln("Downloading videos...");
 	}
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-
         // TODO create lock and verify
         $store = new FlockStore();
         $lock_factory = new LockFactory($store);
