@@ -91,9 +91,9 @@
 /* Search line change color hover result */
 .result:hover {
     
-    color: #817eac;
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
+    color: hsl(244, 63%, 80%);
+    -webkit-transform: scale(103%);
+    transform: scale(103%);
     cursor: zoom-out;
 }
 
