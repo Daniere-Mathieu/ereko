@@ -1,7 +1,7 @@
 let search_input = document.getElementById('search_input');
 let result_list = document.getElementById('result_list');
 let list_exist = false;
-const API_KEY = '';//'AIzaSyChQda9SVL9Lql8-KBX-6XsNJzB4hrSbkM'; // Token for YT API requests. Please limit requests, we have 100 each day.
+const API_KEY = 'AIzaSyChQda9SVL9Lql8-KBX-6XsNJzB4hrSbkM'; // Token for YT API requests. Please limit requests, we have 100 each day.
 
 function createResultDiv(item) {
     let img = document.createElement('img');
@@ -19,7 +19,10 @@ function createResultDiv(item) {
     result_info.className = 'result_info';
 
     let result = document.createElement('div');
+    result.addEventListener('click', addTrackApi);
     result.className = 'result';
+    result.id = item.id.videoId;
+
     result.appendChild(result_img);
     result.appendChild(result_info);
 
@@ -40,6 +43,10 @@ function titleInBold(title) {
         return '<b>' + splitTitle.shift() + '</b> -' + splitTitle.join(' -');
     }
     return title;
+}
+
+function getPartyUid() {
+    return window.location.href.split('/').pop();
 }
 
 async function requestToYoutube(research) {
@@ -67,6 +74,34 @@ async function requestToYoutube(research) {
             for (const item of data.items) {
                 createResultDiv(item);
             }
+        })
+        .catch(function (e) {
+            console.log(e);
+            // Afficher une erreur dans le front ?
+        }
+    );
+}
+
+async function addTrackApi() {
+    let party = getPartyUid();
+    removeResultDiv()
+    let url =  'http://0.0.0.0:8000/api/add/' + party + '/' + this.id;
+
+    await fetch(url, {
+            headers: {'Content-Type': 'application/json'},
+            method: 'POST', 
+            body: JSON.stringify({'title': 'Un titre de test'}),
+        })
+        .then(function (response) {
+            if (response.status == 200) {
+                return response.json();
+            } else {
+                throw new TypeError('Request failed ! Status code : ' + response.status);
+            }
+        })
+        .then(function (data) {
+            console.log(data);
+            // Instance objet Track
         })
         .catch(function (e) {
             console.log(e);
