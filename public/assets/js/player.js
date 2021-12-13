@@ -5,6 +5,7 @@
 // - Hover over sliders to see preview of timestamp/volume change
 
 const audioPlayer = document.querySelector(".audio-player");
+let songName = document.getElementById("songName");
 //constante du player de musique
 audio.addEventListener("loadeddata",async() => {
     if (autoplay === 0) {
@@ -14,7 +15,6 @@ audio.addEventListener("loadeddata",async() => {
     audioPlayer.querySelector(".time .length").textContent = getTimeCodeFromNum(
       audio.duration
     );
-    let songName = document.getElementById("songName");
     songName.innerText = allTrackList[currentMusic].track_title;
   },
   false

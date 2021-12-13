@@ -17,6 +17,7 @@ let audio = new Audio();
 audio.volume = .75;
 // je donne la valeur au volume du son
 let track = new Track();
+//
 function setAudio(source){
       audio.src = source;
 }
@@ -24,15 +25,15 @@ function setAudio(source){
 audio.addEventListener("ended",() => {
   let endVerification = currentMusic + 1;
   if (allTrackList.length <= endVerification) {
-    console.log("test")
+    console.log("endend")
     setAudio(musicList[0].path);
     spliceList(musicList,4);
     nextLoadMusic();
-    //currentMusic = 0;
-    //futureMusic = 1;
+    currentMusic = 0;
+    futureMusic = 1;
   }else {
     setAudio(musicList[0].path);
-    currentMusic = futureMusic;
+    currentMusic++;
     futureMusic++;
     spliceList(musicList,4);
     nextLoadMusic();
