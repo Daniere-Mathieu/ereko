@@ -81,7 +81,7 @@ class PartyTrackController extends AbstractController
             "state_for_party" => $track_in_party->getState(),
             "order" => $track_in_party->getOrderInList(),
             "state_track" => $track->getState(),
-            "download_path" => $track->getPath(),
+            "download_path" => $track_in_party->getTrackDownloadPath(),
             "thumbnail_path" => $track->getThumbnailPath(),
         ];
     }
