@@ -62,10 +62,17 @@ window.addEventListener("load",async() => {
 // fonction qui capte le chargement de la page pour load les premier musique
 function loadCallMusic(){
   return new Promise(resolve=>{
-    for (let i = futureMusic; i < lastLoadMusic+1 ; i++) {
-      callMusic(allTrackList[i].download_path,allTrackList[i]);
+    if (allTrackList.length < 5) {
+      for (let i = futureMusic; i < allTrackList.length ; i++) {
+        callMusic(allTrackList[i].download_path,allTrackList[i]);
+      }
     }
-    resolve("blc");
+    else {
+      for (let i = futureMusic; i < lastLoadMusic+1 ; i++) {
+        callMusic(allTrackList[i].download_path,allTrackList[i]);
+      }
+    }
+    resolve("resolve");
   })
 }
 async function nextLoadMusic(){
