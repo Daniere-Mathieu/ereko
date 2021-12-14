@@ -51,7 +51,7 @@ class PartyTrackController extends AbstractController
         if (empty($track_in_party)) {
             throw new HttpException(404, 'Track not found.');
         }
-        $track = $track_in_party->getTrackId();
+        $track = $track_in_party->getTrack();
 
         return [
             $party,
@@ -111,7 +111,7 @@ class PartyTrackController extends AbstractController
         }
 
         $track_in_party = new TrackInParty();
-        $track_in_party->setTrackId($track);
+        $track_in_party->setTrack($track);
         $track_in_party->setState('IN_PLAYLIST');
 
         $party = $this->fetchParty($party_uid, $entityManager);
@@ -130,7 +130,6 @@ class PartyTrackController extends AbstractController
         $track = new Track();
         $track->setTrackId($track_uid);
         $track->setThumbnailPath("https://i.ytimg.com/vi/" . $track_uid . "/mqdefault.jpg");
-        $track->setPath('https://youtu.be/' . $track_uid);
         $track->setTitle($request->request->get('title'));
         $track->setState('TO_DOWNLOAD');
 
@@ -233,7 +232,7 @@ class PartyTrackController extends AbstractController
 
         $response_array = [];
         foreach($tracks_in_party as $track_in_party) {
-            $track = $track_in_party->getTrackId();
+            $track = $track_in_party->getTrack();
             $response_array[] = $this->createJsonArray($party, $track_in_party, $track);
         }
 

@@ -41,7 +41,7 @@ class Party
     private $date;
 
     /**
-     * @ORM\OneToMany(targetEntity=TrackInParty::class, mappedBy="party_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=TrackInParty::class, mappedBy="party", orphanRemoval=true)
      */
     private $trackInParties;
 
@@ -114,7 +114,7 @@ class Party
     {
         if (!$this->trackInParties->contains($trackInParty)) {
             $this->trackInParties[] = $trackInParty;
-            $trackInParty->setPartyId($this);
+            $trackInParty->setParty($this);
             $trackInParty->setOrderInList($this->findLastTrackInParty() + 1);
         }
         return $this;
@@ -132,8 +132,8 @@ class Party
     {
         if ($this->trackInParties->removeElement($trackInParty)) {
             // set the owning side to null (unless already changed)
-            if ($trackInParty->getPartyId() === $this) {
-                $trackInParty->setPartyId(null);
+            if ($trackInParty->getParty() === $this) {
+                $trackInParty->setParty(null);
             }
         }
 
@@ -166,7 +166,7 @@ class Party
     {
         $this->tracks = [];
         foreach ($this->getTrackInParties() as $track_in_party) {
-            $this->tracks[] = $track_in_party->getTrackId();
+            $this->tracks[] = $track_in_party->getTrack();
         }
         return $this->tracks;
     }

@@ -63,22 +63,12 @@ class Track
      * 
      * @Assert\NotBlank
      * @Assert\Type("string")
-     * @CustomAssert\VideoUrl
-     * 
-     */
-    private $path;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * 
-     * @Assert\NotBlank
-     * @Assert\Type("string")
      * 
      */
     private $state;
 
     /**
-     * @ORM\OneToMany(targetEntity=TrackInParty::class, mappedBy="track_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=TrackInParty::class, mappedBy="track", orphanRemoval=true)
      * 
      */
     private $trackInParties;
@@ -127,19 +117,6 @@ class Track
         return $this;
     }
 
-    public function getPath(): ?string
-    {
-        return $this->path;
-    }
-
-    public function setPath(string $path): self
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-
     public function getPathToFile(): ?string
     {
         return self::$download_dir . $this->getFileName();
@@ -177,7 +154,7 @@ class Track
     {
         if (!$this->trackInParties->contains($trackInParty)) {
             $this->trackInParties[] = $trackInParty;
-            $trackInParty->setTrackId($this);
+            $trackInParty->setTrack($this);
         }
 
         return $this;
@@ -187,8 +164,8 @@ class Track
     {
         if ($this->trackInParties->removeElement($trackInParty)) {
             // set the owning side to null (unless already changed)
-            if ($trackInParty->getTrackId() === $this) {
-                $trackInParty->setTrackId(null);
+            if ($trackInParty->getTrack() === $this) {
+                $trackInParty->setTrack(null);
             }
         }
 
