@@ -18,6 +18,8 @@ class TrackInParty
         'IN_PLAYLIST'
     ];
 
+    private $download_base_path = "/api/download/";
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -100,6 +102,14 @@ class TrackInParty
         $this->track_id = $track_id;
 
         return $this;
+    }
+
+    public function getTrackDownloadPath() {
+        return $this->download_base_path
+            . $this->party_id->getUid() . '/'
+            . $this->track_id->getTrackId(). '/'
+            . $this->order_in_list
+            ;
     }
 
     public function matchTrackIdAndOrder($track_id, int $order) {
