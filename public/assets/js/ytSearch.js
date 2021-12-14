@@ -141,3 +141,35 @@ search_input.addEventListener('keyup', (e) => {
         }
     }
 })
+
+async function addTrackApi_Test(obj, title="mon super titre") {
+    console.log(obj.id)
+    let party = getPartyUid();
+    let url =  'http://0.0.0.0:8000/api/add/' + party + '/' + obj.id;
+    console.log(url)
+
+    await fetch(url, {
+            headers: {'Content-Type': 'application/json'},
+            method: 'POST', 
+            body: JSON.stringify({'title': "title qui ne fonctionne pas"}),
+        })
+        .then(function (response) {
+            if (response.status == 200) {
+                removeResultDiv()
+                return response.json();
+            } else {
+                throw new TypeError('Request failed ! Status code : ' + response.status);
+            }
+        })
+        .then(function (data) {
+            console.log(data);
+            let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
+            track.displayTrack(title, data.order);
+            musicList.push(track);
+        })
+        .catch(function (e) {
+            console.log(e);
+            createErrorDiv("Something went wrong - ADD TRACK");
+        }
+    );
+}
