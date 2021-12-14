@@ -21,7 +21,8 @@ class Track
         'TO_DOWNLOAD',
         'DOWNLOADING',
         'READY',
-        'ON_ERROR'
+        'ON_ERROR',
+        'TOO_LONG'
     ];
     public static $download_dir = "data/music/";
     public static $audio_format = ".ogg";
