@@ -21,6 +21,9 @@ docker build -t symfony5_youtube-dl .
 
 # Lancer l'environnement
 docker-compose up
+
+# Installer les dépendances
+docker exec <container_id> composer install
 ```
 
 Developpement
@@ -39,8 +42,8 @@ Mise en place
 Se placer dans le conteneur Docker Symfony.
 
 ```
-# Installer les dépendances
-composer install
+# Mettre à jour les dépendances
+composer update
 
 # Créer la base de donnée
 bin/console doctrine:migrations:migrate
