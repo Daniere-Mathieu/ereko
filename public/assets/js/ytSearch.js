@@ -1,7 +1,11 @@
 let search_input = document.getElementById('search_input');
 let result_list = document.getElementById('result_list');
+let request_error = document.getElementById('request_error');
+
 let list_exist = false;
-const API_KEY = 'AIzaSyChQda9SVL9Lql8-KBX-6XsNJzB4hrSbkM'; // Token for YT API requests. Please limit requests, we have 100 each day.
+
+const API_KEY = 'AIzaSyARXz1iQ3SEIknARH5LibTNzzRpQRvt-oo'; // Token for YT API requests. Please limit requests, we have 100 each day.
+// const API_KEY = 'AIzaSyChQda9SVL9Lql8-KBX-6XsNJzB4hrSbkM'; // Token for YT API requests. Please limit requests, we have 100 each day.
 
 function createResultDiv(item) {
     let img = document.createElement('img');
@@ -27,6 +31,19 @@ function createResultDiv(item) {
     result.appendChild(result_info);
 
     result_list.appendChild(result);
+}
+
+function createErrorDiv(error) {
+    let error_div = document.getElementById('error');
+    if (error_div) {
+        request_error.removeChild(error_div);
+    }
+
+    let error_p = document.createElement('p');
+    error_p.id = "error";
+    error_p.innerText = error;
+    
+    request_error.appendChild(error_p);
 }
 
 function removeResultDiv() {
@@ -67,7 +84,7 @@ async function requestToYoutube(research) {
             if (response.status == 200) {
                 return response.json();
             } else {
-                throw new TypeError('Request failed ! Status code : ' + response.status);
+                throw new TypeError('Youtube request failed ! Status code : ' + response.status);
             }
         })
         .then(function (data) {
@@ -77,23 +94,23 @@ async function requestToYoutube(research) {
         })
         .catch(function (e) {
             console.log(e);
-            // Afficher une erreur dans le front ?
+            createErrorDiv("Something went wrong - RESEARCH");
         }
     );
 }
 
 async function addTrackApi() {
     let party = getPartyUid();
-    removeResultDiv()
     let url =  'http://0.0.0.0:8000/api/add/' + party + '/' + this.id;
 
     await fetch(url, {
             headers: {'Content-Type': 'application/json'},
             method: 'POST', 
-            body: JSON.stringify({'title': 'Un titre de test'}),
+            body: JSON.stringify({'title': "title qui ne fonctionne pas"}),
         })
         .then(function (response) {
             if (response.status == 200) {
+                removeResultDiv()
                 return response.json();
             } else {
                 throw new TypeError('Request failed ! Status code : ' + response.status);
@@ -101,11 +118,13 @@ async function addTrackApi() {
         })
         .then(function (data) {
             console.log(data);
-            // Instance objet Track
+            let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
+            track.displayTrack("ça ne fonctionne pas", data.order);
+            musicList.push(track);
         })
         .catch(function (e) {
             console.log(e);
-            // Afficher une erreur dans le front ?
+            createErrorDiv("Something went wrong - ADD TRACK");
         }
     );
 }

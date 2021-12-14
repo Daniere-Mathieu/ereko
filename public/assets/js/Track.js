@@ -16,15 +16,12 @@ class Track {
   displayTrack(titleParam,number){
     let scrollParent = document.getElementById('scroll');
     let track = document.createElement("div");
-    let author = document.createElement("b");
     let title = document.createElement("p");
     scrollParent.appendChild(track);
     track.setAttribute("class","track");
-    track.appendChild(author);
     track.appendChild(title);
     title.setAttribute("class","title_track")
     title.setAttribute("id",number)
-    author.innerText = "authorParam -";
     title.innerText = titleParam;
   }
 }
