@@ -22,11 +22,11 @@ class Track {
     track.appendChild(title);
     title.setAttribute("class","title_track")
     title.setAttribute("id",number)
-    title.innerText = titleParam + this.state_track;
+    title.innerText = titleParam + " | " + this.state_track;
   }
 
   setState(state) {
+    console.log("state = " + state);
     this.state = state;
-    
   }
 }
