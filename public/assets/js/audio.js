@@ -46,18 +46,18 @@ audio.addEventListener("ended",() => {
 //function qui capte la fin d'une musique grace a l'event ended et lance la prochaine musique;
 window.addEventListener("load",async() => {
   await callTrackList(playlistID);
-  await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
-  window.setTimeout(()=>{
-    setAudio(musicList[0].path);
-    spliceList(musicList,1);
-    counter = 0;
-    loadCallMusic();
-    for (let i = 0; i < allTrackList.length; i++) {
-      console.log(track);
-      track.setState(allTrackList[i].state);
-      track.displayTrack(allTrackList[i].track_title,allTrackList[i].order)
-    }
-  },10000)
+  if (allTrackList.length > 0) {
+    await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
+    window.setTimeout(()=>{
+      setAudio(musicList[0].path);
+      spliceList(musicList,1);
+      counter = 0;
+      loadCallMusic();
+      for (let i = 0; i < allTrackList.length; i++) {
+        track.displayTrack(allTrackList[i].track_title,allTrackList[i].order)
+      }
+    },10000)
+  }
 })
 // fonction qui capte le chargement de la page pour load les premier musique
 function loadCallMusic(){
@@ -88,11 +88,15 @@ function spliceList(array,size){
 }
 function setPlaying(param){
   let trackTitle = document.getElementById(allTrackList[currentMusic].order);
-  let idCurrantMusic = trackTitle.getAttribute("id");
-  if(allTrackList[currentMusic].order == idCurrantMusic){
+  let idCurrentMusic = trackTitle.getAttribute("id");
+  if(allTrackList[currentMusic].order == idCurrentMusic){
     songName.innerText = allTrackList[currentMusic].track_title;
     trackTitle.setAttribute("class",param);
   }
+}
+function setThumbnail(param){
+  let thumbnail = document.getElementById("thumbnail");
+    thumbnail.setAttribute("src",param[currentMusic].thumbnail_path);
 }
 function decodeUrl(){
   let url = location.href;
