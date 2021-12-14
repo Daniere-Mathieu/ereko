@@ -223,4 +223,12 @@ class Track
     public static function singleTrackIdRegex() {
         return "#^" . self::$track_id_regex . "$#";
     }
+
+    public function shouldBeDownloaded() {
+        return $this->state !== Track::$available_states[2]
+            // TODO create a try counter for error downloads
+            && $this->state !== Track::$available_states[3]
+            && $this->state !== Track::$available_states[4]
+            ;
+    }
 }
