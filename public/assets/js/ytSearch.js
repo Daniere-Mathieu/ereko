@@ -23,7 +23,7 @@ function createResultDiv(item) {
     result_info.className = 'result_info';
 
     let result = document.createElement('div');
-    result.addEventListener('click', addTrackApi);
+    result.addEventListener('click', function(){addTrackApi(item.snippet.title, item.id.videoId)}, false);
     result.className = 'result';
     result.id = item.id.videoId;
 
@@ -99,14 +99,15 @@ async function requestToYoutube(research) {
     );
 }
 
-async function addTrackApi() {
+async function addTrackApi(track_title, track_id) {
     let party = getPartyUid();
-    let url =  'http://0.0.0.0:8000/api/add/' + party + '/' + this.id;
+    let url =  'http://0.0.0.0:8000/api/add/' + party + '/' + track_id;
+    console.log("ADD TRACK API TITLE : " + track_title);
 
     await fetch(url, {
             headers: {'Content-Type': 'application/json'},
             method: 'POST', 
-            body: JSON.stringify({'title': "title qui ne fonctionne pas"}),
+            body: JSON.stringify({'title': track_title}),
         })
         .then(function (response) {
             if (response.status == 200) {
@@ -119,7 +120,7 @@ async function addTrackApi() {
         .then(function (data) {
             console.log(data);
             let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
-            track.displayTrack("ça ne fonctionne pas", data.order);
+            track.displayTrack(track_title, data.order);
             musicList.push(track);
         })
         .catch(function (e) {
@@ -141,3 +142,36 @@ search_input.addEventListener('keyup', (e) => {
         }
     }
 })
+
+// FONCTION DE TESTS
+async function addTrackApi_Test(obj, title="mon super titre") {
+    console.log(obj.id)
+    let party = getPartyUid();
+    let url =  'http://0.0.0.0:8000/api/add/' + party + '/' + obj.id;
+    console.log(url)
+
+    await fetch(url, {
+            headers: {'Content-Type': 'application/json'},
+            method: 'POST', 
+            body: JSON.stringify({'title': title}),
+        })
+        .then(function (response) {
+            if (response.status == 200) {
+                removeResultDiv()
+                return response.json();
+            } else {
+                throw new TypeError('Request failed ! Status code : ' + response.status);
+            }
+        })
+        .then(function (data) {
+            console.log(data);
+            let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
+            track.displayTrack(title, data.order);
+            musicList.push(track);
+        })
+        .catch(function (e) {
+            console.log(e);
+            createErrorDiv("Something went wrong - ADD TRACK");
+        }
+    );
+}

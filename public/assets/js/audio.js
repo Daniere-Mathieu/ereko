@@ -53,6 +53,8 @@ window.addEventListener("load",async() => {
     counter = 0;
     loadCallMusic();
     for (let i = 0; i < allTrackList.length; i++) {
+      console.log(track);
+      track.setState(allTrackList[i].state);
       track.displayTrack(allTrackList[i].track_title,allTrackList[i].order)
     }
   },10000)
