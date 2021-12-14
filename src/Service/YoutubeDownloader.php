@@ -24,7 +24,7 @@ class YoutubeDownloader
 
         $result_code = null;
         echo "\nDownloading " . $this->video_id;
-        exec($this->createFullCommand($video_id), $this->cli_output, $result_code);
+        exec($this->createFullCommand($this->video_id), $this->cli_output, $result_code);
 
         if ($result_code === 0) {
             return true;
@@ -45,7 +45,7 @@ class YoutubeDownloader
 
     public function isTrackTooLong()
     {
-        $full_duration_command = $this->duration_command . " " . $this->video_id;
+        $full_duration_command = self::$duration_command . " " . $this->video_id;
         $result_code = null;
         $cli_output = [];
         exec ($full_duration_command, $cli_output, $result_code);
