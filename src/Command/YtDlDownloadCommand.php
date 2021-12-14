@@ -65,15 +65,24 @@ class YtDlDownloadCommand extends EndlessCommand
         $this->entityManager->persist($track);
         $this->entityManager->flush();
 
-        // download it.
-        $downloader = new YoutubeDownloader();
+        $downloader = new YoutubeDownloader($track->getTrackId());
+
+        if ($downloader->isTrackTooLong()) {
+            // set status to TOO_LONG
+            $track->setState(Track::$available_states[4]);
+            $this->entityManager->persist($track);
+            $this->entityManager->flush();
+            $output->writeln("Video " . $track->getTrackId() . " is too long.");
+            return 1;
+        }
+
         try {
-            $downloader->download($track->getTrackId());
+            $downloader->download();
             // set status to READY
             $track->setState(Track::$available_states[2]);
         }
         catch (\RuntimeException $e) {
-            // TODO set status to ON_ERROR
+            // set status to ON_ERROR
             $track->setState(Track::$available_states[3]);
             $this->entityManager->persist($track);
             $this->entityManager->flush();

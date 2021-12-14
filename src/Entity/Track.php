@@ -8,10 +8,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Validator as CustomAssert;
+
+
 
 /**
  * @ORM\Entity(repositoryClass=TrackRepository::class)
+ * @UniqueEntity("track_id")
+ * 
  */
 class Track
 {
@@ -21,7 +26,8 @@ class Track
         'TO_DOWNLOAD',
         'DOWNLOADING',
         'READY',
-        'ON_ERROR'
+        'ON_ERROR',
+        'TOO_LONG'
     ];
     public static $download_dir = "data/music/";
     public static $audio_format = ".ogg";
@@ -216,5 +222,13 @@ class Track
 
     public static function singleTrackIdRegex() {
         return "#^" . self::$track_id_regex . "$#";
+    }
+
+    public function shouldBeDownloaded() {
+        return $this->state !== Track::$available_states[2]
+            // TODO create a try counter for error downloads
+            && $this->state !== Track::$available_states[3]
+            && $this->state !== Track::$available_states[4]
+            ;
     }
 }

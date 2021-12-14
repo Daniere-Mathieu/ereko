@@ -27,23 +27,23 @@ class TrackFixtures extends Fixture
     ];
 
     private static $youtube_ids = [
-        'aaaaaamoEDg',
-        'aaaaaabaYBs',
-        'aaaaaahg56_',
-        'aaaaaahg56_',
+        'a60noPLQlTs',
+        '_Yhyp-_hX2s',
+        'btPJPFnesV4',
+        'v2AC41dglnM',
     ];
 
     public function load(ObjectManager $manager): void
     {
         $this->faker = Factory::create();
 
-        for( $i = 0 ; $i < 10 ; $i++) {
+        foreach( self::$youtube_ids as $track_uid) {
             $track = new Track();
 
-            $track->setTrackId($this->faker->randomElement(self::$youtube_ids));
+            $track->setTrackId($track_uid);
             $track->setTitle($this->faker->name);
             $track->setPath($this->faker->randomElement(self::$paths));
-            $track->setThumbnailPath($this->faker->randomElement(self::$thumbnails));
+            $track->setThumbnailPath("https://i.ytimg.com/vi/" . $track_uid . "/mqdefault.jpg");
             $track->setState($this->faker->randomElement(Track::$available_states));
 
             $manager->persist($track);

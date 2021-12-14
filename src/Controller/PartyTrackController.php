@@ -97,29 +97,23 @@ class PartyTrackController extends AbstractController
         ValidatorInterface $validator ): JsonResponse
     {
         Party::verifyMatchUid($party_uid);
+        Track::verifyMatchUid($track_uid);
 
-        $track = new Track();
-        $track->setTrackId($track_uid);
-        $track->setThumbnailPath("https://i.ytimg.com/vi/" . $track_uid . "/mqdefault.jpg");
-        $track->setPath('https://youtu.be/' . $track_uid);
-        $track->setTitle($request->request->get('title'));
-        $track->setState('TO_DOWNLOAD');
+        $entityManager = $doctrine->getManager();
 
-        $errors = $validator->validate($track);
-        if (count($errors) > 0) {
-            $data = [
-                'type' => 'validation_error',
-                'title' => 'There was a validation error',
-                'errors' => $errors
-            ];
-            return new JsonResponse($data, 400);
+        if ( empty($track = $this->fetchTrack($track_uid, $entityManager))) {
+            $track = $this->createNewTrack($track_uid, $request);
+
+            $errors = $validator->validate($track);
+            if (count($errors) > 0) {
+                return $this->formatValidationErrors($errors);
+            }
         }
 
         $track_in_party = new TrackInParty();
         $track_in_party->setTrackId($track);
         $track_in_party->setState('IN_PLAYLIST');
 
-        $entityManager = $doctrine->getManager();
         $party = $this->fetchParty($party_uid, $entityManager);
         $party->addTrackInParty($track_in_party);
 
@@ -130,6 +124,51 @@ class PartyTrackController extends AbstractController
 
         $response_array = $this->createJsonArray($party, $track_in_party, $track);
         return new JsonResponse($response_array);
+    }
+
+    private function createNewTrack($track_uid, $request) {
+        $track = new Track();
+        $track->setTrackId($track_uid);
+        $track->setThumbnailPath("https://i.ytimg.com/vi/" . $track_uid . "/mqdefault.jpg");
+        $track->setPath('https://youtu.be/' . $track_uid);
+        $track->setTitle($request->request->get('title'));
+        $track->setState('TO_DOWNLOAD');
+
+        return $track;
+    }
+
+    private function fetchTrack($track_uid, $entityManager) {
+        $tracks = $entityManager->getRepository(Track::class)->findBy(['track_id' => $track_uid]);
+
+        if (empty($tracks)) {
+            return NULL;
+        }
+        else if (count($tracks) > 1) {
+            // Should not happen: conflicting tracks uids.
+            throw new HttpException(500, "Many tracks match this UID: " . $track_uid);
+        }
+
+        $track = $tracks[0];
+        if ($track->shouldBeDownloaded()) {
+            $track->setState('TO_DOWNLOAD');
+        }
+
+        return $track;
+    }
+
+    private function formatValidationErrors($errors) {
+        $return_errors = [];
+        foreach ($errors as $error) {
+            $return_errors[] = $error->getMessage();
+        }
+
+        $data = [
+            'type' => 'validation_error',
+            'title' => 'There was a validation error',
+            'errors' => $return_errors
+        ];
+
+        return new JsonResponse($data, 400);
     }
 
     /**
