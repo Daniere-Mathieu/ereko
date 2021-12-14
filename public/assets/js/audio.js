@@ -47,7 +47,17 @@ audio.addEventListener("ended",() => {
 window.addEventListener("load",async() => {
   await callTrackList(playlistID);
   if (allTrackList.length > 0) {
-    await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
+    if (allTrackList[currentMusic].state_track === "READY") {
+      await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
+    }
+    else{
+      while(allTrackList[currentMusic].state_track !== "READY"){
+        currentMusic++;
+        futureMusic++;
+        lastLoadMusic++;
+      }
+      await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
+    }
     window.setTimeout(()=>{
       setAudio(musicList[0].path);
       spliceList(musicList,1);
@@ -64,12 +74,16 @@ function loadCallMusic(){
   return new Promise(resolve=>{
     if (allTrackList.length < 5) {
       for (let i = futureMusic; i < allTrackList.length ; i++) {
-        callMusic(allTrackList[i].download_path,allTrackList[i]);
+        if (allTrackList[i].state_track === "READY") {
+          callMusic(allTrackList[i].download_path,allTrackList[i]);
+        }
       }
     }
     else {
       for (let i = futureMusic; i < lastLoadMusic+1 ; i++) {
-        callMusic(allTrackList[i].download_path,allTrackList[i]);
+        if (allTrackList[i].state_track === "READY") {
+          callMusic(allTrackList[i].download_path,allTrackList[i]);
+        }
       }
     }
     resolve("resolve");
