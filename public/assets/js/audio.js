@@ -26,12 +26,15 @@ audio.addEventListener("ended",() => {
   let endVerification = currentMusic + 1;
   if (allTrackList.length <= endVerification) {
     console.log("endend")
+    setPlaying("title_track")
     setAudio(musicList[0].path);
     spliceList(musicList,4);
     nextLoadMusic();
     currentMusic = 0;
     futureMusic = 1;
+
   }else {
+    setPlaying("title_track")
     setAudio(musicList[0].path);
     currentMusic++;
     futureMusic++;
@@ -80,11 +83,11 @@ function spliceList(array,size){
       array.splice(0,1);
     }
 }
-function setPlaying(){
+function setPlaying(param){
   let trackTitle = document.getElementById(allTrackList[currentMusic].order);
   let idCurrantMusic = trackTitle.getAttribute("id");
   if(allTrackList[currentMusic].order == idCurrantMusic){
     songName.innerText = allTrackList[currentMusic].track_title;
-    trackTitle.setAttribute("class","playing");
+    trackTitle.setAttribute("class",param);
   }
 }
