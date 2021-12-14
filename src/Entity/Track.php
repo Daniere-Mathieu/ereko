@@ -68,7 +68,7 @@ class Track
     private $state;
 
     /**
-     * @ORM\OneToMany(targetEntity=TrackInParty::class, mappedBy="track_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=TrackInParty::class, mappedBy="track", orphanRemoval=true)
      * 
      */
     private $trackInParties;
@@ -154,7 +154,7 @@ class Track
     {
         if (!$this->trackInParties->contains($trackInParty)) {
             $this->trackInParties[] = $trackInParty;
-            $trackInParty->setTrackId($this);
+            $trackInParty->setTrack($this);
         }
 
         return $this;
@@ -164,8 +164,8 @@ class Track
     {
         if ($this->trackInParties->removeElement($trackInParty)) {
             // set the owning side to null (unless already changed)
-            if ($trackInParty->getTrackId() === $this) {
-                $trackInParty->setTrackId(null);
+            if ($trackInParty->getTrack() === $this) {
+                $trackInParty->setTrack(null);
             }
         }
 

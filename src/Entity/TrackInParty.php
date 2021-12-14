@@ -41,13 +41,13 @@ class TrackInParty
      * @ORM\ManyToOne(targetEntity=Party::class, inversedBy="trackInParties")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $party_id;
+    private $party;
 
     /**
      * @ORM\ManyToOne(targetEntity=Track::class, inversedBy="trackInParties")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $track_id;
+    private $track;
 
     public function getId(): ?int
     {
@@ -80,41 +80,41 @@ class TrackInParty
         throw new \ValueError('Track in Party state forbidden');
     }
 
-    public function getPartyId(): ?Party
+    public function getParty(): ?Party
     {
-        return $this->party_id;
+        return $this->party;
     }
 
-    public function setPartyId(?Party $party_id): self
+    public function setParty(?Party $party): self
     {
-        $this->party_id = $party_id;
+        $this->party = $party;
 
         return $this;
     }
 
-    public function getTrackId(): ?Track
+    public function getTrack(): ?Track
     {
-        return $this->track_id;
+        return $this->track;
     }
 
-    public function setTrackId(?Track $track_id): self
+    public function setTrack(?Track $track): self
     {
-        $this->track_id = $track_id;
+        $this->track = $track;
 
         return $this;
     }
 
     public function getTrackDownloadPath() {
         return $this->download_base_path
-            . $this->party_id->getUid() . '/'
-            . $this->track_id->getTrackId(). '/'
+            . $this->party->getUid() . '/'
+            . $this->track->getTrackId(). '/'
             . $this->order_in_list
             ;
     }
 
     public function matchTrackIdAndOrder($track_id, int $order) {
         return (
-            $this->getTrackId()->getTrackId() === $track_id
+            $this->getTrack()->getTrackId() === $track_id
             &&
             $this->getOrderInList() === $order
         );
