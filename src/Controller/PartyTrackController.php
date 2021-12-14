@@ -130,7 +130,6 @@ class PartyTrackController extends AbstractController
         $track = new Track();
         $track->setTrackId($track_uid);
         $track->setThumbnailPath("https://i.ytimg.com/vi/" . $track_uid . "/mqdefault.jpg");
-        $track->setPath('https://youtu.be/' . $track_uid);
         $track->setTitle($request->request->get('title'));
         $track->setState('TO_DOWNLOAD');
 

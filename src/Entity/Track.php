@@ -63,16 +63,6 @@ class Track
      * 
      * @Assert\NotBlank
      * @Assert\Type("string")
-     * @CustomAssert\VideoUrl
-     * 
-     */
-    private $path;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * 
-     * @Assert\NotBlank
-     * @Assert\Type("string")
      * 
      */
     private $state;
@@ -126,19 +116,6 @@ class Track
 
         return $this;
     }
-
-    public function getPath(): ?string
-    {
-        return $this->path;
-    }
-
-    public function setPath(string $path): self
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
 
     public function getPathToFile(): ?string
     {
