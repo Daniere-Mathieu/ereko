@@ -18,6 +18,7 @@ audio.volume = .75;
 // je donne la valeur au volume du son
 let track = new Track();
 //
+let playlistID = decodeUrl()
 function setAudio(source){
       audio.src = source;
 }
@@ -44,7 +45,7 @@ audio.addEventListener("ended",() => {
 })
 //function qui capte la fin d'une musique grace a l'event ended et lance la prochaine musique;
 window.addEventListener("load",async() => {
-  await callTrackList("jyizlslbcw");
+  await callTrackList(playlistID);
   await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
   window.setTimeout(()=>{
     setAudio(musicList[0].path);
@@ -90,4 +91,9 @@ function setPlaying(param){
     songName.innerText = allTrackList[currentMusic].track_title;
     trackTitle.setAttribute("class",param);
   }
+}
+function decodeUrl(){
+  let url = location.href;
+  let arrayDecodeUrl = url.split('/');
+  return arrayDecodeUrl[4]
 }
