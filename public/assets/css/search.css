@@ -97,5 +97,9 @@
     cursor: zoom-out;
 }
 
-
-
+#request_error {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    color: red;
+}
