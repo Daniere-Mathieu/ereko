@@ -1,15 +1,26 @@
-function callTrackList(uid){
-  console.log("callTrackList");
-  let url = "http://0.0.0.0:8000/api/"+uid;
-  fetch(url).then((response)=>{
+async function callTrackList(uid){
+  let url = "http://0.0.0.0:8000/api/playlist/"+uid;
+  return fetch(url).then((response)=>{
     if(response.ok){
       return response.json().then(json => {
-        for(let i = 0; i < json.length ;i++)
-        allTrackList[i] = json[i];
+        jsonTransfer(json);
        });
     }
     else{
       console.log("il y a eu une erreur")
     }
   })
+}
+function jsonTransfer(json){
+  return new Promise(resolve =>{
+    for(let i = 0; i < json.length ;i++){
+    allTrackList[i] = json[i];
+    console.log("callTrackList")
+  }
+  resolve("resolve")
+  })
+}
+function callTrack(id){
+  let url = "http://0.0.0.0:8000/info/"+ id;
+
 }
