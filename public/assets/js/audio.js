@@ -66,7 +66,7 @@ window.addEventListener("load",async() => {
       for (let i = 0; i < allTrackList.length; i++) {
         track.displayTrack(allTrackList[i].track_title,allTrackList[i].order)
       }
-    },10000)
+    },2000)
   }
 })
 // fonction qui capte le chargement de la page pour load les premier musique
