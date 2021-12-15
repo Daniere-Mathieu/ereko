@@ -146,7 +146,6 @@ class YtDlDownloadCommand extends EndlessCommand
 	protected function finishIteration(InputInterface $input, OutputInterface $output): void
 	{
 		// Do some cleanup/memory management here, don't forget to call the parent implementation!
-        // TODO release lock
         $this->lock->release();
 
 		parent::finishIteration($input, $output);
@@ -156,7 +155,6 @@ class YtDlDownloadCommand extends EndlessCommand
 	protected function finalize(InputInterface $input, OutputInterface $output): void
 	{
 		// Do some cleanup here, don't forget to call the parent implementation!
-        // TODO release lock
         $this->lock->release();
 
 		parent::finalize($input, $output);

@@ -20,7 +20,6 @@ class VideoUrlValidator extends ConstraintValidator
             return;
         }
 
-        // TODO: implement the validation here
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ video_url }}', $url)
             ->addViolation();
