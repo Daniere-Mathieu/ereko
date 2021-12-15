@@ -32,6 +32,9 @@
     color: white;
     padding: 5px 10px;
     border-bottom: 1px solid grey;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .playing {
@@ -39,14 +42,22 @@
     border-bottom: 3px solid hsl(244, 63%, 80%);
 }
 
-.refresh_logo {
+.container_logo {
+    width: 40px;
+    height: 40px;
+}
+
+.track_state_svg {
     width: 40px;
     height: 40px;
     stroke: #ffffff;
-    stroke-width: 1.5;
+    stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
     fill: none;
+}
+
+.rotate {
     animation: 5s linear infinite rotation;
 }
 
