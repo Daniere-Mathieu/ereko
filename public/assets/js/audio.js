@@ -46,6 +46,9 @@ audio.addEventListener("ended",() => {
 //function qui capte la fin d'une musique grace a l'event ended et lance la prochaine musique;
 window.addEventListener("load",async() => {
   await callTrackList(playlistID);
+  for (let i = 0; i < allTrackList.length; i++) {
+    track.displayTrack(allTrackList[i].track_title,allTrackList[i].order)
+  }
   if (allTrackList.length > 0) {
     if (allTrackList[currentMusic].state_track === "READY") {
       await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
@@ -54,7 +57,9 @@ window.addEventListener("load",async() => {
       let onDownloadCounter = true;
       let dowloadable = true;
       while(allTrackList[currentMusic].state_track !== "READY"){
-        await callTrackList(playlistID);
+        let idTimeout = setTimeout(function () {
+          callTrackList(playlistID);
+        }, 500);
         if (currentMusic+1 === allTrackList.length) {
           let currentMusic = 0;
           let futureMusic = currentMusic + 1;
@@ -75,17 +80,23 @@ window.addEventListener("load",async() => {
         await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
       }
     }
-    window.setTimeout(()=>{
-      if (musicList.length > 0) {
-        setAudio(musicList[0].path);
-        spliceList(musicList,1);
-        counter = 0;
-        loadCallMusic();
-      }
-      for (let i = 0; i < allTrackList.length; i++) {
-        track.displayTrack(allTrackList[i].track_title,allTrackList[i].order)
-      }
-    },3000)
+    if (musicList.length > 0) {
+      setAudio(musicList[0].path);
+      spliceList(musicList,1);
+      counter = 0;
+      loadCallMusic();
+    }
+    else {
+      let intervalID = setInterval(function () {
+        if (musicList.length >= 1) {
+          setAudio(musicList[0].path);
+          spliceList(musicList,1);
+          counter = 0;
+          loadCallMusic();
+          clearInterval(intervalID);
+        }
+      }, 700);
+    }
   }
 })
 // fonction qui capte le chargement de la page pour load les premier musique
