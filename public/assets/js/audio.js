@@ -51,22 +51,41 @@ window.addEventListener("load",async() => {
       await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
     }
     else{
+      let onDownloadCounter = true;
+      let dowloadable = true;
       while(allTrackList[currentMusic].state_track !== "READY"){
-        currentMusic++;
-        futureMusic++;
-        lastLoadMusic++;
+        await callTrackList(playlistID);
+        if (currentMusic+1 === allTrackList.length) {
+          let currentMusic = 0;
+          let futureMusic = currentMusic + 1;
+          let lastLoadMusic = currentMusic + 4;
+          onDownloadCounter++;
+        }
+        else {
+          currentMusic++;
+          futureMusic++;
+          lastLoadMusic++;
+        }
+        if (onDownloadCounter === 3) {
+          dowloadable = false
+          break;
+        }
       }
-      await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
+      if (dowloadable === true) {
+        await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
+      }
     }
     window.setTimeout(()=>{
-      setAudio(musicList[0].path);
-      spliceList(musicList,1);
-      counter = 0;
-      loadCallMusic();
+      if (musicList.length > 0) {
+        setAudio(musicList[0].path);
+        spliceList(musicList,1);
+        counter = 0;
+        loadCallMusic();
+      }
       for (let i = 0; i < allTrackList.length; i++) {
         track.displayTrack(allTrackList[i].track_title,allTrackList[i].order)
       }
-    },2000)
+    },3000)
   }
 })
 // fonction qui capte le chargement de la page pour load les premier musique

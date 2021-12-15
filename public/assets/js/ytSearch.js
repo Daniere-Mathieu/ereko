@@ -42,7 +42,7 @@ function createErrorDiv(error) {
     let error_p = document.createElement('p');
     error_p.id = "error";
     error_p.innerText = error;
-    
+
     request_error.appendChild(error_p);
 }
 
@@ -78,7 +78,7 @@ async function requestToYoutube(research) {
     };
 
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
-    
+
     await fetch(url, {headers: {'Accept': 'application/json'}})
         .then(function (response) {
             if (response.status == 200) {
@@ -106,7 +106,7 @@ async function addTrackApi(track_title, track_id) {
 
     await fetch(url, {
             headers: {'Content-Type': 'application/json'},
-            method: 'POST', 
+            method: 'POST',
             body: JSON.stringify({'title': track_title}),
         })
         .then(function (response) {
@@ -152,7 +152,7 @@ async function addTrackApi_Test(obj, title="mon super titre") {
 
     await fetch(url, {
             headers: {'Content-Type': 'application/json'},
-            method: 'POST', 
+            method: 'POST',
             body: JSON.stringify({'title': title}),
         })
         .then(function (response) {
@@ -167,7 +167,7 @@ async function addTrackApi_Test(obj, title="mon super titre") {
             console.log(data);
             let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
             track.displayTrack(title, data.order);
-            musicList.push(track);
+            allTrackList.push(track);
         })
         .catch(function (e) {
             console.log(e);
