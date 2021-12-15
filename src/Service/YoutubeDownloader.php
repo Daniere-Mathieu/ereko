@@ -6,14 +6,22 @@ use App\Entity\Track;
 
 class YoutubeDownloader
 {
-    private $video_id;
-    private $max_time_minutes = 20;
-
-    private static $youtube_dl_command = "youtube-dl --no-playlist \
-        -x --audio-format vorbis --recode-video ogg";
-    private static $duration_command = "youtube-dl --get-duration";
+    /* This is temporary. Should be removed when youtube-dl will be fixed. */
+    private static $youtube_dl_command = "cd /opt/youtube-dl ; python -m youtube_dl";
+    /* This is the normal command */
+    // private $youtube_dl_command = "youtube-dl"
     private static $output_video_file_format = "%(id)s.%(ext)s";
 
+    private static function downloadCommand() {
+        return self::$youtube_dl_command . " --no-playlist \
+            -x --audio-format vorbis --recode-video ogg";
+    }
+    private static function durationCommand() {
+        return self::$youtube_dl_command . " --get-duration";
+    }
+    
+    private $video_id;
+    private $max_time_minutes = 20;
     private $cli_output = [];
 
     public function __construct(String $video_id) {
@@ -34,7 +42,7 @@ class YoutubeDownloader
     }
 
     private function createFullCommand() {
-        return self::$youtube_dl_command . " -o '" . Track::$download_dir . self::$output_video_file_format . "' " . $this->video_id;
+        return self::downloadCommand() . " -o '" . Track::$download_dir . self::$output_video_file_format . "' " . $this->video_id;
     }
 
     private function display_cli_output() {
@@ -45,7 +53,7 @@ class YoutubeDownloader
 
     public function isTrackTooLong()
     {
-        $full_duration_command = self::$duration_command . " " . $this->video_id;
+        $full_duration_command = self::durationCommand() . " " . $this->video_id;
         $result_code = null;
         $cli_output = [];
         exec ($full_duration_command, $cli_output, $result_code);
