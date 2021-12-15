@@ -16,7 +16,6 @@ let audio = new Audio();
 //object audio
 audio.volume = .75;
 // je donne la valeur au volume du son
-let track = new Track();
 //
 let playlistID = decodeUrl()
 function setAudio(source){
@@ -46,6 +45,7 @@ audio.addEventListener("ended",() => {
 //function qui capte la fin d'une musique grace a l'event ended et lance la prochaine musique;
 window.addEventListener("load",async() => {
   await callTrackList(playlistID);
+<<<<<<< HEAD
   for (let i = 0; i < allTrackList.length; i++) {
     track.displayTrack(allTrackList[i].track_title,allTrackList[i].order)
   }
@@ -85,6 +85,19 @@ window.addEventListener("load",async() => {
       spliceList(musicList,1);
       counter = 0;
       loadCallMusic();
+=======
+  await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
+  window.setTimeout(()=>{
+    setAudio(musicList[0].path);
+    spliceList(musicList,1);
+    counter = 0;
+    loadCallMusic();
+    for (let i = 0; i < allTrackList.length; i++) {
+      let t = allTrackList[i];
+      let track = new Track(t.party_id, t.track_id, t.state_for_party, t.order, t.state_track, t.download_path);
+      track.displayTrack(allTrackList[i].track_title,allTrackList[i].order)
+      console.log(track);
+>>>>>>> add downloading svg, create track object in audio.js
     }
     else {
       let intervalID = setInterval(function () {

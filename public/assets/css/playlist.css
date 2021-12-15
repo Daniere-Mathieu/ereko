@@ -39,3 +39,21 @@
     border-bottom: 3px solid hsl(244, 63%, 80%);
 }
 
+.refresh_logo {
+    width: 40px;
+    height: 40px;
+    stroke: #ffffff;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    animation: 5s linear infinite rotation;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(-360deg);
+    }
+}
