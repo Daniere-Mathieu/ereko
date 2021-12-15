@@ -25,10 +25,9 @@ class Track {
     title.setAttribute("class","title_track")
     title.setAttribute("id",number)
 
-    title.innerText = titleParam + " | " + this.state_track;
+    title.innerText = titleParam;
     
-    console.log(this.state_track);
-    if (this.state_track === 'DOWNLOADING') {
+    if (this.state_track === 'DOWNLOADING' || this.state_track === 'TO_DOWNLOAD') {
       track.appendChild(this.displayDownloadSVG());
     } else if (this.state_track === 'ON_ERROR') {
       track.appendChild(this.displayErrorSVG());
@@ -99,9 +98,3 @@ class Track {
     return div;
   }
 }
-
-
-//   <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-//   <circle cx="12" cy="12" r="9" />
-//   <line x1="9" y1="15" x2="15" y2="9" />
-// </svg> */}
