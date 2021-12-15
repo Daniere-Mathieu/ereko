@@ -20,19 +20,20 @@ class YoutubeDownloader
         return self::$youtube_dl_command . " --get-duration";
     }
     
+    private $download_dir;
     private $video_id;
     private $max_time_minutes = 20;
     private $cli_output = [];
 
-    public function __construct(String $video_id) {
+    public function __construct(String $video_id, String $download_dir) {
         $this->video_id = $video_id;
+        $this->download_dir = $download_dir;
     }
 
     public function download() {
-
         $result_code = null;
         echo "\nDownloading " . $this->video_id;
-        exec($this->createFullCommand($this->video_id), $this->cli_output, $result_code);
+        exec($this->createFullCommand(), $this->cli_output, $result_code);
 
         if ($result_code === 0) {
             return true;
@@ -42,7 +43,10 @@ class YoutubeDownloader
     }
 
     private function createFullCommand() {
-        return self::downloadCommand() . " -o '" . Track::$download_dir . self::$output_video_file_format . "' " . $this->video_id;
+        return self::downloadCommand()
+            . " -o '" . $this->download_dir . self::$output_video_file_format. "' "
+            . $this->video_id
+            ;
     }
 
     private function display_cli_output() {

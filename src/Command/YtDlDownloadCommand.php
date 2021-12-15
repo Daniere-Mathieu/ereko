@@ -12,8 +12,9 @@ use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Store\FlockStore;
 use Symfony\Component\Lock\Exception\LockConflictedException;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Service\YoutubeDownloader;
+use Symfony\Component\HttpKernel\KernelInterface;
 
+use App\Service\YoutubeDownloader;
 use App\Entity\Track;
 
 class YtDlDownloadCommand extends EndlessCommand
@@ -21,12 +22,14 @@ class YtDlDownloadCommand extends EndlessCommand
     protected static $defaultName = 'yt-dl:download';
     protected static $defaultDescription = 'Download all tracks to be downloaded. Daemonizable command.';
     private $lock;
+    private $download_dir;
 
     private EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, KernelInterface $kernel)
     {
         $this->entityManager = $entityManager;
+        $this->download_dir = $kernel->getProjectDir() . '/' . Track::$download_dir;
         parent::__construct();
     }
 
@@ -63,7 +66,7 @@ class YtDlDownloadCommand extends EndlessCommand
         $this->entityManager->persist($track);
         $this->entityManager->flush();
 
-        $downloader = new YoutubeDownloader($track->getTrackId());
+        $downloader = new YoutubeDownloader($track->getTrackId(), $this->download_dir);
 
         if ( ! $this->checkTrackLength($track, $downloader, $output)) {
             return 1;
