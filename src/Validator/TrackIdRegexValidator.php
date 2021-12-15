@@ -20,7 +20,6 @@ class TrackIdRegexValidator extends ConstraintValidator
             return;
         }
 
-        // TODO: implement the validation here
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ uid }}', $uid)
             ->addViolation();
