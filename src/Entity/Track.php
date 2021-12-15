@@ -83,6 +83,16 @@ class Track
      */
     private $thumbnail_path;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $error_retries;
+
     public function __construct()
     {
         $this->trackInParties = new ArrayCollection();
@@ -202,10 +212,59 @@ class Track
     }
 
     public function shouldBeDownloaded() {
-        return $this->state !== Track::$available_states[2]
-            // TODO create a try counter for error downloads
-            && $this->state !== Track::$available_states[3]
-            && $this->state !== Track::$available_states[4]
+        return $this->state !== Track::$available_states[2] // READY
+            && $this->state !== Track::$available_states[4] // TOO_LONG
+            && $this->shouldErrorDownloadBeRetried()
             ;
+    }
+
+    private function shouldErrorDownloadBeRetried(): bool
+    {
+        // test current error retries number
+        switch (true) {
+            case ($this->updated === NULL):
+                $this->updated = new \Datetime();
+                // do NOT break
+            case ($this->error_retries === NULL):
+                $delay = new \DateInterval("P0DT0H0M0S");
+                break;
+            case ($this->error_retries <= 5):
+                $delay = new \DateInterval("P0DT0H0M30S");
+                break;
+            case ($this->error_retries <= 20):
+                $delay = new \DateInterval("P0DT0H1M0S");
+                break;
+            case ($this->error_retries <= 40):
+                $delay = new \DateInterval("P0DT0H5M0S");
+                break;
+            case ($this->error_retries <= 100):
+                $delay = new \DateInterval("P0DT1H0M0S");
+                break;
+            default:
+                return false;
+        }
+
+        // compare last_updated + delay with current time
+        $now = new \Datetime();
+        return $now >= date_add($this->updated, $delay);
+
+    }
+
+    public function getUpdated(): ?\DateTimeInterface
+    {
+        return $this->updated;
+    }
+
+    public function getErrorRetries(): ?int
+    {
+        return $this->error_retries;
+    }
+
+    public function meetDownloadError(): self
+    {
+        $this->updated = new \Datetime();
+        $this->error_retries++;
+        $this->state = Track::$available_states[3]; //ON_ERROR
+        return $this;
     }
 }

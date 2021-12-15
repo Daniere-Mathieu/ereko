@@ -43,11 +43,9 @@ class YtDlDownloadCommand extends EndlessCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        // TODO create lock and verify
         $store = new FlockStore();
         $lock_factory = new LockFactory($store);
         // use static method to avoid locks being different thanks to the scope.
-        //$this->lock = LockFactory::createLock('yt-downloader');
         $this->lock = $lock_factory->createLock('yt-downloader');
 
         if ($this->lock->acquire() === false) {
@@ -59,6 +57,7 @@ class YtDlDownloadCommand extends EndlessCommand
         if (empty($track)) {
             return 0;
         }
+        echo 'coucou ' . $track->getTrackId();
         
         // pass its state to DOWNLOADING
         $track->setState(Track::$available_states[1]);
@@ -67,12 +66,7 @@ class YtDlDownloadCommand extends EndlessCommand
 
         $downloader = new YoutubeDownloader($track->getTrackId());
 
-        if ($downloader->isTrackTooLong()) {
-            // set status to TOO_LONG
-            $track->setState(Track::$available_states[4]);
-            $this->entityManager->persist($track);
-            $this->entityManager->flush();
-            $output->writeln("Video " . $track->getTrackId() . " is too long.");
+        if ( ! $this->checkTrackLength($track, $downloader, $output)) {
             return 1;
         }
 
@@ -82,12 +76,10 @@ class YtDlDownloadCommand extends EndlessCommand
             $track->setState(Track::$available_states[2]);
         }
         catch (\RuntimeException $e) {
-            // set status to ON_ERROR
-            $track->setState(Track::$available_states[3]);
-            $this->entityManager->persist($track);
-            $this->entityManager->flush();
-            
-            $output->writeln("Download failed for video " . $track->getTrackId());
+            // update errors counter
+            $track->meetDownloadError();
+            $message = "Download failed for video " . $track->getTrackId();
+            $this->persistTrackAndDisplayError($track, $output, $message);
             return 1;		
         }
         
@@ -103,15 +95,48 @@ class YtDlDownloadCommand extends EndlessCommand
     private function getPriorityTrackToDownload(): ?Track
     {
         $track_repo = $this->entityManager->getRepository(Track::class);
-        
-        // get DOWNLOADING tracks in DB (should not exist, I guess)
-        $tracks = $track_repo->findBy(['state' => Track::$available_states[1]]);
-        // If not, get TO_DOWNLOAD tracks in DB
-        if (empty($tracks)) {
-            $tracks = $track_repo->findBy(['state' => Track::$available_states[0]]);
+
+        $states_to_download = [1, 0, 3]; // DOWNLOADING, TO_DOWNLOAD, ON_ERROR
+
+        foreach ($states_to_download as $state) {
+            $tracks = $track_repo->findBy(['state' => Track::$available_states[$state]]);
+            foreach ($tracks as $track) {
+                if ($track->shouldBeDownloaded()) {
+                    return $track;
+                }
+            }
+        }
+        return NULL;
+    }
+
+    private function checkTrackLength($track, $downloader, $output)
+    {
+        try {
+            $track_too_long = $downloader->isTrackTooLong();
+        }
+        catch ( \RuntimeException $e ) {
+            // update errors counter
+            $track = $track->meetDownloadError();
+            $message = "Could not get duration for video " . $track->getTrackId();
+            $this->persistTrackAndDisplayError($track, $output, $message);
+            return false;
         }
 
-        return empty($tracks) ? NULL : $tracks[0];
+        if ($track_too_long) {
+            // set status to TOO_LONG
+            $track->setState(Track::$available_states[4]);
+            $message = "Video " . $track->getTrackId() . " is too long.";
+            $this->persistTrackAndDisplayError($track, $output, $message);
+            return false;
+        }
+        return true;
+    }
+
+    private function persistTrackAndDisplayError($track, $output, String $message)
+    {
+        $this->entityManager->persist($track);
+        $this->entityManager->flush();
+        $output->writeln($message);
     }
 
     /**
