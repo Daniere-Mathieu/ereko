@@ -57,7 +57,6 @@ class YtDlDownloadCommand extends EndlessCommand
         if (empty($track)) {
             return 0;
         }
-        echo 'coucou ' . $track->getTrackId();
         
         // pass its state to DOWNLOADING
         $track->setState(Track::$available_states[1]);
@@ -116,7 +115,7 @@ class YtDlDownloadCommand extends EndlessCommand
         }
         catch ( \RuntimeException $e ) {
             // update errors counter
-            $track = $track->meetDownloadError();
+            $track->meetDownloadError();
             $message = "Could not get duration for video " . $track->getTrackId();
             $this->persistTrackAndDisplayError($track, $output, $message);
             return false;
