@@ -102,7 +102,6 @@ async function requestToYoutube(research) {
 async function addTrackApi(track_title, track_id) {
     let party = getPartyUid();
     let url =  'http://0.0.0.0:8000/api/add/' + party + '/' + track_id;
-    console.log("ADD TRACK API TITLE : " + track_title);
 
     await fetch(url, {
             headers: {'Content-Type': 'application/json'},
