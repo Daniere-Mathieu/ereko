@@ -46,7 +46,9 @@ audio.addEventListener("ended",() => {
 window.addEventListener("load",async() => {
   await callTrackList(playlistID);
   for (let i = 0; i < allTrackList.length; i++) {
-    track.displayTrack(allTrackList[i].track_title,allTrackList[i].order)
+    let t = allTrackList[i];
+      let track = new Track(t.party_id, t.track_id, t.state_for_party, t.order, t.state_track, t.download_path);
+      track.displayTrack(allTrackList[i].track_title,allTrackList[i].order);
   }
   if (allTrackList.length > 0) {
     if (allTrackList[currentMusic].state_track === "READY") {
