@@ -16,7 +16,6 @@ let audio = new Audio();
 //object audio
 audio.volume = .75;
 // je donne la valeur au volume du son
-let track = new Track();
 //
 let playlistID = decodeUrl()
 function setAudio(source){
@@ -46,26 +45,79 @@ audio.addEventListener("ended",() => {
 //function qui capte la fin d'une musique grace a l'event ended et lance la prochaine musique;
 window.addEventListener("load",async() => {
   await callTrackList(playlistID);
-  await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
-  window.setTimeout(()=>{
-    setAudio(musicList[0].path);
-    spliceList(musicList,1);
-    counter = 0;
-    loadCallMusic();
-    for (let i = 0; i < allTrackList.length; i++) {
-      console.log(track);
-      track.setState(allTrackList[i].state);
-      track.displayTrack(allTrackList[i].track_title,allTrackList[i].order)
+  for (let i = 0; i < allTrackList.length; i++) {
+      let t = allTrackList[i];
+      let track = new Track(t.party_id, t.track_id, t.state_for_party, t.order, t.state_track, t.download_path);
+      track.displayTrack(allTrackList[i].track_title, allTrackList[i].order);
+  }
+  if (allTrackList.length > 0) {
+    if (allTrackList[currentMusic].state_track === "READY") {
+      await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
     }
-  },10000)
+    else{
+      let onDownloadCounter = true;
+      let dowloadable = true;
+      while(allTrackList[currentMusic].state_track !== "READY"){
+        let idTimeout = setTimeout(function () {
+          callTrackList(playlistID);
+        }, 500);
+        if (currentMusic+1 === allTrackList.length) {
+          let currentMusic = 0;
+          let futureMusic = currentMusic + 1;
+          let lastLoadMusic = currentMusic + 4;
+          onDownloadCounter++;
+        }
+        else {
+          currentMusic++;
+          futureMusic++;
+          lastLoadMusic++;
+        }
+        if (onDownloadCounter === 3) {
+          dowloadable = false
+          break;
+        }
+      }
+      if (dowloadable === true) {
+        await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
+      }
+    }
+    if (musicList.length > 0) {
+      setAudio(musicList[0].path);
+      spliceList(musicList,1);
+      counter = 0;
+      loadCallMusic();
+    }
+    else {
+      let intervalID = setInterval(function () {
+        if (musicList.length >= 1) {
+          setAudio(musicList[0].path);
+          spliceList(musicList,1);
+          counter = 0;
+          loadCallMusic();
+          clearInterval(intervalID);
+        }
+      }, 700);
+    }
+  }
 })
 // fonction qui capte le chargement de la page pour load les premier musique
 function loadCallMusic(){
   return new Promise(resolve=>{
-    for (let i = futureMusic; i < lastLoadMusic+1 ; i++) {
-      callMusic(allTrackList[i].download_path,allTrackList[i]);
+    if (allTrackList.length < 5) {
+      for (let i = futureMusic; i < allTrackList.length ; i++) {
+        if (allTrackList[i].state_track === "READY") {
+          callMusic(allTrackList[i].download_path,allTrackList[i]);
+        }
+      }
     }
-    resolve("blc");
+    else {
+      for (let i = futureMusic; i < lastLoadMusic+1 ; i++) {
+        if (allTrackList[i].state_track === "READY") {
+          callMusic(allTrackList[i].download_path,allTrackList[i]);
+        }
+      }
+    }
+    resolve("resolve");
   })
 }
 async function nextLoadMusic(){
@@ -88,11 +140,15 @@ function spliceList(array,size){
 }
 function setPlaying(param){
   let trackTitle = document.getElementById(allTrackList[currentMusic].order);
-  let idCurrantMusic = trackTitle.getAttribute("id");
-  if(allTrackList[currentMusic].order == idCurrantMusic){
+  let idCurrentMusic = trackTitle.getAttribute("id");
+  if(allTrackList[currentMusic].order == idCurrentMusic){
     songName.innerText = allTrackList[currentMusic].track_title;
     trackTitle.setAttribute("class",param);
   }
+}
+function setThumbnail(param){
+  let thumbnail = document.getElementById("thumbnail");
+    thumbnail.setAttribute("src",param[currentMusic].thumbnail_path);
 }
 function decodeUrl(){
   let url = location.href;

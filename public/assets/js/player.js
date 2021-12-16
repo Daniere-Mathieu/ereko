@@ -15,8 +15,8 @@ audio.addEventListener("loadeddata",async() => {
     audioPlayer.querySelector(".time .length").textContent = getTimeCodeFromNum(
       audio.duration
     );
-    songName.innerText = allTrackList[currentMusic].track_title;
-    setPlaying("title_track playing")
+    setPlaying("title_track playing");
+    setThumbnail(allTrackList)
   },
   false
 );
