@@ -51,6 +51,8 @@ function removeResultDiv() {
     for (let i = result_div.length-1; i >= 0 ; i--) {
         result_list.removeChild(result_div[i]);
     }
+
+    search_input.value = "";
 }
 
 function titleInBold(title) {
