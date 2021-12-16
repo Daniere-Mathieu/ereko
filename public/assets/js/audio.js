@@ -16,6 +16,7 @@ let audio = new Audio();
 //object audio
 audio.volume = .75;
 // je donne la valeur au volume du son
+let promiseList = [];
 //
 let myPlaylist = new Playlist();
 
@@ -55,7 +56,9 @@ window.addEventListener("load",async() => {
   }
   if (allTrackList.length > 0) {
     if (allTrackList[currentMusic].state_track === "READY") {
-      await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
+      promiseList[currentMusic] = callMusic(allTrackList[currentMusic].download_path);
+      await callMusicBlob(promiseList[currentMusic],allTrackList[currentMusic]);
+      console.log(promiseList)
     }
     else{
       let onDownloadCounter = true;
@@ -83,14 +86,15 @@ window.addEventListener("load",async() => {
         }
       }
       if (dowloadable === true) {
-        await callMusic(allTrackList[currentMusic].download_path,allTrackList[currentMusic]);
+       promiseList[currentMusic] = callMusic(allTrackList[currentMusic].download_path);
+        await callMusicBlob(promiseList[currentMusic],)
       }
     }
     if (musicList.length > 0) {
       setAudio(musicList[0].path);
       spliceList(musicList,1);
       counter = 0;
-      loadCallMusic();
+      //loadCallMusic();
     }
     else {
       let intervalID = setInterval(function () {
@@ -98,7 +102,7 @@ window.addEventListener("load",async() => {
           setAudio(musicList[0].path);
           spliceList(musicList,1);
           counter = 0;
-          loadCallMusic();
+          //loadCallMusic();
           clearInterval(intervalID);
         }
       }, 700);
@@ -106,33 +110,37 @@ window.addEventListener("load",async() => {
   }
 })
 // fonction qui capte le chargement de la page pour load les premier musique
-function loadCallMusic(){
-  return new Promise(resolve=>{
+async function loadCallMusic(){
+  console.log("loadCallMusic")
     if (allTrackList.length < 5) {
       for (let i = futureMusic; i < allTrackList.length ; i++) {
         if (allTrackList[i].state_track === "READY") {
-          callMusic(allTrackList[i].download_path,allTrackList[i]);
+          promiseList[i] = callMusic(allTrackList[i].download_path);
+          console.log(promiseList)
+          await callMusicBlob(promiseList[i])
         }
       }
     }
     else {
       for (let i = futureMusic; i < lastLoadMusic+1 ; i++) {
         if (allTrackList[i].state_track === "READY") {
-          callMusic(allTrackList[i].download_path,allTrackList[i]);
+          promiseList[i] = callMusic(allTrackList[i].download_path);
+          console.log(promiseList)
+          await callMusicBlob(promiseList[i])
         }
       }
     }
-    resolve("resolve");
-  })
 }
 async function nextLoadMusic(){
   if (lastLoadMusic >= allTrackList.length) {
     lastLoadMusic -= allTrackList.length;
-    await callMusic(allTrackList[lastLoadMusic].download_path,allTrackList[lastLoadMusic]);
+    promiseList[lastLoadMusic] = callMusic(allTrackList[lastLoadMusic].download_path);
+    await callMusicBlob(promiseList[lastLoadMusic]);
     lastLoadMusic++;
   }
   else {
-    await callMusic(allTrackList[lastLoadMusic].download_path,allTrackList[lastLoadMusic]);
+     promiseList[lastLoadMusic] = callMusic(allTrackList[lastLoadMusic].download_path);
+    await callMusicBlob(promiseList[lastLoadMusic]);
     lastLoadMusic++;
   }
 }
