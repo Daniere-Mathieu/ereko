@@ -18,6 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Party
 {
     protected const party_id_length = 10;
+    public static $wait_days_before_delete_party = 10;
 
     private $tracks;
 

@@ -22,10 +22,11 @@ class PartyController extends AbstractController
         
         // Création de la soirée
         $party = new Party();
-        $party->setDate(new \DateTime($date));
+        $party_date = new \DateTime($date);
+        $party->setDate($party_date);
 
-        // /|\ A SUPPRIMER PLUS TARD QUAND DEFINIE DANS l'ENTITY
-        $party->setEndDate(new \DateTime($date));
+        // /!\ A SUPPRIMER PLUS TARD QUAND DEFINIE DANS l'ENTITY
+        $party->setEndDate($this->computePartyEndDate($party_date, Party::$wait_days_before_delete_party));
  
         // Vérification de la date
         $errors = $validator->validate($party);
@@ -40,5 +41,13 @@ class PartyController extends AbstractController
         $uid = $party->getUid();
 
         return $this->redirectToRoute('playlist_uid', ['party_uid' => $uid]);
+    }
+
+    private function computePartyEndDate(\Datetime $party_date, int $days_delay): \Datetime
+    {
+        $string_interval = "P" . $days_delay . "DT0H0M0S";
+        $interval = new \DateInterval($string_interval);
+        $end_date = clone $party_date;
+        return $end_date->add($interval);
     }
 }
