@@ -56,11 +56,9 @@ window.addEventListener("load",async() => {
     }
     else{
       let onDownloadCounter = true;
-      let dowloadable = true;
+        let dowloadable = false;
       while(allTrackList[currentMusic].state_track !== "READY"){
-        let idTimeout = setTimeout(function () {
-          callTrackList(playlistID);
-        }, 500);
+          await callTrackList(playlistID);
         if (currentMusic+1 === allTrackList.length) {
           let currentMusic = 0;
           let futureMusic = currentMusic + 1;
@@ -72,7 +70,11 @@ window.addEventListener("load",async() => {
           futureMusic++;
           lastLoadMusic++;
         }
-        if (onDownloadCounter === 3) {
+        if (allTrackList[currentMusic].state_track === "READY") {
+          dowloadable = true;
+          break;
+        }
+        if (onDownloadCounter === 2) {
           dowloadable = false
           break;
         }
