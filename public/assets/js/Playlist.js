@@ -1,6 +1,5 @@
 class Playlist {
     list_of_tracks;
-    testaa;
 
     constructor() {
         this.list_of_tracks = [];
@@ -14,16 +13,6 @@ class Playlist {
     removeTrack(track_id) {
         
     }
-
-    clearDisplayTracks() {
-        let playlist = document.getElementById('playlist');
-        playlist.removeChild(document.getElementById('scroll'));
-    
-        let scroll = document.createElement('div');
-        scroll.classList = "scroll";
-        scroll.id = "scroll";
-        playlist.appendChild(scroll);
-      }
 
     load() {
         let party = window.location.href.split('/').pop();
@@ -83,13 +72,12 @@ class Playlist {
             }
         );
 
-        results.then((server_playlist) => { 
-            this.clearDisplayTracks();
+        results.then((server_playlist) => {
             for (let i = 0; i < server_playlist.length; i++) {
-                if (this.list_of_tracks[i].getState)
-                // this.list_of_tracks[i].state_track == server_playlist[i].state_track;
-                // console.log(this.list_of_tracks.state_track, server_playlist[i].state_track)
-                this.list_of_tracks[i].setState(server_playlist[i]);
+                if (this.list_of_tracks[i].state_track != 'READY' && server_playlist[i].state_track == 'READY') {
+                    this.list_of_tracks[i].setState(server_playlist[i]);
+                } 
+                console.log(this.list_of_tracks[i].state_track, server_playlist[i].state_track) // DEBUG
             }
         });
     }
@@ -98,10 +86,5 @@ class Playlist {
         this.list_of_tracks.forEach(track => {
             track.displayTrack(track.track_title, track.order);
         });
-    }
-
-    debugPlaylist() {
-        console.log("DEBUG PLAYLIST");
-        console.log(this.list_of_tracks);
     }
 }
