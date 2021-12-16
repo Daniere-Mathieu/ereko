@@ -19,6 +19,7 @@ class Party
 {
     protected const party_id_length = 10;
     public static $wait_days_before_delete_party = 10;
+    public static $max_months_before_party_takes_place = 3;
 
     private $tracks;
 
@@ -104,6 +105,13 @@ class Party
         $this->date = $date;
 
         return $this;
+    }
+
+    public function dateIsTooFar() {
+        $string_interval = "P" . self::$max_months_before_party_takes_place . "M0DT0H0M0S";
+        $interval = new \DateInterval($string_interval);
+        $max_date = date_add(new \Datetime(), $interval);
+        return $this->date > $max_date;
     }
 
     /**

@@ -24,6 +24,15 @@ class PartyController extends AbstractController
         $party = new Party();
         $party_date = new \DateTime($date);
         $party->setDate($party_date);
+        if ($party->dateIsTooFar()) {
+            return $this->render(
+                'home/index.html.twig',
+                [
+                    'no_date' => 'Date is too far. Party should take place in the next '
+                        . Party::$max_months_before_party_takes_place
+                        . ' months.'
+                ]);
+        }
 
         // /!\ A SUPPRIMER PLUS TARD QUAND DEFINIE DANS l'ENTITY
         $party->setEndDate($this->computePartyEndDate($party_date, Party::$wait_days_before_delete_party));
