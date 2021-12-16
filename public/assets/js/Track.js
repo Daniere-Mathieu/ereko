@@ -34,9 +34,13 @@ class Track {
     }
   }
 
+  getState() {
+    return this.state_track;
+  }
+
   setState(track) {
     console.log("state = " + track.state_track);
-    this.state = track.state_track;
+    this.state_track = track.state_track;
     this.displayTrack(track.track_title, track.order);
   }
 

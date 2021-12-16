@@ -86,6 +86,7 @@ class Playlist {
         results.then((server_playlist) => { 
             this.clearDisplayTracks();
             for (let i = 0; i < server_playlist.length; i++) {
+                if (this.list_of_tracks[i].getState)
                 // this.list_of_tracks[i].state_track == server_playlist[i].state_track;
                 // console.log(this.list_of_tracks.state_track, server_playlist[i].state_track)
                 this.list_of_tracks[i].setState(server_playlist[i]);
