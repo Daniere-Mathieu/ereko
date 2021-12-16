@@ -51,7 +51,6 @@ function removeResultDiv() {
     for (let i = result_div.length-1; i >= 0 ; i--) {
         result_list.removeChild(result_div[i]);
     }
-
     search_input.value = "";
 }
 
@@ -123,6 +122,7 @@ async function addTrackApi(track_title, track_id) {
             let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
             track.displayTrack(track_title, data.order);
             allTrackList.push(track);
+            objectTrackList.push(track);
         })
         .catch(function (e) {
             console.log(e);
