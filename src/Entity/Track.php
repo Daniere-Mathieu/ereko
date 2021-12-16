@@ -149,7 +149,7 @@ class Track
             $this->state = $state;
             return $this;
         }
-        throw new \ValueError('Track state forbidden');
+        throw new \InvalidArgumentException('Track state forbidden');
     }
 
     /**
