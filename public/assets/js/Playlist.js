@@ -15,6 +15,16 @@ class Playlist {
         
     }
 
+    clearDisplayTracks() {
+        let playlist = document.getElementById('playlist');
+        playlist.removeChild(document.getElementById('scroll'));
+    
+        let scroll = document.createElement('div');
+        scroll.classList = "scroll";
+        scroll.id = "scroll";
+        playlist.appendChild(scroll);
+      }
+
     load() {
         let party = window.location.href.split('/').pop();
         let url =  'http://0.0.0.0:8000/api/playlist/' + party;
@@ -42,6 +52,7 @@ class Playlist {
             for (let i = 0; i < server_playlist.length; i++) {
                 let t = server_playlist[i];
                 let track = new Track(t.party_id, t.track_id, t.state_for_party, t.order, t.state_track, t.download_path);
+                
                 this.list_of_tracks.push(track)
                 track.displayTrack(t.track_title, t.order);
             }
@@ -49,6 +60,7 @@ class Playlist {
     }
 
     update() {
+        console.log("UPDATE")
         let party = window.location.href.split('/').pop();
         let url =  'http://0.0.0.0:8000/api/playlist/' + party;
 
@@ -72,8 +84,11 @@ class Playlist {
         );
 
         results.then((server_playlist) => { 
-            for (let i = 0; i < this.list_of_tracks.length; i++) {
-               console.log(this.list_of_tracks[i])
+            this.clearDisplayTracks();
+            for (let i = 0; i < server_playlist.length; i++) {
+                // this.list_of_tracks[i].state_track == server_playlist[i].state_track;
+                // console.log(this.list_of_tracks.state_track, server_playlist[i].state_track)
+                this.list_of_tracks[i].setState(server_playlist[i]);
             }
         });
     }

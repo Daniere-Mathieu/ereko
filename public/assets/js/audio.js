@@ -162,4 +162,6 @@ function decodeUrl(){
 }
 
 myPlaylist.load();
-myPlaylist.update();
+setInterval(() => {
+  myPlaylist.update();
+}, 2500);

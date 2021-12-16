@@ -34,9 +34,10 @@ class Track {
     }
   }
 
-  setState(state) {
-    console.log("state = " + state);
-    this.state = state;
+  setState(track) {
+    console.log("state = " + track.state_track);
+    this.state = track.state_track;
+    this.displayTrack(track.track_title, track.order);
   }
 
   displayDownloadSVG() {
