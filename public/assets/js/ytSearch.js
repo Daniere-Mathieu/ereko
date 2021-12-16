@@ -120,7 +120,7 @@ async function addTrackApi(track_title, track_id) {
             console.log(data);
             let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
             track.displayTrack(track_title, data.order);
-            musicList.push(track);
+            allTrackList.push(track);
         })
         .catch(function (e) {
             console.log(e);
