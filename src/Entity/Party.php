@@ -18,6 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Party
 {
     protected const party_id_length = 10;
+    public const maximum_track_number = 200;
     public static $wait_days_before_delete_party = 10;
     public static $max_months_before_party_takes_place = 3;
 
@@ -130,6 +131,11 @@ class Party
             $trackInParty->setOrderInList($this->findLastTrackInParty() + 1);
         }
         return $this;
+    }
+    
+    public function trackNumberLimitIsReached(): bool
+    {
+        return count($this->trackInParties) >= maximum_track_number;
     }
 
     private function findLastTrackInParty() {

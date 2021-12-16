@@ -115,6 +115,13 @@ class PartyTrackController extends AbstractController
         $track_in_party->setState('IN_PLAYLIST');
 
         $party = $this->fetchParty($party_uid, $entityManager);
+        if($party->trackNumberLimitIsReached()){
+            $data = [
+                'error_code' => 400,
+                'message' => 'This is a maximum tracks limit.'
+            ];
+            return new JsonResponse($data, 400);
+        }
         $party->addTrackInParty($track_in_party);
 
         $entityManager->persist($track);
