@@ -135,7 +135,7 @@ class Party
     
     public function trackNumberLimitIsReached(): bool
     {
-        return count($this->trackInParties) >= maximum_track_number;
+        return count($this->trackInParties) >= self::maximum_track_number;
     }
 
     private function findLastTrackInParty() {
