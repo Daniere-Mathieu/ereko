@@ -13,6 +13,7 @@ let allTrackList = [];
 let musicList = [];
 //j'initilize le tableau de musique
 let test = [];
+let save;
 let audio = new Audio();
 //object audio
 audio.volume = .75;
@@ -35,6 +36,10 @@ audio.addEventListener("ended",() => {
     console.log("endend")
     setPlaying("title_track")
     sortMusiclist(musicList);
+    if (musicList.length === 0 ) {
+      console.log(save)
+      musicList[0] = save;
+    }
     setAudio(musicList[0].path);
     spliceList(musicList,1);
     nextLoadMusic();
@@ -98,7 +103,13 @@ window.addEventListener("load",async() => {
     }
     if (musicList.length > 0) {
       setAudio(musicList[0].path);
-      spliceList(musicList,1);
+      if (allTrackList.length === 1) {
+        save = musicList[0];
+        spliceList(musicList,1);
+      }
+      else {
+        spliceList(musicList,1);
+      }
       counter = 0;
       loadCallMusic();
     }
@@ -106,7 +117,13 @@ window.addEventListener("load",async() => {
       let intervalID = setInterval(function () {
         if (musicList.length >= 1) {
           setAudio(musicList[0].path);
-          spliceList(musicList,1);
+          if (allTrackList.length === 1) {
+            save = musicList[0];
+            spliceList(musicList,1);
+          }
+          else {
+            spliceList(musicList,1);
+          }
           counter = 0;
           loadCallMusic();
           clearInterval(intervalID);
