@@ -219,10 +219,9 @@ function decodeUrl(){
 }
 
 myPlaylist.load();
-setInterval(() => {
+let update_id = setInterval(() => {
   myPlaylist.update();
-}, 2500);
-function sortMusiclist(tab){
+}, 2500);function sortMusiclist(tab){
     let changed;
     do{
         changed = false;

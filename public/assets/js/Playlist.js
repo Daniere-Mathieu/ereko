@@ -75,7 +75,6 @@ class Playlist {
                 if (this.list_of_tracks[i].hasStateChanged(server_playlist[i].state_track)) {
                     this.list_of_tracks[i].setState(server_playlist[i]);
                 }
-                //console.log(this.list_of_tracks[i].state_track, server_playlist[i].state_track) // DEBUG
             }
         });
     }
