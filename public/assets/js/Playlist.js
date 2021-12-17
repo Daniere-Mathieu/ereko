@@ -3,7 +3,6 @@ class Playlist {
 
     constructor() {
         this.list_of_tracks = [];
-        this.testaa = "bonjour";
     }
 
     addTrack(track) {
@@ -33,7 +32,7 @@ class Playlist {
                 return data;
             })
             .catch(function (e) {
-                console.log(e);
+                console.log('une grosse erreur', e);
             }
         );
 
