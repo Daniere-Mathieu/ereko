@@ -14,6 +14,7 @@ let musicList = [];
 //j'initilize le tableau de musique
 let test = [];
 let save;
+let first = true;
 let audio = new Audio();
 //object audio
 audio.volume = .75;
@@ -163,6 +164,10 @@ async function loadCallMusic(){
     }
 }
 async function nextLoadMusic(){
+  if (first) {
+    lastLoadMusic++;
+    first = false;
+  }
   console.log("nextLoadMusic/"+lastLoadMusic)
   if (lastLoadMusic >= allTrackList.length) {
     console.log("nextLoadMusic/if/"+lastLoadMusic)
