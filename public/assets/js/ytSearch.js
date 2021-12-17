@@ -123,6 +123,7 @@ async function addTrackApi(track_title, track_id) {
             myPlaylist.addTrack(track);
             track.displayTrack(track_title, data.order);
             allTrackList.push(track);
+            musicList.push(track);
         })
         .catch(function (e) {
             console.log(e);
