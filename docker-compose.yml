@@ -31,4 +31,3 @@ services:
 # this is for the persistence of the BDD
 volumes:
   ereko-db-persist:
-
