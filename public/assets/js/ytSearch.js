@@ -102,7 +102,7 @@ async function requestToYoutube(research) {
 
 async function addTrackApi(track_title, track_id) {
     let party = getPartyUid();
-    let url =  'http://0.0.0.0:8000/api/add/' + party + '/' + track_id;
+    let url =  'http://localhost:8000/api/add/' + party + '/' + track_id;
 
     await fetch(url, {
             headers: {'Content-Type': 'application/json'},

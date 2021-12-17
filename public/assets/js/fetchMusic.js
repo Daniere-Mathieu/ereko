@@ -7,12 +7,8 @@ async function callMusic(url){
 function callMusicBlob(promiseMusic,array){
   promiseMusic.then(response=> {
   if(response.ok) {
-    console.log("if blob");
     response.blob().then(blob => {
-      console.log("callMusic3");
-      console.log("callMusic3/counter/"+counter);
-      musicList[counter] = {path:URL.createObjectURL(blob),number: array.order};
-      console.log("callMusic4");
+      musicList.push({path:URL.createObjectURL(blob),number: array.order,loop:loop});
       if (counter < 3) {
         counter++;
       }
@@ -21,15 +17,4 @@ function callMusicBlob(promiseMusic,array){
     console.log('Network request for musicCall' + response.status + ': ' + response.statusText);
   }
 });
-}
-function callMusicBlobUrl(promiseblob,array){
-  promiseblob.then(blob => {
-    console.log("callMusic3");
-    console.log("callMusic3/counter/"+counter);
-    musicList[counter] = {path:URL.createObjectURL(blob),number: array.order};
-    console.log("callMusic4");
-    if (counter < 3) {
-      counter++;
-    }
-  })
 }

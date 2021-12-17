@@ -18,7 +18,7 @@ class YoutubeDownloader
     private static function durationCommand() {
         return self::$youtube_dl_command . " --get-duration";
     }
-    
+
     private $download_dir;
     private $video_id;
     private $max_time_minutes = 20;
@@ -42,11 +42,20 @@ class YoutubeDownloader
     }
 
     private function createFullCommand() {
+<<<<<<< HEAD
         $full_command = self::downloadCommand()
             . " -o '" . $this->download_dir . self::$output_video_file_format. "' "
             . $this->video_id
             ;
         return $full_command;
+=======
+        $fullCommand = self::downloadCommand()
+            . " -o '" . $this->download_dir . self::$output_video_file_format. "' "
+            . $this->video_id
+            ;
+        echo $fullCommand;
+        return $fullCommand;
+>>>>>>> 37a811a (fix bug docker on window ,do a algorithm for sort and fix infinite loop)
     }
 
     private function display_cli_output() {
