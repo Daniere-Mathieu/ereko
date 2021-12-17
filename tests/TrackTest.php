@@ -43,6 +43,7 @@ class TrackTest extends TestCase
         $this->tryWrongState($track, 1);
         $this->tryWrongState($track, "WRONG_STATE");
     }
+    
     private function tryWrongState($track, $state): void
     {
         $this->expectException( "InvalidArgumentException" );
