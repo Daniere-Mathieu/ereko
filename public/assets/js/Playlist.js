@@ -16,7 +16,7 @@ class Playlist {
 
     load() {
         let party = window.location.href.split('/').pop();
-        let url =  'http://localhost:8000/api/playlist/' + party;
+        let url =  window.location.origin+"/api/playlist/" + party;
 
         const results = fetch(url, {
                 headers: {'Content-Type': 'application/json'},
@@ -51,7 +51,7 @@ class Playlist {
     update() {
         console.log("UPDATE")
         let party = window.location.href.split('/').pop();
-        let url =  'http://localhost:8000/api/playlist/' + party;
+        let url =  window.location.origin+'/api/playlist/' + party;
 
         const results = fetch(url, {
                 headers: {'Content-Type': 'application/json'},

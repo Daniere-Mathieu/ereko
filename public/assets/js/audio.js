@@ -223,7 +223,7 @@ function decodeUrl(){
 
 myPlaylist.load();
 setInterval(() => {
-  //myPlaylist.update();
+  myPlaylist.update();
 }, 2500);
 function sortMusiclist(tab){
     let changed;
