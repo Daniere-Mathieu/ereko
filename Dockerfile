@@ -21,5 +21,5 @@ RUN curl -L https://github.com/dirkf/youtube-dl/archive/refs/heads/df-youtube-un
 # configure the crontab for music downloader
 ADD ./docker_files/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "bash", "/entrypoint.sh" ]
 CMD [ "/opt/bitnami/scripts/symfony/run.sh" ]
