@@ -15,8 +15,8 @@ class Playlist {
 
     load() {
         let party = window.location.href.split('/').pop();
-        let url =  window.location.origin+"/api/playlist/" + party;
-
+        let url =  window.location.origin + '/api/playlist/' + party;
+        
         const results = fetch(url, {
                 headers: {'Content-Type': 'application/json'},
                 method: 'GET',
@@ -49,7 +49,7 @@ class Playlist {
 
     update() {
         let party = window.location.href.split('/').pop();
-        let url =  window.location.origin+'/api/playlist/' + party;
+        let url =  window.location.origin + '/api/playlist/' + party;
 
         const results = fetch(url, {
                 headers: {'Content-Type': 'application/json'},
