@@ -51,6 +51,7 @@ function removeResultDiv() {
     for (let i = result_div.length-1; i >= 0 ; i--) {
         result_list.removeChild(result_div[i]);
     }
+    search_input.value = "";
 }
 
 function titleInBold(title) {
@@ -119,8 +120,9 @@ async function addTrackApi(track_title, track_id) {
         .then(function (data) {
             console.log(data);
             let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
+            myPlaylist.addTrack(track);
             track.displayTrack(track_title, data.order);
-            musicList.push(track);
+            allTrackList.push(track);
         })
         .catch(function (e) {
             console.log(e);

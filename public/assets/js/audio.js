@@ -17,6 +17,8 @@ let audio = new Audio();
 audio.volume = .75;
 // je donne la valeur au volume du son
 //
+let myPlaylist = new Playlist();
+
 let playlistID = decodeUrl()
 function setAudio(source){
       audio.src = source;
@@ -47,8 +49,9 @@ window.addEventListener("load",async() => {
   await callTrackList(playlistID);
   for (let i = 0; i < allTrackList.length; i++) {
       let t = allTrackList[i];
-      let track = new Track(t.party_id, t.track_id, t.state_for_party, t.order, t.state_track, t.download_path);
-      track.displayTrack(allTrackList[i].track_title, allTrackList[i].order);
+      // let track = new Track(t.party_id, t.track_id, t.state_for_party, t.order, t.state_track, t.download_path);
+      // myPlaylist.addTrack(track);
+      // track.displayTrack(allTrackList[i].track_title, allTrackList[i].order);
   }
   if (allTrackList.length > 0) {
     if (allTrackList[currentMusic].state_track === "READY") {
@@ -157,3 +160,8 @@ function decodeUrl(){
   let arrayDecodeUrl = url.split('/');
   return arrayDecodeUrl[4]
 }
+
+myPlaylist.load();
+setInterval(() => {
+  myPlaylist.update();
+}, 2500);

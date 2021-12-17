@@ -23,7 +23,7 @@ class Track {
     track.setAttribute("class","track");
     track.appendChild(title);
     title.setAttribute("class","title_track")
-    title.setAttribute("id",number)
+    track.setAttribute("id",number)
 
     title.innerText = titleParam;
     
@@ -34,9 +34,15 @@ class Track {
     }
   }
 
-  setState(state) {
-    console.log("state = " + state);
-    this.state = state;
+  getState() {
+    return this.state_track;
+  }
+
+  setState(track) {
+    this.state_track = track.state_track;
+    let node = document.getElementById(track.order);
+    node.remove();
+    this.displayTrack(track.track_title, track.order);
   }
 
   displayDownloadSVG() {
