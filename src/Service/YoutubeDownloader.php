@@ -13,8 +13,7 @@ class YoutubeDownloader
     private static $output_video_file_format = "%(id)s.%(ext)s";
 
     private static function downloadCommand() {
-        return self::$youtube_dl_command . " --no-playlist \
-            -x --audio-format vorbis --recode-video ogg";
+        return self::$youtube_dl_command . " --no-playlist -x --audio-format vorbis --recode-video ogg";
     }
     private static function durationCommand() {
         return self::$youtube_dl_command . " --get-duration";
@@ -43,10 +42,11 @@ class YoutubeDownloader
     }
 
     private function createFullCommand() {
-        return self::downloadCommand()
+        $full_command = self::downloadCommand()
             . " -o '" . $this->download_dir . self::$output_video_file_format. "' "
             . $this->video_id
             ;
+        return $full_command;
     }
 
     private function display_cli_output() {
