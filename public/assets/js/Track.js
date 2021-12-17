@@ -46,7 +46,10 @@ class Track {
   }
 
   hasStateChanged(state) {
-    
+    if (this.state_track != state) {
+      return  true
+    }
+    return false
   }
 
   displayDownloadSVG() {

@@ -48,7 +48,6 @@ class Playlist {
     }
 
     update() {
-        console.log("UPDATE")
         let party = window.location.href.split('/').pop();
         let url =  window.location.origin+'/api/playlist/' + party;
 
@@ -73,7 +72,7 @@ class Playlist {
 
         results.then((server_playlist) => {
             for (let i = 0; i < server_playlist.length; i++) {
-                if (this.list_of_tracks[i].state_track != 'READY' && server_playlist[i].state_track == 'READY') {
+                if (this.list_of_tracks[i].hasStateChanged(server_playlist[i].state_track)) {
                     this.list_of_tracks[i].setState(server_playlist[i]);
                 }
                 console.log(this.list_of_tracks[i].state_track, server_playlist[i].state_track) // DEBUG
