@@ -46,7 +46,6 @@ audio.addEventListener("ended",() => {
     nextLoadMusic();
     currentMusic = 0;
     futureMusic = 1;
-
   }else {
     setPlaying("title_track");
     sortMusiclist(musicList);

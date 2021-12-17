@@ -16,6 +16,8 @@ class Track {
   }
 
   displayTrack(titleParam, number){
+    console.log("display");
+
     let scrollParent = document.getElementById('scroll');
     let track = document.createElement("div");
     let title = document.createElement("p");
