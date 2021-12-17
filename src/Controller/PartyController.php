@@ -24,7 +24,7 @@ class PartyController extends AbstractController
         $party = new Party();
         $party_date = new \DateTime($date);
         $party->setDate($party_date);
-        if ($party->dateIsTooFar()) {
+        if ($party->UnacceptableDate()) {
             return $this->render(
                 'home/index.html.twig',
                 [
