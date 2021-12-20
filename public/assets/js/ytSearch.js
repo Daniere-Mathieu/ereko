@@ -122,7 +122,6 @@ async function addTrackApi(track_title, track_id) {
             let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
             myPlaylist.addTrack(track);
             allTrackList.push(track);
-            console.log(data);
             if (allTrackList < 5) {
                 async () => {
                     let last = allTrackList.length - 1;
@@ -131,7 +130,6 @@ async function addTrackApi(track_title, track_id) {
                 }
             }
             track.displayTrack(track_title, data.order);
-
         })
         .catch(function (e) {
             console.log(e);
