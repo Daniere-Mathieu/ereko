@@ -18,7 +18,7 @@ class YoutubeDownloader
     private static function durationCommand() {
         return self::$youtube_dl_command . " --get-duration";
     }
-    
+
     private $download_dir;
     private $video_id;
     private $max_time_minutes = 20;

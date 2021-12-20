@@ -11,12 +11,12 @@ class Playlist {
     }
 
     removeTrack(track_id) {
-        
+
     }
 
     load() {
         let party = window.location.href.split('/').pop();
-        let url =  'http://0.0.0.0:8000/api/playlist/' + party;
+        let url =  window.location.origin+"/api/playlist/" + party;
 
         const results = fetch(url, {
                 headers: {'Content-Type': 'application/json'},
@@ -37,11 +37,11 @@ class Playlist {
             }
         );
 
-        results.then((server_playlist) => { 
+        results.then((server_playlist) => {
             for (let i = 0; i < server_playlist.length; i++) {
                 let t = server_playlist[i];
                 let track = new Track(t.party_id, t.track_id, t.state_for_party, t.order, t.state_track, t.download_path);
-                
+
                 this.list_of_tracks.push(track)
                 track.displayTrack(t.track_title, t.order);
             }
@@ -51,7 +51,7 @@ class Playlist {
     update() {
         console.log("UPDATE")
         let party = window.location.href.split('/').pop();
-        let url =  'http://0.0.0.0:8000/api/playlist/' + party;
+        let url =  window.location.origin+'/api/playlist/' + party;
 
         const results = fetch(url, {
                 headers: {'Content-Type': 'application/json'},
@@ -76,7 +76,7 @@ class Playlist {
             for (let i = 0; i < server_playlist.length; i++) {
                 if (this.list_of_tracks[i].state_track != 'READY' && server_playlist[i].state_track == 'READY') {
                     this.list_of_tracks[i].setState(server_playlist[i]);
-                } 
+                }
                 console.log(this.list_of_tracks[i].state_track, server_playlist[i].state_track) // DEBUG
             }
         });

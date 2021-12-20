@@ -1,5 +1,5 @@
 async function callTrackList(uid){
-  let url = "http://0.0.0.0:8000/api/playlist/"+uid;
+  let url = window.location.origin +"/api/playlist/"+uid;
   return fetch(url).then((response)=>{
     if(response.ok){
       return response.json().then(json => {
@@ -21,6 +21,6 @@ function jsonTransfer(json){
   })
 }
 function callTrack(id){
-  let url = "http://0.0.0.0:8000/info/"+ id;
+  let url = window.location.origin+"/info/"+ id;
 
 }
