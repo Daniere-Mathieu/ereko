@@ -35,7 +35,7 @@ audio.addEventListener("ended",() => {
   console.log("ended")
   if (allTrackList.length <= endVerification) {
     console.log("endend")
-    setPlaying("title_track")
+    setPlaying("track")
     sortMusiclist(musicList);
     if (musicList.length === 0 ) {
       console.log(save)
@@ -47,7 +47,7 @@ audio.addEventListener("ended",() => {
     currentMusic = 0;
     futureMusic = 1;
   }else {
-    setPlaying("title_track");
+    setPlaying("track");
     sortMusiclist(musicList);
     setAudio(musicList[0].path);
     currentMusic++;
