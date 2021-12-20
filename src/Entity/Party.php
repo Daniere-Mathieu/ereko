@@ -112,8 +112,8 @@ class Party
         $string_interval = "P" . self::$max_months_before_party_takes_place . "M0DT0H0M0S";
         $interval = new \DateInterval($string_interval);
         $max_date = date_add(new \Datetime(), $interval);
-        $now = new Datetime();
-        return $this->date < $now && $this->date > $max_date;
+        $now = new \Datetime();
+        return $this->date < $now || $this->date > $max_date;
     }
 
     /**

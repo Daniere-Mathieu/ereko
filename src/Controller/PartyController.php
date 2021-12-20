@@ -28,7 +28,7 @@ class PartyController extends AbstractController
             return $this->render(
                 'home/index.html.twig',
                 [
-                    'no_date' => 'Date is too far. Party should take place in the next '
+                    'no_date' => 'Date is not correct. Party should take place in the next '
                         . Party::$max_months_before_party_takes_place
                         . ' months.'
                 ]);
