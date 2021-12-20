@@ -121,10 +121,17 @@ async function addTrackApi(track_title, track_id) {
         .then(function (data) {
             let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
             myPlaylist.addTrack(track);
-            track.displayTrack(track_title, data.order);
-            callTrackList(party);
             allTrackList.push(track);
-            musicList.push(track);
+            console.log(data);
+            if (allTrackList < 5) {
+                async () => {
+                    let last = allTrackList.length - 1;
+                    promiseList[last] = callMusic(allTrackList[last].download_path);
+                    callMusicBlob(promiseList[last],allTrackList[last]);
+                }
+            }
+            track.displayTrack(track_title, data.order);
+
         })
         .catch(function (e) {
             console.log(e);

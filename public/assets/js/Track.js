@@ -16,8 +16,6 @@ class Track {
   }
 
   displayTrack(titleParam, number){
-    console.log("display");
-
     let scrollParent = document.getElementById('scroll');
     let track = document.createElement("div");
     let title = document.createElement("p");
@@ -52,6 +50,13 @@ class Track {
       return  true
     }
     return false
+  }
+
+  isReady() {
+    if (this.state_track == 'READY') {
+      return true;
+    }
+    return false;
   }
 
   displayDownloadSVG() {

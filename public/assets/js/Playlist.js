@@ -1,12 +1,21 @@
 class Playlist {
     list_of_tracks;
+    party;
 
     constructor() {
         this.list_of_tracks = [];
+        this.party = window.location.href.split('/').pop();
     }
 
     addTrack(track) {
         this.list_of_tracks.push(track);
+        let intervalID = setInterval(() => {
+            callTrackList(this.party);
+            if (track.isReady()) {
+                this.playList
+                clearInterval(intervalID);
+            }
+        }, 2500);
     }
 
     removeTrack(track_id) {
@@ -77,6 +86,7 @@ class Playlist {
                 }
             }
         });
+
     }
 
     displayTracks() {
