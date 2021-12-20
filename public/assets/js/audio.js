@@ -266,12 +266,21 @@ async function test1(){
 async function test2(){
   console.log("test2");
   let last = allTrackList.length - 1 ;
-  for (let i = 0; i < musicList.length; i++) {
-    if (musicList[0].loop !== musicList[3].loop) {
-
-    }
+  let loopNumber = 0;
+  let tempArray = [];
+  let length = musicList.length;
+  for (let i = 0; i < length; i++) {
     if (allTrackList[last].order < musicList[i].number) {
-      console.log("inf")
+      if (musicList[0].loop !== musicList[i].loop) {
+        loopNumber = musicList[0].loop;
+      }
+      tempArray.push(musicList[i]);
+      musicList.splice(i,1);
     }
-  }
+  promiseList[0] = callMusic(allTrackList[0].download_path);
+  await callMusicBlob(promiseList[0],allTrackList[0]);
+  let intervalPut = setInterval(()=>{
+
+  },500)
+}
 }
