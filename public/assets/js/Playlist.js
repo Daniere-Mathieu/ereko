@@ -12,7 +12,11 @@ class Playlist {
         let intervalID = setInterval(() => {
             callTrackList(this.party);
             if (track.isReady()) {
-                this.playList
+              console.log("isready");
+              if (allTrackList.length < 5) {
+                console.log("inf 5");
+                  test1();
+              }
                 clearInterval(intervalID);
             }
         }, 2500);
@@ -25,7 +29,7 @@ class Playlist {
     load() {
         let party = window.location.href.split('/').pop();
         let url =  window.location.origin + '/api/playlist/' + party;
-        
+
         const results = fetch(url, {
                 headers: {'Content-Type': 'application/json'},
                 method: 'GET',

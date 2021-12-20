@@ -27,6 +27,8 @@ let myPlaylist = new Playlist();
 
 let playlistID = decodeUrl()
 function setAudio(source){
+  console.log(musicList[0]);
+  console.log("setAudio")
       audio.src = source;
 }
 //function qui change la musique (sert a économisé quelque ligne)
@@ -240,4 +242,26 @@ function sortMusiclist(tab){
       }
     }
   } while(changed);
+}
+async function test1(){
+  console.log("async");
+    if (typeof musicList[0] == "undefined") {
+      console.log("je suis rentrée")
+      promiseList[0] = callMusic(allTrackList[0].download_path);
+      await callMusicBlob(promiseList[0],allTrackList[0]);
+      let emptyInterval = setInterval(()=> {
+        console.log("interval")
+        if (typeof musicList[0] !== "undefined" && typeof allTrackList[0].thumbnail_path !== "undefined") {
+            console.log("salut")
+            setAudio(musicList[0].path);
+            clearInterval(emptyInterval);
+        }
+      },500)
+
+    }
+    else {
+      console.log("test")
+      promiseList[0] = callMusic(allTrackList[0].download_path);
+      await callMusicBlob(promiseList[0],allTrackList[0]);
+    }
 }

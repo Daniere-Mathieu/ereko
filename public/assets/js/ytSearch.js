@@ -126,7 +126,7 @@ async function addTrackApi(track_title, track_id) {
                 async () => {
                     let last = allTrackList.length - 1;
                     promiseList[last] = callMusic(allTrackList[last].download_path);
-                    callMusicBlob(promiseList[last],allTrackList[last]);
+                    await callMusicBlob(promiseList[last],allTrackList[last]);
                 }
             }
             track.displayTrack(track_title, data.order);
@@ -142,7 +142,7 @@ search_input.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
         if (list_exist) {
             removeResultDiv();
-            
+
         }
         if (search_input.value.length > 0) {
             requestToYoutube(search_input.value);
