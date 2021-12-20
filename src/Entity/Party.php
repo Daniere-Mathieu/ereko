@@ -18,6 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Party
 {
     protected const party_id_length = 10;
+    public const maximum_track_number = 200;
     public static $wait_days_before_delete_party = 10;
     public static $max_months_before_party_takes_place = 3;
 
@@ -107,11 +108,12 @@ class Party
         return $this;
     }
 
-    public function dateIsTooFar() {
+    public function UnacceptableDate() {
         $string_interval = "P" . self::$max_months_before_party_takes_place . "M0DT0H0M0S";
         $interval = new \DateInterval($string_interval);
         $max_date = date_add(new \Datetime(), $interval);
-        return $this->date > $max_date;
+        $now = new Datetime();
+        return $this->date < $now && $this->date > $max_date;
     }
 
     /**
@@ -130,6 +132,11 @@ class Party
             $trackInParty->setOrderInList($this->findLastTrackInParty() + 1);
         }
         return $this;
+    }
+    
+    public function trackNumberLimitIsReached(): bool
+    {
+        return count($this->trackInParties) >= self::maximum_track_number;
     }
 
     private function findLastTrackInParty() {

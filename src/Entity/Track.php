@@ -149,7 +149,7 @@ class Track
             $this->state = $state;
             return $this;
         }
-        throw new \ValueError('Track state forbidden');
+        throw new \InvalidArgumentException('Track state forbidden');
     }
 
     /**
@@ -246,7 +246,8 @@ class Track
 
         // compare last_updated + delay with current time
         $now = new \Datetime();
-        return $now >= date_add($this->updated, $delay);
+        $updated_on = clone $this->updated;
+        return $now >= date_add($updated_on, $delay);
 
     }
 
