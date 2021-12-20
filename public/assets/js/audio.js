@@ -46,7 +46,6 @@ audio.addEventListener("ended",() => {
     nextLoadMusic();
     currentMusic = 0;
     futureMusic = 1;
-
   }else {
     setPlaying("title_track");
     sortMusiclist(musicList);
@@ -62,9 +61,6 @@ window.addEventListener("load",async() => {
   await callTrackList(playlistID);
   for (let i = 0; i < allTrackList.length; i++) {
       let t = allTrackList[i];
-      // let track = new Track(t.party_id, t.track_id, t.state_for_party, t.order, t.state_track, t.download_path);
-      // myPlaylist.addTrack(track);
-      // track.displayTrack(allTrackList[i].track_title, allTrackList[i].order);
   }
   if (allTrackList.length > 0) {
     if (allTrackList[currentMusic].state_track === "READY") {
@@ -203,12 +199,13 @@ function spliceList(array,size){
       array.splice(0,1);
     }
 }
-function setPlaying(param){
-  let trackTitle = document.getElementById(allTrackList[currentMusic].order);
-  let idCurrentMusic = trackTitle.getAttribute("id");
+function setPlaying(className){
+  // I think nexr three lines are useless
+  let trackDiv = document.getElementById(allTrackList[currentMusic].order);
+  let idCurrentMusic = trackDiv.getAttribute("id");
   if(allTrackList[currentMusic].order == idCurrentMusic){
     songName.innerText = allTrackList[currentMusic].track_title;
-    trackTitle.setAttribute("class",param);
+    trackDiv.setAttribute("class", className);
   }
 }
 function setThumbnail(param){
@@ -222,10 +219,9 @@ function decodeUrl(){
 }
 
 myPlaylist.load();
-setInterval(() => {
+let update_id = setInterval(() => {
   myPlaylist.update();
-}, 2500);
-function sortMusiclist(tab){
+}, 2500);function sortMusiclist(tab){
     let changed;
     do{
         changed = false;

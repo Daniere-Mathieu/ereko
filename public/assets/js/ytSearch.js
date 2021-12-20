@@ -52,6 +52,7 @@ function removeResultDiv() {
         result_list.removeChild(result_div[i]);
     }
     search_input.value = "";
+    list_exist = false
 }
 
 function titleInBold(title) {
@@ -102,7 +103,7 @@ async function requestToYoutube(research) {
 
 async function addTrackApi(track_title, track_id) {
     let party = getPartyUid();
-    let url =  window.location.origin+'/api/add/' + party + '/' + track_id;
+    let url =  window.location.origin + '/api/add/' + party + '/' + track_id;
 
     await fetch(url, {
             headers: {'Content-Type': 'application/json'},
@@ -111,18 +112,18 @@ async function addTrackApi(track_title, track_id) {
         })
         .then(function (response) {
             if (response.status == 200) {
-                removeResultDiv()
+                removeResultDiv();
                 return response.json();
             } else {
                 throw new TypeError('Request failed ! Status code : ' + response.status);
             }
         })
         .then(function (data) {
-            console.log(data);
             let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
             myPlaylist.addTrack(track);
             track.displayTrack(track_title, data.order);
             allTrackList.push(track);
+            musicList.push(track);
         })
         .catch(function (e) {
             console.log(e);
@@ -135,7 +136,7 @@ search_input.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
         if (list_exist) {
             removeResultDiv();
-            list_exist = false
+            
         }
         if (search_input.value.length > 0) {
             requestToYoutube(search_input.value);

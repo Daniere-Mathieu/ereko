@@ -15,7 +15,7 @@ audio.addEventListener("loadeddata",async() => {
     audioPlayer.querySelector(".time .length").textContent = getTimeCodeFromNum(
       audio.duration
     );
-    setPlaying("title_track playing");
+    setPlaying("track playing");
     setThumbnail(allTrackList)
   },
   false
