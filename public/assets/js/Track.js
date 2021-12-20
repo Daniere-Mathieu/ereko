@@ -26,7 +26,7 @@ class Track {
     track.setAttribute("id",number)
 
     title.innerHTML = titleParam;
-
+    
     if (this.state_track === 'DOWNLOADING' || this.state_track === 'TO_DOWNLOAD') {
       track.appendChild(this.displayDownloadSVG());
     } else if (this.state_track === 'ON_ERROR') {
