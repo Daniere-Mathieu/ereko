@@ -17,6 +17,10 @@ class Playlist {
                 console.log("inf 5");
                   test1();
               }
+              else {
+                console.log("sup 5");
+                test2();
+              }
                 clearInterval(intervalID);
             }
         }, 2500);

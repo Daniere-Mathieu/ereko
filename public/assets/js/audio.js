@@ -13,7 +13,6 @@ let allTrackList = [];
 let musicList = [];
 //j'initilize le tableau de musique
 let test = [];
-let save;
 let first = true;
 let audio = new Audio();
 //object audio
@@ -24,6 +23,7 @@ let promiseList = [];
 let loop = 0;
 let reset = false;
 let myPlaylist = new Playlist();
+let currentMusicPlaying = [];
 
 let playlistID = decodeUrl()
 function setAudio(source){
@@ -34,16 +34,14 @@ function setAudio(source){
 //function qui change la musique (sert a économisé quelque ligne)
 audio.addEventListener("ended",() => {
   let endVerification = currentMusic + 1;
-  console.log("ended")
   if (allTrackList.length <= endVerification) {
-    console.log("endend")
     setPlaying("track")
     sortMusiclist(musicList);
     if (musicList.length === 0 ) {
-      console.log(save)
-      musicList[0] = save;
+      musicList[0] = currentMusicPlaying[0];
     }
     setAudio(musicList[0].path);
+    currentMusicPlaying[0] = musicList[0];
     spliceList(musicList,1);
     nextLoadMusic();
     currentMusic = 0;
@@ -52,6 +50,7 @@ audio.addEventListener("ended",() => {
     setPlaying("track");
     sortMusiclist(musicList);
     setAudio(musicList[0].path);
+    currentMusicPlaying[0] = musicList[0];
     currentMusic++;
     futureMusic++;
     spliceList(musicList,1);
@@ -102,13 +101,8 @@ window.addEventListener("load",async() => {
     }
     if (musicList.length > 0) {
       setAudio(musicList[0].path);
-      if (allTrackList.length === 1) {
-        save = musicList[0];
-        spliceList(musicList,1);
-      }
-      else {
-        spliceList(musicList,1);
-      }
+      currentMusicPlaying[0] = musicList[0];
+      spliceList(musicList,1);
       counter = 0;
       loadCallMusic();
     }
@@ -116,13 +110,8 @@ window.addEventListener("load",async() => {
       let intervalID = setInterval(function () {
         if (musicList.length >= 1) {
           setAudio(musicList[0].path);
-          if (allTrackList.length === 1) {
-            save = musicList[0];
-            spliceList(musicList,1);
-          }
-          else {
-            spliceList(musicList,1);
-          }
+          currentMusicPlaying[0]  = musicList[0];
+          spliceList(musicList,1);
           counter = 0;
           loadCallMusic();
           clearInterval(intervalID);
@@ -166,21 +155,20 @@ async function nextLoadMusic(){
     lastLoadMusic++;
     first = false;
   }
-  console.log("nextLoadMusic/"+lastLoadMusic)
+  if (lastLoadMusic < allTrackList.length) {
+    if(allTrackList[lastLoadMusic].state_track == "ON_ERROR"  || allTrackList[lastLoadMusic].state_track=="TOO_LONG"){
+      lastLoadMusic++;
+    }
+  }
   if (lastLoadMusic >= allTrackList.length) {
-    console.log("nextLoadMusic/if/"+lastLoadMusic)
     if (reset) {
-      console.log("nextLoadMusic/if/reset"+lastLoadMusic)
       lastLoadMusic -= allTrackList.length;
     }
     else {
-      console.log("nextLoadMusic/if/else"+lastLoadMusic)
-      console.log(loop+"/loop")
       lastLoadMusic = 0;
       loop++;
       reset = true;
     }
-    console.log(lastLoadMusic + "/lastLoadMusic");
     promiseList[lastLoadMusic] = callMusic(allTrackList[lastLoadMusic].download_path);
     await callMusicBlob(promiseList[lastLoadMusic],allTrackList[lastLoadMusic]);
     lastLoadMusic++;
@@ -196,7 +184,6 @@ async function nextLoadMusic(){
 }
 // fonction qui a pour but de d'apeller la prochaine musique loadable
 function spliceList(array,size){
-  console.log("splice")
     if (array.length >= size) {
       array.splice(0,1);
     }
@@ -205,9 +192,21 @@ function setPlaying(className){
   // I think nexr three lines are useless
   let trackDiv = document.getElementById(allTrackList[currentMusic].order);
   let idCurrentMusic = trackDiv.getAttribute("id");
-  if(allTrackList[currentMusic].order == idCurrentMusic){
+  if(currentMusicPlaying[0].number == idCurrentMusic){
     songName.innerText = allTrackList[currentMusic].track_title;
     trackDiv.setAttribute("class", className);
+  }
+  else {
+    for (let i = 0; i < allTrackList.length; i++) {
+      let trackGreatDiv = document.getElementById(allTrackList[i].order);
+      let idGreatCurrentMusic = trackGreatDiv.getAttribute("id");
+      if (idGreatCurrentMusic == currentMusicPlaying[0].number) {
+        currentMusic = i;
+        songName.innerText = allTrackList[i].track_title;
+        trackGreatDiv.setAttribute("class", className);
+        break;
+      }
+    }
   }
 }
 function setThumbnail(param){
@@ -231,9 +230,7 @@ function sortMusiclist(tab){
     changed = false;
     for(let i=0; i < tab.length-1; i++) {
       if(tab[i].number > tab[i+1].number) {
-        console.log("yes")
         if(tab[i].loop === tab[i+1].loop) {
-          console.log("yes,yes,yes,yes")
           let tmp = tab[i];
           tab[i] = tab[i+1];
           tab[i+1] = tmp;
@@ -264,4 +261,16 @@ async function test1(){
       promiseList[0] = callMusic(allTrackList[0].download_path);
       await callMusicBlob(promiseList[0],allTrackList[0]);
     }
+}
+async function test2(){
+  console.log("test2");
+  let last = allTrackList.length - 1 ;
+  for (let i = 0; i < musicList.length; i++) {
+    if (musicList[0].loop !== musicList[3].loop) {
+
+    }
+    if (allTrackList[last].order < musicList[i].number) {
+      console.log("inf")
+    }
+  }
 }

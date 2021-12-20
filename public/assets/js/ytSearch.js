@@ -4,7 +4,7 @@ let request_error = document.getElementById('request_error');
 
 let list_exist = false;
 
-const API_KEY = 'AIzaSyARXz1iQ3SEIknARH5LibTNzzRpQRvt-oo'; // Token for YT API requests. Please limit requests, we have 100 each day.
+const API_KEY = 'AIzaSyChQda9SVL9Lql8-KBX-6XsNJzB4hrSbkM'; // Token for YT API requests. Please limit requests, we have 100 each day.
 // const API_KEY = 'AIzaSyChQda9SVL9Lql8-KBX-6XsNJzB4hrSbkM'; // Token for YT API requests. Please limit requests, we have 100 each day.
 
 function createResultDiv(item) {
