@@ -193,7 +193,7 @@ function setPlaying(className){
   let trackDiv = document.getElementById(allTrackList[currentMusic].order);
   let idCurrentMusic = trackDiv.getAttribute("id");
   if(currentMusicPlaying[0].number == idCurrentMusic){
-    songName.innerHTML = allTrackList[currentMusic].track_title;
+    songName.innerText = allTrackList[currentMusic].track_title;
     trackDiv.setAttribute("class", className);
   }
   else {
@@ -202,7 +202,7 @@ function setPlaying(className){
       let idGreatCurrentMusic = trackGreatDiv.getAttribute("id");
       if (idGreatCurrentMusic == currentMusicPlaying[0].number) {
         currentMusic = i;
-        songName.innerHTML = allTrackList[i].track_title;
+        songName.innerText = allTrackList[i].track_title;
         trackGreatDiv.setAttribute("class", className);
         break;
       }
@@ -251,6 +251,7 @@ async function test1(){
         if (typeof musicList[0] !== "undefined" && typeof allTrackList[0].thumbnail_path !== "undefined") {
             console.log("salut")
             setAudio(musicList[0].path);
+            currentMusicPlaying[0] = musicList[0];
             clearInterval(emptyInterval);
         }
       },500)
