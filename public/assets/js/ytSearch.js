@@ -122,6 +122,7 @@ async function addTrackApi(track_title, track_id) {
             let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
             myPlaylist.addTrack(track);
             track.displayTrack(track_title, data.order);
+            callTrackList(party);
             allTrackList.push(track);
             musicList.push(track);
         })

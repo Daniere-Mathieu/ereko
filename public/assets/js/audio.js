@@ -221,21 +221,23 @@ function decodeUrl(){
 myPlaylist.load();
 let update_id = setInterval(() => {
   myPlaylist.update();
-}, 2500);function sortMusiclist(tab){
-    let changed;
-    do{
-        changed = false;
-        for(let i=0; i < tab.length-1; i++) {
-            if(tab[i].number > tab[i+1].number) {
-              console.log("yes")
-              if(tab[i].loop === tab[i+1].loop) {
-                console.log("yes,yes,yes,yes")
-                let tmp = tab[i];
-                tab[i] = tab[i+1];
-                tab[i+1] = tmp;
-                changed = true;
-              }
-            }
+}, 2500);
+
+function sortMusiclist(tab){
+  let changed;
+  do{
+    changed = false;
+    for(let i=0; i < tab.length-1; i++) {
+      if(tab[i].number > tab[i+1].number) {
+        console.log("yes")
+        if(tab[i].loop === tab[i+1].loop) {
+          console.log("yes,yes,yes,yes")
+          let tmp = tab[i];
+          tab[i] = tab[i+1];
+          tab[i+1] = tmp;
+          changed = true;
         }
-    } while(changed);
+      }
+    }
+  } while(changed);
 }
