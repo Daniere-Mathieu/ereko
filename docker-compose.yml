@@ -12,8 +12,8 @@ services:
       - MARIADB_DATABASE=ereko
     volumes:
       - ereko-db-persist:/var/lib/mysql
-  myapp:
-    image: symfony5_youtube-dl #docker.io/bitnami/symfony:5.3
+  ereko:
+    image: tomngr/ereko:current
     ports:
       - '8000:8000'
     environment:
