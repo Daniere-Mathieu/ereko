@@ -193,7 +193,7 @@ function setPlaying(className){
   let trackDiv = document.getElementById(allTrackList[currentMusic].order);
   let idCurrentMusic = trackDiv.getAttribute("id");
   if(currentMusicPlaying[0].number == idCurrentMusic){
-    songName.innerText = allTrackList[currentMusic].track_title;
+    songName.innerHTML = allTrackList[currentMusic].track_title;
     trackDiv.setAttribute("class", className);
   }
   else {
@@ -202,7 +202,7 @@ function setPlaying(className){
       let idGreatCurrentMusic = trackGreatDiv.getAttribute("id");
       if (idGreatCurrentMusic == currentMusicPlaying[0].number) {
         currentMusic = i;
-        songName.innerText = allTrackList[i].track_title;
+        songName.innerHTML = allTrackList[i].track_title;
         trackGreatDiv.setAttribute("class", className);
         break;
       }
