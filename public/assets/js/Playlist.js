@@ -1,12 +1,29 @@
 class Playlist {
     list_of_tracks;
+    party;
 
     constructor() {
         this.list_of_tracks = [];
+        this.party = window.location.href.split('/').pop();
     }
 
     addTrack(track) {
         this.list_of_tracks.push(track);
+        let intervalID = setInterval(() => {
+            callTrackList(this.party);
+            if (track.isReady()) {
+              console.log("isready");
+              if (allTrackList.length < 5) {
+                console.log("inf 5");
+                  test1();
+              }
+              else {
+                console.log("sup 5");
+                test2();
+              }
+                clearInterval(intervalID);
+            }
+        }, 2500);
     }
 
     removeTrack(track_id) {
@@ -16,7 +33,7 @@ class Playlist {
     load() {
         let party = window.location.href.split('/').pop();
         let url =  window.location.origin + '/api/playlist/' + party;
-        
+
         const results = fetch(url, {
                 headers: {'Content-Type': 'application/json'},
                 method: 'GET',
@@ -77,6 +94,7 @@ class Playlist {
                 }
             }
         });
+
     }
 
     displayTracks() {

@@ -4,7 +4,7 @@ let request_error = document.getElementById('request_error');
 
 let list_exist = false;
 
-const API_KEY = 'AIzaSyARXz1iQ3SEIknARH5LibTNzzRpQRvt-oo'; // Token for YT API requests. Please limit requests, we have 100 each day.
+const API_KEY = 'AIzaSyChQda9SVL9Lql8-KBX-6XsNJzB4hrSbkM'; // Token for YT API requests. Please limit requests, we have 100 each day.
 // const API_KEY = 'AIzaSyChQda9SVL9Lql8-KBX-6XsNJzB4hrSbkM'; // Token for YT API requests. Please limit requests, we have 100 each day.
 
 function createResultDiv(item) {
@@ -121,9 +121,15 @@ async function addTrackApi(track_title, track_id) {
         .then(function (data) {
             let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
             myPlaylist.addTrack(track);
-            track.displayTrack(track_title, data.order);
             allTrackList.push(track);
-            musicList.push(track);
+            if (allTrackList < 5) {
+                async () => {
+                    let last = allTrackList.length - 1;
+                    promiseList[last] = callMusic(allTrackList[last].download_path);
+                    await callMusicBlob(promiseList[last],allTrackList[last]);
+                }
+            }
+            track.displayTrack(track_title, data.order);
         })
         .catch(function (e) {
             console.log(e);
@@ -136,7 +142,7 @@ search_input.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
         if (list_exist) {
             removeResultDiv();
-            
+
         }
         if (search_input.value.length > 0) {
             requestToYoutube(search_input.value);
