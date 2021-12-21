@@ -261,9 +261,7 @@ async function test1(){
     }
     else {
       console.log("test")
-      let last = allTrackList.length -1 ;
-      promiseList[last] = callMusic(allTrackList[last].download_path);
-      await callMusicBlob(promiseList[last],allTrackList[last]);
+      test3();
     }
 }
 async function test2(){
@@ -304,5 +302,48 @@ async function test2(){
           }
         }
       },500)
+    }
+}
+async function test3(){
+  let last = allTrackList.length - 1 ;
+  let loopNumber = 0;
+  let tempArray = [];
+  let validation = false ;
+  for (let i = 0; i < musicList.length; i++) {
+    console.log("for test2")
+    if (allTrackList[last].order > musicList[i].number && currentMusicPlaying[0].loop !== musicList[i].loop) {
+      console.log("if test2")
+      loopNumber = currentMusicPlaying[0].loop;
+      tempArray.push(musicList[i]);
+      musicList.splice(i,1);
+      validation = true;
+      i--;
+    }
+  }
+  console.log(tempArray)
+    let length = musicList.length;
+    if (validation) {
+      console.log("validation")
+      promiseList[last] = callMusic(allTrackList[last].download_path);
+      await callMusicBlob(promiseList[last],allTrackList[last]);
+      let intervalPut = setInterval(()=>{
+        console.log("interval")
+        if (typeof musicList[length] !== "undefined") {
+          let x = 0;
+          musicList[length].loop = currentMusicPlaying[0].loop
+          let max = allTrackList.length -1;
+          for (let i = musicList.length; i < max; i++) {
+            musicList[i] = tempArray[x];
+            x++;
+          }
+          if (musicList.length === max) {
+            clearInterval(intervalPut);
+          }
+        }
+      },500)
+    }
+    else{
+      promiseList[last] = callMusic(allTrackList[last].download_path);
+      await callMusicBlob(promiseList[last],allTrackList[last]);
     }
 }
