@@ -42,7 +42,7 @@ audio.addEventListener("ended",() => {
     }
     setAudio(musicList[0].path);
     currentMusicPlaying[0] = musicList[0];
-    spliceList(musicList,1);
+    spliceList(musicList);
     nextLoadMusic();
     currentMusic = 0;
     futureMusic = 1;
@@ -53,7 +53,7 @@ audio.addEventListener("ended",() => {
     currentMusicPlaying[0] = musicList[0];
     currentMusic++;
     futureMusic++;
-    spliceList(musicList,1);
+    spliceList(musicList);
     nextLoadMusic();
   }
 })
@@ -102,7 +102,7 @@ window.addEventListener("load",async() => {
     if (musicList.length > 0) {
       setAudio(musicList[0].path);
       currentMusicPlaying[0] = musicList[0];
-      spliceList(musicList,1);
+      spliceList(musicList);
       counter = 0;
       loadCallMusic();
     }
@@ -111,7 +111,7 @@ window.addEventListener("load",async() => {
         if (musicList.length >= 1) {
           setAudio(musicList[0].path);
           currentMusicPlaying[0]  = musicList[0];
-          spliceList(musicList,1);
+          spliceList(musicList);
           counter = 0;
           loadCallMusic();
           clearInterval(intervalID);
@@ -183,10 +183,8 @@ async function nextLoadMusic(){
   }
 }
 // fonction qui a pour but de d'apeller la prochaine musique loadable
-function spliceList(array,size){
-    if (array.length >= size) {
+function spliceList(array){
       array.splice(0,1);
-    }
 }
 function setPlaying(className){
   // I think nexr three lines are useless
@@ -252,6 +250,7 @@ async function test1(){
             console.log("salut")
             setAudio(musicList[0].path);
             currentMusicPlaying[0] = musicList[0];
+            spliceList(musicList);
             clearInterval(emptyInterval);
         }
       },500)

@@ -130,13 +130,6 @@ async function addTrackApi(track_title, track_id) {
                 );
             myPlaylist.addTrack(track);
             allTrackList.push(track);
-            if (allTrackList < 5) {
-                async () => {
-                    let last = allTrackList.length - 1;
-                    promiseList[last] = callMusic(allTrackList[last].download_path);
-                    await callMusicBlob(promiseList[last],allTrackList[last]);
-                }
-            }
             track.displayTrack();
         })
         .catch(function (e) {
