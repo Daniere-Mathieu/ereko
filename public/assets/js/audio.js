@@ -265,22 +265,41 @@ async function test1(){
 }
 async function test2(){
   console.log("test2");
+  console.log(musicList)
   let last = allTrackList.length - 1 ;
   let loopNumber = 0;
   let tempArray = [];
-  let length = musicList.length;
-  for (let i = 0; i < length; i++) {
-    if (allTrackList[last].order < musicList[i].number) {
-      if (musicList[0].loop !== musicList[i].loop) {
-        loopNumber = musicList[0].loop;
-      }
+  let validation = false ;
+  for (let i = 0; i < musicList.length; i++) {
+    console.log("for test2")
+    if (allTrackList[last].order > musicList[i].number && currentMusicPlaying[0].loop !== musicList[i].loop) {
+      console.log("if test2")
+      loopNumber = currentMusicPlaying[0].loop;
       tempArray.push(musicList[i]);
       musicList.splice(i,1);
+      validation = true;
+      i--;
     }
-  promiseList[0] = callMusic(allTrackList[0].download_path);
-  await callMusicBlob(promiseList[0],allTrackList[0]);
-  let intervalPut = setInterval(()=>{
-
-  },500)
-}
+  }
+  console.log(tempArray)
+    let length = musicList.length;
+    if (validation) {
+      console.log("validation")
+      promiseList[last] = callMusic(allTrackList[last].download_path);
+      await callMusicBlob(promiseList[last],allTrackList[last]);
+      let intervalPut = setInterval(()=>{
+        console.log("interval")
+        if (typeof musicList[length] !== "undefined") {
+          let x = 0;
+          musicList[length].loop = currentMusicPlaying[0].loop
+          for (let i = musicList.length; i < 4; i++) {
+            musicList[i] = tempArray[x];
+            x++;
+          }
+          if (musicList.length === 4) {
+            clearInterval(intervalPut);
+          }
+        }
+      },500)
+    }
 }
