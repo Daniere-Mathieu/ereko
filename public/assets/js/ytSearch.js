@@ -56,6 +56,7 @@ function removeResultDiv() {
 
 function clearInputSearch() {
     search_input.value = "";
+    search_input.focus();
 }
 
 function titleInBold(title) {
