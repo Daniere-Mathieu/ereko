@@ -243,7 +243,7 @@ function sortMusiclist(tab){
 }
 async function test1(){
   console.log("async");
-    if (typeof musicList[0] == "undefined") {
+    if (typeof musicList[0] == "undefined" && allTrackList.length === 1) {
       console.log("je suis rentrée")
       promiseList[0] = callMusic(allTrackList[0].download_path);
       await callMusicBlob(promiseList[0],allTrackList[0]);
