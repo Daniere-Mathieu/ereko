@@ -19,25 +19,10 @@
     width: 50%;
     min-width: 750px;
     max-width: none;
-    /*
-    flex-grow: 5;
-    position: relative;
-    overflow-y: hidden;
-    background-color:  rgba(0, 0, 0, 0.81);
-    display: flex;
-    */
     flex-direction: row;
-    /*
-    align-items: center;
-    flex-wrap: wrap;
-    */
 }
 
 .playlist {
-    /*
-    flex-grow: 0;
-    height: 100%;
-    */
     height: 100%;
     width: 50%;
 }
@@ -56,42 +41,3 @@
 .search {
     height: 50%;
 }
-
-/*
-.audio_player_full {
-    height: 50%;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-.player_desktop_img {
-    flex-grow: 2;
-    height: 60%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.player_desktop_img_container {
-    width: 80%;
-    display: flex;
-}
-
-.player_desktop_img_container > img {
-    width: 100%;
-}
-
-.horizontal_separator {
-    width: 75%;
-    stroke: 1px;
-}
-
-.vertical_separator {
-    height: 93%;
-    width: 1px;
-    background-color: grey;
-}
-*/
-

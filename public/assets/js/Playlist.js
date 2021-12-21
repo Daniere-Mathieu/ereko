@@ -56,10 +56,17 @@ class Playlist {
         results.then((server_playlist) => {
             for (let i = 0; i < server_playlist.length; i++) {
                 let t = server_playlist[i];
-                let track = new Track(t.party_id, t.track_id, t.state_for_party, t.order, t.state_track, t.download_path);
-
+                let track = new Track(
+                    t.party_id,
+                    t.track_id,
+                    t.state_for_party,
+                    t.order,
+                    t.state_track,
+                    t.download_path,
+                    t.track_title
+                );
                 this.list_of_tracks.push(track)
-                track.displayTrack(t.track_title, t.order);
+                track.displayTrack();
             }
         });
     }
@@ -99,7 +106,7 @@ class Playlist {
 
     displayTracks() {
         this.list_of_tracks.forEach(track => {
-            track.displayTrack(track.track_title, track.order);
+            track.displayTrack();
         });
     }
 }

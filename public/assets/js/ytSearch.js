@@ -119,7 +119,15 @@ async function addTrackApi(track_title, track_id) {
             }
         })
         .then(function (data) {
-            let track = new Track(data.party_id, data.track_id, data.state_for_party, data.order, data.state_track, data.download_path);
+            let track = new Track(
+                data.party_id,
+                data.track_id,
+                data.state_for_party,
+                data.order,
+                data.state_track,
+                data.download_path,
+                data.track_title
+                );
             myPlaylist.addTrack(track);
             allTrackList.push(track);
             if (allTrackList < 5) {
@@ -129,7 +137,7 @@ async function addTrackApi(track_title, track_id) {
                     await callMusicBlob(promiseList[last],allTrackList[last]);
                 }
             }
-            track.displayTrack(track_title, data.order);
+            track.displayTrack();
         })
         .catch(function (e) {
             console.log(e);
