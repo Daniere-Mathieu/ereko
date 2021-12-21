@@ -241,8 +241,10 @@ function sortMusiclist(tab){
     }
   } while(changed);
 }
-async function test1(){
-  console.log("async");
+async function test1(lastC){
+  console.log("test1/entrée");
+  console.log(musicList)
+  console.log(allTrackList)
     if (typeof musicList[0] == "undefined" && allTrackList.length === 1) {
       console.log("je suis rentrée")
       promiseList[0] = callMusic(allTrackList[0].download_path);
@@ -261,11 +263,11 @@ async function test1(){
     }
     else {
       console.log("test")
-      test3();
+      test3(lastC);
     }
 }
-async function test2(){
-  console.log("test2");
+async function test2(lastB){
+  console.log("test2/entrée");
   console.log(musicList)
   let last = allTrackList.length - 1 ;
   let loopNumber = 0;
@@ -304,15 +306,14 @@ async function test2(){
       },500)
     }
 }
-async function test3(){
-  let last = allTrackList.length - 1 ;
+async function test3(last){
   let loopNumber = 0;
   let tempArray = [];
   let validation = false ;
   for (let i = 0; i < musicList.length; i++) {
-    console.log("for test2")
+    console.log("for test3")
     if (allTrackList[last].order > musicList[i].number && currentMusicPlaying[0].loop !== musicList[i].loop) {
-      console.log("if test2")
+      console.log("if test3")
       loopNumber = currentMusicPlaying[0].loop;
       tempArray.push(musicList[i]);
       musicList.splice(i,1);
@@ -343,7 +344,22 @@ async function test3(){
       },500)
     }
     else{
+      console.log("else/test3")
+      console.log(last)
       promiseList[last] = callMusic(allTrackList[last].download_path);
       await callMusicBlob(promiseList[last],allTrackList[last]);
+      if (typeof currentMusicPlaying[0] === "undefined") {
+        let idInterval = setInterval(()=>{
+          if (typeof musicList[0] != "undefined") {
+            console.log('je suis rentée je te jure')
+            setAudio(musicList[0].path);
+            currentMusicPlaying[0] = musicList[0];
+            spliceList(musicList);
+            clearInterval(idInterval)
+          }
+        },500)
+      }
+      else {
+      }
     }
 }

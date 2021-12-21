@@ -128,8 +128,8 @@ async function addTrackApi(track_title, track_id) {
                 data.download_path,
                 data.track_title
                 );
-            myPlaylist.addTrack(track);
             allTrackList.push(track);
+            myPlaylist.addTrack(track);
             track.displayTrack();
         })
         .catch(function (e) {
