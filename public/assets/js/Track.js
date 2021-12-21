@@ -5,17 +5,19 @@ class Track {
   order;
   state_track;
   download_path;
+  title;
 
-  constructor(party_id, track_id, state_for_party, order, state_track, download_path) {
+  constructor(party_id, track_id, state_for_party, order, state_track, download_path, title) {
     this.party_id = party_id;
     this.track_id = track_id;
     this.state_for_party = state_for_party;
     this.order = order;
     this.state_track = state_track;
     this.download_path = download_path;
+    this.title = title;
   }
 
-  displayTrack(titleParam, number){
+  displayTrack(){
     let scrollParent = document.getElementById('scroll');
     let track = document.createElement("div");
     let title = document.createElement("p");
@@ -23,9 +25,9 @@ class Track {
     track.setAttribute("class","track");
     track.appendChild(title);
     title.setAttribute("class","title_track")
-    track.setAttribute("id",number)
+    track.setAttribute("id", this.order)
 
-    title.innerHTML = titleParam;
+    title.innerHTML = this.title;
     
     if (this.state_track === 'DOWNLOADING' || this.state_track === 'TO_DOWNLOAD') {
       track.appendChild(this.displayDownloadSVG());
@@ -42,7 +44,7 @@ class Track {
     this.state_track = track.state_track;
     let node = document.getElementById(track.order);
     node.remove();
-    this.displayTrack(track.track_title, track.order);
+    this.displayTrack();
   }
 
   hasStateChanged(state) {
