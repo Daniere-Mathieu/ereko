@@ -43,7 +43,9 @@ audio.addEventListener("ended",() => {
     setAudio(musicList[0].path);
     currentMusicPlaying[0] = musicList[0];
     spliceList(musicList);
-    nextLoadMusic();
+    if (allTrackList.length > 1) {
+      nextLoadMusic();
+    }
     currentMusic = 0;
     futureMusic = 1;
   }else {
@@ -184,6 +186,7 @@ async function nextLoadMusic(){
 }
 // fonction qui a pour but de d'apeller la prochaine musique loadable
 function spliceList(array){
+  console.log("splice")
       array.splice(0,1);
 }
 function setPlaying(className){
@@ -258,8 +261,9 @@ async function test1(){
     }
     else {
       console.log("test")
-      promiseList[0] = callMusic(allTrackList[0].download_path);
-      await callMusicBlob(promiseList[0],allTrackList[0]);
+      let last = allTrackList.length -1 ;
+      promiseList[last] = callMusic(allTrackList[last].download_path);
+      await callMusicBlob(promiseList[last],allTrackList[last]);
     }
 }
 async function test2(){
