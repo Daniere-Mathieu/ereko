@@ -18,7 +18,7 @@ class Playlist {
             callTrackList(this.party);
             if (track.isReady()) {
               console.log("isready");
-              if (allTrackList.length < 5) {
+              if (lastA < 5) {
                 console.log("inf 5");
                   test1(lastA);
               }

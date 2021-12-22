@@ -269,13 +269,13 @@ async function test1(lastC){
 async function test2(lastB){
   console.log("test2/entrée");
   console.log(musicList)
-  let last = allTrackList.length - 1 ;
+  console.log(lastB)
   let loopNumber = 0;
   let tempArray = [];
   let validation = false ;
   for (let i = 0; i < musicList.length; i++) {
     console.log("for test2")
-    if (allTrackList[last].order > musicList[i].number && currentMusicPlaying[0].loop !== musicList[i].loop) {
+    if (allTrackList[lastB].order > musicList[i].number && currentMusicPlaying[0].loop !== musicList[i].loop) {
       console.log("if test2")
       loopNumber = currentMusicPlaying[0].loop;
       tempArray.push(musicList[i]);
@@ -288,8 +288,8 @@ async function test2(lastB){
     let length = musicList.length;
     if (validation) {
       console.log("validation")
-      promiseList[last] = callMusic(allTrackList[last].download_path);
-      await callMusicBlob(promiseList[last],allTrackList[last]);
+      promiseList[lastB] = callMusic(allTrackList[lastB].download_path);
+      await callMusicBlob(promiseList[lastB],allTrackList[lastB]);
       let intervalPut = setInterval(()=>{
         console.log("interval")
         if (typeof musicList[length] !== "undefined") {
@@ -307,6 +307,7 @@ async function test2(lastB){
     }
 }
 async function test3(last){
+  console.log(last)
   let loopNumber = 0;
   let tempArray = [];
   let validation = false ;
