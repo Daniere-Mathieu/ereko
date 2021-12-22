@@ -241,9 +241,11 @@ function sortMusiclist(tab){
     }
   } while(changed);
 }
-async function test1(){
-  console.log("async");
-    if (typeof musicList[0] == "undefined") {
+async function addTrackInfFive(last){
+  console.log("test1/entrée");
+  console.log(musicList)
+  console.log(allTrackList)
+    if (typeof musicList[0] == "undefined" && allTrackList.length === 1) {
       console.log("je suis rentrée")
       promiseList[0] = callMusic(allTrackList[0].download_path);
       await callMusicBlob(promiseList[0],allTrackList[0]);
@@ -261,15 +263,13 @@ async function test1(){
     }
     else {
       console.log("test")
-      let last = allTrackList.length -1 ;
-      promiseList[last] = callMusic(allTrackList[last].download_path);
-      await callMusicBlob(promiseList[last],allTrackList[last]);
+      addTrackMultAdd(last);
     }
 }
-async function test2(){
-  console.log("test2");
+async function addTrackSupFive(last){
+  console.log("test2/entrée");
   console.log(musicList)
-  let last = allTrackList.length - 1 ;
+  console.log(last)
   let loopNumber = 0;
   let tempArray = [];
   let validation = false ;
@@ -304,5 +304,63 @@ async function test2(){
           }
         }
       },500)
+    }
+}
+async function addTrackMultAdd(last){
+  console.log(last)
+  let loopNumber = 0;
+  let tempArray = [];
+  let validation = false ;
+  for (let i = 0; i < musicList.length; i++) {
+    console.log("for test3")
+    if (allTrackList[last].order > musicList[i].number && currentMusicPlaying[0].loop !== musicList[i].loop) {
+      console.log("if test3")
+      loopNumber = currentMusicPlaying[0].loop;
+      tempArray.push(musicList[i]);
+      musicList.splice(i,1);
+      validation = true;
+      i--;
+    }
+  }
+  console.log(tempArray)
+    let length = musicList.length;
+    if (validation) {
+      console.log("validation")
+      promiseList[last] = callMusic(allTrackList[last].download_path);
+      await callMusicBlob(promiseList[last],allTrackList[last]);
+      let intervalPut = setInterval(()=>{
+        console.log("interval")
+        if (typeof musicList[length] !== "undefined") {
+          let x = 0;
+          musicList[length].loop = currentMusicPlaying[0].loop
+          let max = allTrackList.length -1;
+          for (let i = musicList.length; i < max; i++) {
+            musicList[i] = tempArray[x];
+            x++;
+          }
+          if (musicList.length === max) {
+            clearInterval(intervalPut);
+          }
+        }
+      },500)
+    }
+    else{
+      console.log("else/test3")
+      console.log(last)
+      promiseList[last] = callMusic(allTrackList[last].download_path);
+      await callMusicBlob(promiseList[last],allTrackList[last]);
+      if (typeof currentMusicPlaying[0] === "undefined") {
+        let idInterval = setInterval(()=>{
+          if (typeof musicList[0] != "undefined") {
+            console.log('je suis rentée je te jure')
+            setAudio(musicList[0].path);
+            currentMusicPlaying[0] = musicList[0];
+            spliceList(musicList);
+            clearInterval(idInterval)
+          }
+        },500)
+      }
+      else {
+      }
     }
 }

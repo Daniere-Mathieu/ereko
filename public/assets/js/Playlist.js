@@ -9,17 +9,21 @@ class Playlist {
 
     addTrack(track) {
         this.list_of_tracks.push(track);
+        let last = allTrackList.length - 1 ;
+        if (last  < 0) {
+          last = 0;
+        }
         let intervalID = setInterval(() => {
             callTrackList(this.party);
             if (track.isReady()) {
               console.log("isready");
-              if (allTrackList.length < 5) {
+              if (last < 5) {
                 console.log("inf 5");
-                  test1();
+                  addTrackInfFive(last);
               }
               else {
                 console.log("sup 5");
-                test2();
+                addTrackSupFive(last);
               }
                 clearInterval(intervalID);
             }
@@ -97,7 +101,7 @@ class Playlist {
         results.then((server_playlist) => {
             for (let i = 0; i < server_playlist.length; i++) {
                 if (this.list_of_tracks[i].hasStateChanged(server_playlist[i].state_track)) {
-                    this.list_of_tracks[i].setState(server_playlist[i]);
+                    this.list_of_tracks[i].setState(server_playlist[i].state_track);
                 }
             }
         });
