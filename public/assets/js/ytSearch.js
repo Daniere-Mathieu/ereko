@@ -4,8 +4,8 @@ let request_error = document.getElementById('request_error');
 
 let list_exist = false;
 
+// const API_KEY = 'AIzaSyARXz1iQ3SEIknARH5LibTNzzRpQRvt-oo'; // Token for YT API requests. Please limit requests, we have 100 each day.
 const API_KEY = 'AIzaSyChQda9SVL9Lql8-KBX-6XsNJzB4hrSbkM'; // Token for YT API requests. Please limit requests, we have 100 each day.
-// const API_KEY = 'AIzaSyChQda9SVL9Lql8-KBX-6XsNJzB4hrSbkM'; // Token for YT API requests. Please limit requests, we have 100 each day.
 
 function createResultDiv(item) {
     let img = document.createElement('img');
@@ -51,8 +51,12 @@ function removeResultDiv() {
     for (let i = result_div.length-1; i >= 0 ; i--) {
         result_list.removeChild(result_div[i]);
     }
-    search_input.value = "";
     list_exist = false
+}
+
+function clearInputSearch() {
+    search_input.value = "";
+    search_input.focus();
 }
 
 function titleInBold(title) {
@@ -113,6 +117,7 @@ async function addTrackApi(track_title, track_id) {
         .then(function (response) {
             if (response.status == 200) {
                 removeResultDiv();
+                clearInputSearch();
                 return response.json();
             } else {
                 throw new TypeError('Request failed ! Status code : ' + response.status);
