@@ -9,7 +9,6 @@ class Playlist {
 
     addTrack(track) {
         this.list_of_tracks.push(track);
-        console.log(allTrackList.length)
         let last = allTrackList.length - 1 ;
         if (last  < 0) {
           last = 0;
@@ -102,7 +101,7 @@ class Playlist {
         results.then((server_playlist) => {
             for (let i = 0; i < server_playlist.length; i++) {
                 if (this.list_of_tracks[i].hasStateChanged(server_playlist[i].state_track)) {
-                    this.list_of_tracks[i].setState(server_playlist[i]);
+                    this.list_of_tracks[i].setState(server_playlist[i].state_track);
                 }
             }
         });

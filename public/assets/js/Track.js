@@ -30,9 +30,9 @@ class Track {
     title.innerHTML = this.title;
     
     if (this.state_track === 'DOWNLOADING' || this.state_track === 'TO_DOWNLOAD') {
-      track.appendChild(this.displayDownloadSVG());
+      track.appendChild(this.displayDownloadSVG(this.order));
     } else if (this.state_track === 'ON_ERROR') {
-      track.appendChild(this.displayErrorSVG());
+      track.appendChild(this.displayErrorSVG(this.order));
     }
   }
 
@@ -40,11 +40,16 @@ class Track {
     return this.state_track;
   }
 
-  setState(track) {
-    this.state_track = track.state_track;
-    let node = document.getElementById(track.order);
+  setState(state) {
+    this.state_track = state;
+    if (this.state_track == 'READY') {
+      this.removeStateLogo(this.order);
+    }
+  }
+
+  removeStateLogo(id) {
+    let node = document.getElementById('container_logo_' + id);
     node.remove();
-    this.displayTrack();
   }
 
   hasStateChanged(state) {
@@ -61,7 +66,7 @@ class Track {
     return false;
   }
 
-  displayDownloadSVG() {
+  displayDownloadSVG(id) {
     let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute('viewBox', '0 0 24 24')
     svg.classList = 'track_state_svg rotate';
@@ -83,12 +88,13 @@ class Track {
 
     let div = document.createElement('div');
     div.classList = 'container_logo';
+    div.id = 'container_logo_' + id;
     div.appendChild(svg);
 
     return div;
   }
 
-  displayErrorSVG() {
+  displayErrorSVG(id) {
     let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute('viewBox', '0 0 24 24')
     svg.classList = 'track_state_svg';
@@ -115,6 +121,7 @@ class Track {
 
     let div = document.createElement('div');
     div.classList = 'container_logo';
+    div.id = 'container_logo_' + id;
     div.appendChild(svg);
 
     return div;
