@@ -10,21 +10,21 @@ class Playlist {
     addTrack(track) {
         this.list_of_tracks.push(track);
         console.log(allTrackList.length)
-        let lastA = allTrackList.length - 1 ;
-        if (lastA  < 0) {
-          lastA = 0;
+        let last = allTrackList.length - 1 ;
+        if (last  < 0) {
+          last = 0;
         }
         let intervalID = setInterval(() => {
             callTrackList(this.party);
             if (track.isReady()) {
               console.log("isready");
-              if (lastA < 5) {
+              if (last < 5) {
                 console.log("inf 5");
-                  test1(lastA);
+                  addTrackInfFive(last);
               }
               else {
                 console.log("sup 5");
-                test2(lastA);
+                addTrackSupFive(last);
               }
                 clearInterval(intervalID);
             }
