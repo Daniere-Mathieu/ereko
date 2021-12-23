@@ -16,13 +16,10 @@ class Playlist {
         let intervalID = setInterval(() => {
             callTrackList(this.party);
             if (track.isReady()) {
-              console.log("isready");
               if (last < 5) {
-                console.log("inf 5");
                   addTrackInfFive(last);
               }
               else {
-                console.log("sup 5");
                 addTrackSupFive(last);
               }
                 clearInterval(intervalID);
@@ -53,7 +50,6 @@ class Playlist {
                 return data;
             })
             .catch(function (e) {
-                console.log('une grosse erreur', e);
             }
         );
 

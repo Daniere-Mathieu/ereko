@@ -1,6 +1,4 @@
 async function callMusic(url){
-  console.log("callMusic1");
-  console.log("callMusic1/url/"+url);
   return fetch(url)
 };
 //fonction qui demande au serveur les musiques

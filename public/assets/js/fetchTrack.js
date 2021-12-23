@@ -15,7 +15,6 @@ function jsonTransfer(json){
   return new Promise(resolve =>{
     for(let i = 0; i < json.length ;i++){
     allTrackList[i] = json[i];
-    console.log("callTrackList")
   }
   resolve("resolve")
   })
