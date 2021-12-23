@@ -71,36 +71,6 @@ window.addEventListener("load",async() => {
       await callMusicBlob(promiseList[currentMusic],allTrackList[currentMusic]);
       console.log(promiseList)
     }
-    else{
-      let onDownloadCounter = true;
-      let dowloadable = false;
-      while(allTrackList[currentMusic].state_track !== "READY"){
-          await callTrackList(playlistID);
-        if (currentMusic+1 === allTrackList.length) {
-          let currentMusic = 0;
-          let futureMusic = currentMusic + 1;
-          let lastLoadMusic = currentMusic + 4;
-          onDownloadCounter++;
-        }
-        else {
-          currentMusic++;
-          futureMusic++;
-          lastLoadMusic++;
-        }
-        if (allTrackList[currentMusic].state_track === "READY") {
-          dowloadable = true;
-          break;
-        }
-        if (onDownloadCounter === 2) {
-          dowloadable = false
-          break;
-        }
-      }
-      if (dowloadable === true) {
-       promiseList[currentMusic] = callMusic(allTrackList[currentMusic].download_path);
-        await callMusicBlob(promiseList[currentMusic],allTrackList[currentMusic])
-      }
-    }
     if (musicList.length > 0) {
       setAudio(musicList[0].path);
       currentMusicPlaying[0] = musicList[0];
