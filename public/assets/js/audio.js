@@ -27,8 +27,6 @@ let currentMusicPlaying = [];
 
 let playlistID = decodeUrl()
 function setAudio(source){
-  console.log(musicList[0]);
-  console.log("setAudio")
       audio.src = source;
 }
 //function qui change la musique (sert a économisé quelque ligne)
@@ -69,7 +67,6 @@ window.addEventListener("load",async() => {
     if (allTrackList[currentMusic].state_track === "READY") {
       promiseList[currentMusic] = callMusic(allTrackList[currentMusic].download_path);
       await callMusicBlob(promiseList[currentMusic],allTrackList[currentMusic]);
-      console.log(promiseList)
     }
     if (musicList.length > 0) {
       setAudio(musicList[0].path);
@@ -94,18 +91,14 @@ window.addEventListener("load",async() => {
 })
 // fonction qui capte le chargement de la page pour load les premier musique
 async function loadCallMusic(){
-  console.log("loadCallMusic")
     if (allTrackList.length < 5) {
       for (let i = futureMusic; i <= allTrackList.length ; i++) {
-        console.log(i);
-        console.log(allTrackList.length)
         if (i > (allTrackList.length -1)) {
           break;
         }
         else {
           if (allTrackList[i].state_track === "READY") {
             promiseList[i] = callMusic(allTrackList[i].download_path);
-            console.log(promiseList)
             await callMusicBlob(promiseList[i],allTrackList[i])
           }
         }
@@ -113,10 +106,8 @@ async function loadCallMusic(){
     }
     else {
       for (let i = futureMusic; i < lastLoadMusic+1 ; i++) {
-        console.log(i);
         if (allTrackList[i].state_track === "READY") {
           promiseList[i] = callMusic(allTrackList[i].download_path);
-          console.log(promiseList)
           await callMusicBlob(promiseList[i],allTrackList[i])
         }
       }
@@ -156,7 +147,6 @@ async function nextLoadMusic(){
 }
 // fonction qui a pour but de d'apeller la prochaine musique loadable
 function spliceList(array){
-  console.log("splice")
       array.splice(0,1);
 }
 function setPlaying(className){
@@ -212,17 +202,11 @@ function sortMusiclist(tab){
   } while(changed);
 }
 async function addTrackInfFive(last){
-  console.log("test1/entrée");
-  console.log(musicList)
-  console.log(allTrackList)
     if (typeof musicList[0] == "undefined" && allTrackList.length === 1) {
-      console.log("je suis rentrée")
       promiseList[0] = callMusic(allTrackList[0].download_path);
       await callMusicBlob(promiseList[0],allTrackList[0]);
       let emptyInterval = setInterval(()=> {
-        console.log("interval")
         if (typeof musicList[0] !== "undefined" && typeof allTrackList[0].thumbnail_path !== "undefined") {
-            console.log("salut")
             setAudio(musicList[0].path);
             currentMusicPlaying[0] = musicList[0];
             spliceList(musicList);
@@ -232,21 +216,15 @@ async function addTrackInfFive(last){
 
     }
     else {
-      console.log("test")
       addTrackMultAdd(last);
     }
 }
 async function addTrackSupFive(last){
-  console.log("test2/entrée");
-  console.log(musicList)
-  console.log(last)
   let loopNumber = 0;
   let tempArray = [];
   let validation = false ;
   for (let i = 0; i < musicList.length; i++) {
-    console.log("for test2")
     if (allTrackList[last].order > musicList[i].number && currentMusicPlaying[0].loop !== musicList[i].loop) {
-      console.log("if test2")
       loopNumber = currentMusicPlaying[0].loop;
       tempArray.push(musicList[i]);
       musicList.splice(i,1);
@@ -254,14 +232,11 @@ async function addTrackSupFive(last){
       i--;
     }
   }
-  console.log(tempArray)
     let length = musicList.length;
     if (validation) {
-      console.log("validation")
       promiseList[last] = callMusic(allTrackList[last].download_path);
       await callMusicBlob(promiseList[last],allTrackList[last]);
       let intervalPut = setInterval(()=>{
-        console.log("interval")
         if (typeof musicList[length] !== "undefined") {
           let x = 0;
           musicList[length].loop = currentMusicPlaying[0].loop
@@ -277,14 +252,11 @@ async function addTrackSupFive(last){
     }
 }
 async function addTrackMultAdd(last){
-  console.log(last)
   let loopNumber = 0;
   let tempArray = [];
   let validation = false ;
   for (let i = 0; i < musicList.length; i++) {
-    console.log("for test3")
     if (allTrackList[last].order > musicList[i].number && currentMusicPlaying[0].loop !== musicList[i].loop) {
-      console.log("if test3")
       loopNumber = currentMusicPlaying[0].loop;
       tempArray.push(musicList[i]);
       musicList.splice(i,1);
@@ -292,14 +264,11 @@ async function addTrackMultAdd(last){
       i--;
     }
   }
-  console.log(tempArray)
     let length = musicList.length;
     if (validation) {
-      console.log("validation")
       promiseList[last] = callMusic(allTrackList[last].download_path);
       await callMusicBlob(promiseList[last],allTrackList[last]);
       let intervalPut = setInterval(()=>{
-        console.log("interval")
         if (typeof musicList[length] !== "undefined") {
           let x = 0;
           musicList[length].loop = currentMusicPlaying[0].loop
@@ -315,14 +284,11 @@ async function addTrackMultAdd(last){
       },500)
     }
     else{
-      console.log("else/test3")
-      console.log(last)
       promiseList[last] = callMusic(allTrackList[last].download_path);
       await callMusicBlob(promiseList[last],allTrackList[last]);
       if (typeof currentMusicPlaying[0] === "undefined") {
         let idInterval = setInterval(()=>{
           if (typeof musicList[0] != "undefined") {
-            console.log('je suis rentée je te jure')
             setAudio(musicList[0].path);
             currentMusicPlaying[0] = musicList[0];
             spliceList(musicList);
