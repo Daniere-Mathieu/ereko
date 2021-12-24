@@ -20,8 +20,7 @@ function setAudio(source){
 }
 //function qui change la musique (sert a économisé quelque ligne)
 audio.addEventListener("ended",() => {
-  let endVerification = currentMusic + 1;
-  if (allTrackList.length <= endVerification) {
+  if (allTrackList.length <= futureMusic) {
     setPlaying("track")
     sortMusiclist(musicList);
     if (musicList.length === 0 ) {
@@ -73,7 +72,6 @@ window.addEventListener("load",async() => {
     }
   }
 })
-// fonction qui capte le chargement de la page pour load les premier musique
 async function loadCallMusic(){
     if (allTrackList.length < 5) {
       for (let i = futureMusic; i <= allTrackList.length ; i++) {
@@ -134,7 +132,6 @@ function spliceList(array){
       array.splice(0,1);
 }
 function setPlaying(className){
-  // I think nexr three lines are useless
   let trackDiv = document.getElementById(allTrackList[currentMusic].order);
   let idCurrentMusic = trackDiv.getAttribute("id");
   if(currentMusicPlaying.number == idCurrentMusic){
