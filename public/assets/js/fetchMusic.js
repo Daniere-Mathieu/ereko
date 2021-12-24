@@ -7,9 +7,6 @@ function callMusicBlob(promiseMusic,array){
   if(response.ok) {
     response.blob().then(blob => {
       musicList.push({path:URL.createObjectURL(blob),number: array.order,loop:loop});
-      if (counter < 3) {
-        counter++;
-      }
     })
   } else {
     console.log('Network request for musicCall' + response.status + ': ' + response.statusText);

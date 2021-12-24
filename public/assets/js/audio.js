@@ -1,4 +1,3 @@
-let counter = 0;
 let currentMusic = 0;
 let futureMusic = currentMusic + 1;
 let lastLoadMusic = currentMusic + 4;
@@ -59,7 +58,6 @@ window.addEventListener("load",async() => {
       setAudio(musicList[0].path);
       currentMusicPlaying = musicList[0];
       spliceList(musicList);
-      counter = 0;
       loadCallMusic();
     }
     else {
@@ -68,7 +66,6 @@ window.addEventListener("load",async() => {
           setAudio(musicList[0].path);
           currentMusicPlaying  = musicList[0];
           spliceList(musicList);
-          counter = 0;
           loadCallMusic();
           clearInterval(intervalID);
         }
