@@ -1,29 +1,19 @@
 let counter = 0;
-// initilization d'un compteur
 let currentMusic = 0;
-// initilization du numéro de la musique actuel
 let futureMusic = currentMusic + 1;
-// initilization du numéro de la musique a venir
 let lastLoadMusic = currentMusic + 4;
-// initilization du numéro de la prochaine musique a charger avec fetch
 let autoplay = 0;
-// initilization d'une variable qui permet d'activer l'autoplay a la premier écoute
 let allTrackList = [];
-// tableau temporaire servant de remplacant a la réponse du serveur sur la liste de musique
 let musicList = [];
-//j'initilize le tableau de musique
 let test = [];
 let first = true;
 let audio = new Audio();
-//object audio
 audio.volume = .75;
-// je donne la valeur au volume du son
 let promiseList = [];
-//
 let loop = 0;
 let reset = false;
 let myPlaylist = new Playlist();
-let currentMusicPlaying = [];
+let currentMusicPlaying ;
 
 let playlistID = decodeUrl()
 function setAudio(source){
@@ -36,10 +26,10 @@ audio.addEventListener("ended",() => {
     setPlaying("track")
     sortMusiclist(musicList);
     if (musicList.length === 0 ) {
-      musicList[0] = currentMusicPlaying[0];
+      musicList[0] = currentMusicPlaying;
     }
     setAudio(musicList[0].path);
-    currentMusicPlaying[0] = musicList[0];
+    currentMusicPlaying = musicList[0];
     spliceList(musicList);
     if (allTrackList.length > 1) {
       nextLoadMusic();
@@ -50,7 +40,7 @@ audio.addEventListener("ended",() => {
     setPlaying("track");
     sortMusiclist(musicList);
     setAudio(musicList[0].path);
-    currentMusicPlaying[0] = musicList[0];
+    currentMusicPlaying = musicList[0];
     currentMusic++;
     futureMusic++;
     spliceList(musicList);
@@ -67,7 +57,7 @@ window.addEventListener("load",async() => {
     }
     if (musicList.length > 0) {
       setAudio(musicList[0].path);
-      currentMusicPlaying[0] = musicList[0];
+      currentMusicPlaying = musicList[0];
       spliceList(musicList);
       counter = 0;
       loadCallMusic();
@@ -76,7 +66,7 @@ window.addEventListener("load",async() => {
       let intervalID = setInterval(function () {
         if (musicList.length >= 1) {
           setAudio(musicList[0].path);
-          currentMusicPlaying[0]  = musicList[0];
+          currentMusicPlaying  = musicList[0];
           spliceList(musicList);
           counter = 0;
           loadCallMusic();
@@ -150,7 +140,7 @@ function setPlaying(className){
   // I think nexr three lines are useless
   let trackDiv = document.getElementById(allTrackList[currentMusic].order);
   let idCurrentMusic = trackDiv.getAttribute("id");
-  if(currentMusicPlaying[0].number == idCurrentMusic){
+  if(currentMusicPlaying.number == idCurrentMusic){
     songName.innerHTML = allTrackList[currentMusic].track_title;
     trackDiv.setAttribute("class", className);
   }
@@ -158,7 +148,7 @@ function setPlaying(className){
     for (let i = 0; i < allTrackList.length; i++) {
       let trackGreatDiv = document.getElementById(allTrackList[i].order);
       let idGreatCurrentMusic = trackGreatDiv.getAttribute("id");
-      if (idGreatCurrentMusic == currentMusicPlaying[0].number) {
+      if (idGreatCurrentMusic == currentMusicPlaying.number) {
         currentMusic = i;
         songName.innerHTML = allTrackList[i].track_title;
         trackGreatDiv.setAttribute("class", className);
@@ -205,7 +195,7 @@ async function addTrackInfFive(last,max){
       let emptyInterval = setInterval(()=> {
         if (typeof musicList[0] !== "undefined" && typeof allTrackList[0].thumbnail_path !== "undefined") {
             setAudio(musicList[0].path);
-            currentMusicPlaying[0] = musicList[0];
+            currentMusicPlaying = musicList[0];
             spliceList(musicList);
             clearInterval(emptyInterval);
         }
@@ -221,8 +211,8 @@ async function addTrackMultAdd(last,max){
   let tempArray = [];
   let validation = false ;
   for (let i = 0; i < musicList.length; i++) {
-    if (allTrackList[last].order > musicList[i].number && currentMusicPlaying[0].loop !== musicList[i].loop) {
-      loopNumber = currentMusicPlaying[0].loop;
+    if (allTrackList[last].order > musicList[i].number && currentMusicPlaying.loop !== musicList[i].loop) {
+      loopNumber = currentMusicPlaying.loop;
       tempArray.push(musicList[i]);
       musicList.splice(i,1);
       validation = true;
@@ -236,7 +226,7 @@ async function addTrackMultAdd(last,max){
       let intervalPut = setInterval(()=>{
         if (typeof musicList[length] !== "undefined") {
           let x = 0;
-          musicList[length].loop = currentMusicPlaying[0].loop
+          musicList[length].loop = currentMusicPlaying.loop
           for (let i = musicList.length; i < max; i++) {
             musicList[i] = tempArray[x];
             x++;
@@ -250,11 +240,11 @@ async function addTrackMultAdd(last,max){
     else{
       promiseList[last] = callMusic(allTrackList[last].download_path);
       await callMusicBlob(promiseList[last],allTrackList[last]);
-      if (typeof currentMusicPlaying[0] === "undefined") {
+      if (typeof currentMusicPlaying === "undefined") {
         let idInterval = setInterval(()=>{
           if (typeof musicList[0] != "undefined") {
             setAudio(musicList[0].path);
-            currentMusicPlaying[0] = musicList[0];
+            currentMusicPlaying = musicList[0];
             spliceList(musicList);
             clearInterval(idInterval)
           }
