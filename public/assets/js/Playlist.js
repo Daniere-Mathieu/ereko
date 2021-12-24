@@ -17,10 +17,10 @@ class Playlist {
             callTrackList(this.party);
             if (track.isReady()) {
               if (last < 5) {
-                  addTrackInfFive(last);
+                  addTrackInfFive(last,last);
               }
               else {
-                addTrackSupFive(last);
+                addTrackMultAdd(last,last);
               }
                 clearInterval(intervalID);
             }

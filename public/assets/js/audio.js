@@ -60,9 +60,6 @@ audio.addEventListener("ended",() => {
 //function qui capte la fin d'une musique grace a l'event ended et lance la prochaine musique;
 window.addEventListener("load",async() => {
   await callTrackList(playlistID);
-  for (let i = 0; i < allTrackList.length; i++) {
-      let t = allTrackList[i];
-  }
   if (allTrackList.length > 0) {
     if (allTrackList[currentMusic].state_track === "READY") {
       promiseList[currentMusic] = callMusic(allTrackList[currentMusic].download_path);
@@ -201,7 +198,7 @@ function sortMusiclist(tab){
     }
   } while(changed);
 }
-async function addTrackInfFive(last){
+async function addTrackInfFive(last,max){
     if (typeof musicList[0] == "undefined" && allTrackList.length === 1) {
       promiseList[0] = callMusic(allTrackList[0].download_path);
       await callMusicBlob(promiseList[0],allTrackList[0]);
@@ -216,10 +213,10 @@ async function addTrackInfFive(last){
 
     }
     else {
-      addTrackMultAdd(last);
+      addTrackMultAdd(last,max);
     }
 }
-async function addTrackSupFive(last){
+async function addTrackMultAdd(last,max){
   let loopNumber = 0;
   let tempArray = [];
   let validation = false ;
@@ -240,39 +237,6 @@ async function addTrackSupFive(last){
         if (typeof musicList[length] !== "undefined") {
           let x = 0;
           musicList[length].loop = currentMusicPlaying[0].loop
-          for (let i = musicList.length; i < 4; i++) {
-            musicList[i] = tempArray[x];
-            x++;
-          }
-          if (musicList.length === 4) {
-            clearInterval(intervalPut);
-          }
-        }
-      },500)
-    }
-}
-async function addTrackMultAdd(last){
-  let loopNumber = 0;
-  let tempArray = [];
-  let validation = false ;
-  for (let i = 0; i < musicList.length; i++) {
-    if (allTrackList[last].order > musicList[i].number && currentMusicPlaying[0].loop !== musicList[i].loop) {
-      loopNumber = currentMusicPlaying[0].loop;
-      tempArray.push(musicList[i]);
-      musicList.splice(i,1);
-      validation = true;
-      i--;
-    }
-  }
-    let length = musicList.length;
-    if (validation) {
-      promiseList[last] = callMusic(allTrackList[last].download_path);
-      await callMusicBlob(promiseList[last],allTrackList[last]);
-      let intervalPut = setInterval(()=>{
-        if (typeof musicList[length] !== "undefined") {
-          let x = 0;
-          musicList[length].loop = currentMusicPlaying[0].loop
-          let max = allTrackList.length -1;
           for (let i = musicList.length; i < max; i++) {
             musicList[i] = tempArray[x];
             x++;
@@ -295,8 +259,6 @@ async function addTrackMultAdd(last){
             clearInterval(idInterval)
           }
         },500)
-      }
-      else {
       }
     }
 }
