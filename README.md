@@ -16,13 +16,13 @@ Installation
 
 ```
 # Télécharger le code et se placer dans le dossier
-git clone https://github.com/thomas-Ngr/ereko.git
+git clone https://github.com/Daniere-Mathieu/ereko.git
 cd ereko
 
 # Lancer l'environnement
 docker-compose up
 
-# récupérer l'identifiant des conteneurs 
+# récupérer l'identifiant des conteneurs
 docker ps
 
 # Installer les dépendances
@@ -56,4 +56,3 @@ Developpement : commandes utiles
 - `docker exec -it <mariadb_container_id> mysql -u ereko -p` pour avoir un accès à mariadb. Le mot de passe est `mariadb_ereko`.
 - `docker exec -it <container_id> bash` pour conserver un bash actif sur le conteneur (permet d'exécuter des commandes Symfony)
 - taper `exit` pour sortir du conteneur docker.
-
