@@ -1,4 +1,4 @@
-Ereko
+# Ereko
 =====
 
 Ereko est une application de gestion de playlist, qui fonctionne en téléchargeant des musiques depuis Youtube.
@@ -9,8 +9,13 @@ Les musiques sont ajoutées à la suite, et s'enchaînent. Il est impossible de 
 
 L'utilisateur peut régler le volume, mettre la musique sur pause, et avancer la musique en cliquant sur la barre de défilement.
 
-
-Installation
+##  Réaliser par 
+------------
+- [thomas-Ngr](https://github.com/thomas-Ngr)
+- [Neirotciv](https://github.com/Neirotciv)
+- [Daniere-Mathieu](https://github.com/Daniere-Mathieu)
+- [kilikia](https://github.com/kilikia)
+## Installation
 ------------
 
 
